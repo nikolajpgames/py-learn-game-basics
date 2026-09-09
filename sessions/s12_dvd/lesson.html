@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" data-session="12">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 12 &middot; The DVD Bouncer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 12</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 2 &middot; Motion &amp; Time</span>
+    </div>
+    <h1>The DVD Bouncer</h1>
+    <p class="standfirst">Your box already moves. Today you teach it to notice the walls &mdash; and to turn round when it finds one.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+
+    <div class="stage">
+      <div class="screen"><canvas id="demo"></canvas></div>
+      <p class="caption">The old DVD player screensaver, more or less. Yours will be doing this by the end of the session.</p>
+    </div>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong><code>if</code> asks the computer a question</strong>, and only runs the lines underneath when the answer is yes. That's the whole thing. There isn't more to it.</p>
+      <p>The question you'll ask four times today is <em>has the box gone past a wall?</em> And when the answer is yes, you flip its direction by sticking a minus in front of it: <code>vx = -vx</code>.</p>
+      <p>A box travelling right at 240 becomes a box travelling left at 240. Same speed, opposite way. That's a bounce.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 12</code>. Watch the box slide off the corner and disappear. That's the bug you're here to fix.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Open <code>main.py</code> and find <code>update</code>. There's a gap in the middle marked for your wall checks. Notice it changes <code>x</code> and <code>y</code>, but never touches <code>vx</code> or <code>vy</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add the <strong>left wall</strong> check: if <code>x</code> is less than 0, flip <code>vx</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it. It should bounce off the left wall now &mdash; and still escape to the right. Halfway there.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add the <strong>right wall</strong> check. Careful: <code>x</code> is the box's <em>left</em> edge, so its right edge is <code>x + BOX_SIZE</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add the <strong>top</strong> and <strong>bottom</strong> checks. Same two lines again, but with <code>y</code>, <code>vy</code> and <code>HEIGHT</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it. It should bounce forever now. Leave it going while you tidy up and keep half an eye on it.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">All at the top of <code>main.py</code>, in the SETTINGS block. Change one, run it, see what happens.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>SPEED = 240</kbd><span>Pixels per second. Try 40 for a slow drift. Then try 2000 and watch very carefully at the walls &mdash; something goes wrong, and it's worth working out what.</span></div>
+      <div class="knobrow"><kbd>BOX_SIZE = 40</kbd><span>Try 4 and it's basically a pixel. Try 400 and it's bigger than the window &mdash; then the two walls disagree about which way it should go.</span></div>
+      <div class="knobrow"><kbd>BG = (12, 13, 26)</kbd><span>Nearly black with a bit of blue. Make it the same as <code>BOX_COLOUR</code> and the box vanishes without the program breaking at all.</span></div>
+      <div class="knobrow"><kbd>box_vx / box_vy</kbd><span>Further down, where the box is set up. Make one of them half the other and the bounce pattern changes completely.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; which thing do I change?</summary>
+      <div class="hint">
+        <p><strong>Where</strong> the box is: <code>x</code> and <code>y</code>. <strong>Which way it's going</strong>: <code>vx</code> and <code>vy</code>.</p>
+        <p>When it hits a wall, where it is is fine. It's the direction that's wrong. So which pair do you change?</p>
+        <p>And since <code>x</code> and <code>vx</code> are the across-the-screen pair, hitting a left or right wall only changes <code>vx</code>. Up and down doesn't come into it.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; how do I reverse a direction?</summary>
+      <div class="hint">Put a minus in front of it. <code>vx = -vx</code> means "vx becomes the negative of whatever it was". If it was 240 it's now &minus;240. If it was &minus;240 it's now 240, because minus a minus is a plus. That one line handles both walls.</div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; the right wall keeps going wrong</summary>
+      <div class="hint"><code>x</code> is the <em>left</em> edge of the box. If you check <code>if x &gt; WIDTH</code>, the box has to travel its own width past the wall before anything happens &mdash; so it sinks into the edge before bouncing. You want its right edge, which is <code>x + BOX_SIZE</code>.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="kw">def</span> <span class="fn">update</span>(x, y, vx, vy, dt):
+    x = x + vx * dt
+    y = y + vy * dt
+
+    <span class="kw">if</span> x &lt; <span class="nu">0</span>:
+        vx = -vx
+    <span class="kw">if</span> x + BOX_SIZE &gt; WIDTH:
+        vx = -vx
+    <span class="kw">if</span> y &lt; <span class="nu">0</span>:
+        vy = -vy
+    <span class="kw">if</span> y + BOX_SIZE &gt; HEIGHT:
+        vy = -vy
+
+    <span class="kw">return</span> x, y, vx, vy</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make it change colour every time it hits a wall.</strong> The real screensaver did exactly this.</p>
+      <p>You'll want a list of colours and a number that remembers which one you're on. When a bounce happens, move to the next colour &mdash; and when you run off the end of the list, go back to the start. You already know how to make a list from Session 8.</p>
+      <p>Then leave it running. The famous thing about this screensaver is that people waited <em>years</em> to see it land exactly in a corner. Nobody's checking yours, so it's on you to be honest about whether you actually saw it.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>NameError: name 'vx' is not defined</b>
+        <span><code>update</code> doesn't know about <code>vx</code> yet. Check the <code>def</code> line has all five slots: <code>def update(x, y, vx, vy, dt):</code></span>
+      </div>
+      <div class="err">
+        <b>The box shivers against the wall instead of leaving</b>
+        <span>It's still past the wall, so you flip it again on the very next frame, and again, and again. Fix: when it hits, also put it back on the edge &mdash; <code>x = 0</code> for the left wall.</span>
+      </div>
+      <div class="err">
+        <b>It bounces off the sides but sails straight out of the top</b>
+        <span>You copied the <code>x</code> lines and missed one when changing them to <code>y</code>. Easiest bug in the world to make and the hardest to spot &mdash; read the four checks out loud and you'll find it.</span>
+      </div>
+      <div class="err">
+        <b>It gets stuck in a corner and jitters</b>
+        <span>Two walls are both flipping it every frame and fighting each other. Same fix as the shivering one: push it back to the edge after you flip.</span>
+      </div>
+      <div class="err">
+        <b>IndentationError: expected an indented block</b>
+        <span>The line after an <code>if ...:</code> has to be pushed further in than the <code>if</code> itself. That indent is how Python knows which lines the question controls.</span>
+      </div>
+      <div class="err">
+        <b>SyntaxError: invalid syntax</b>
+        <span>Nine times out of ten it's a missing colon at the end of the <code>if</code> line.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+<script>
+/* the little demo at the top — a box, four walls, nothing else */
+(function () {
+  "use strict";
+
+  var canvas = document.getElementById("demo");
+  if (!canvas) return;
+  var ctx = canvas.getContext("2d");
+
+  var W = 640, H = 360, SIZE = 34;
+  var x = 90, y = 60, vx = 190, vy = 190;
+  var bg = "#0C0D13", fg = "#3DE1E1";
+
+  function readTheme() {
+    var cs = getComputedStyle(document.documentElement);
+    bg = cs.getPropertyValue("--demo-bg").trim() || bg;
+    fg = cs.getPropertyValue("--c1").trim() || fg;
+  }
+
+  function fit() {
+    var r = canvas.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.max(1, Math.round(r.width * dpr));
+    canvas.height = Math.max(1, Math.round(r.height * dpr));
+    ctx.setTransform(canvas.width / W, 0, 0, canvas.height / H, 0, 0);
+  }
+
+  var last = 0;
+  function frame(now) {
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+    last = now;
+
+    x += vx * dt;
+    y += vy * dt;
+
+    if (x < 0)          { x = 0;          vx = -vx; }
+    if (x + SIZE > W)   { x = W - SIZE;   vx = -vx; }
+    if (y < 0)          { y = 0;          vy = -vy; }
+    if (y + SIZE > H)   { y = H - SIZE;   vy = -vy; }
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = fg;
+    ctx.fillRect(Math.round(x), Math.round(y), SIZE, SIZE);
+
+    requestAnimationFrame(frame);
+  }
+
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", readTheme);
+  new MutationObserver(readTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ["data-theme"]
+  });
+  window.addEventListener("resize", fit);
+
+  readTheme();
+  fit();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" data-session="28">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 28 &middot; More Levels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 28</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 4 &middot; Arkanoid</span>
+    </div>
+    <h1>More Levels</h1>
+    <p class="standfirst">One level is a demo. Three is a game &mdash; and the only difference between them is two more text files and a counter.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Three levels that follow one after another, a message when you clear one, and a win screen at the end.</p>
+    <p class="caption">And then as many more as you feel like drawing.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Nothing new.</strong> A number that remembers which level you are on, and an <code>f</code>-string that turns it into a filename.</p>
+      <p><strong>Filenames can be built the same way as any other text.</strong> <code>f"level{level:02}.txt"</code> gives <code>level01.txt</code>, <code>level02.txt</code> and so on. The <code>02</code> means "pad it out to two digits with a zero".</p>
+      <p><strong>And clearing the wall is a check you already know:</strong> <code>if len(bricks) == 0</code>. The only question is what happens next &mdash; another level, or the end.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 28</code>. There are three level files in the folder now. Only the first is ever used.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>main.py</code>,</strong> add <code>level = 1</code> before the loop, and load with <code>load_level(f"level{level:02}.txt")</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">After the brick clear-out, check for an empty wall:<br><code>if len(bricks) == 0:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;level = level + 1</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Then either load the next one or finish. <code>if level &gt; 3:</code> set <code>mode = "won"</code>, otherwise load the new level file and make a fresh ball. <span class="steplet">A fresh ball matters &mdash; otherwise level two starts with the ball wherever it happened to be.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">In <code>render.py</code>, show the level number next to the lives, and put a different message on screen for <code>"won"</code> than for <code>"over"</code>. Winning and losing should not look the same.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Play it through all three. Then make <code>level04.txt</code> yourself, change the <code>3</code> to a <code>4</code>, and play that.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Stop counting by hand.</strong> Use <code>os.path.exists(f"level{level:02}.txt")</code> to ask whether the next file is there &mdash; if it is not, you have won. Now adding a level is just adding a file. <span class="steplet">You will need <code>import os</code> at the top.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Draw two more levels and play the lot. Nothing in any <code>.py</code> file changes.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>level = 1</kbd><span>Start on 3 to test the last one without playing the first two. Faster than being good at it.</span></div>
+      <div class="knobrow"><kbd>f"level{level:02}.txt"</kbd><span>The <code>02</code> is the padding. Without it you get <code>level1.txt</code>, which is fine if your files are named that way &mdash; just be consistent.</span></div>
+      <div class="knobrow"><kbd>START_LIVES</kbd><span>Lives now have to last across three levels, so 3 is much harder than it was. Consider giving one back on each new level.</span></div>
+      <div class="knobrow"><kbd>BRICK_TOP</kbd><span>With longer levels you might want the wall to start further down, so there is more room to react.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what does the :02 do?</summary>
+      <div class="hint"><p>Pads the number out to two digits with a zero in front. <code>1</code> becomes <code>01</code>, <code>2</code> becomes <code>02</code>, and <code>12</code> stays <code>12</code>.</p><p>It goes inside the curly brackets after a colon: <code>f"level{level:02}.txt"</code>.</p><p>The point is that files sort properly. Without it, <code>level10.txt</code> sorts before <code>level2.txt</code>, which looks like a computer being stupid and is actually alphabetical order doing its job.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; why make a new ball between levels?</summary>
+      <div class="hint"><p>Because the wall was cleared by a ball that is currently somewhere near the top of the screen going upwards at speed. Load the next level around it and it is instantly inside a brick.</p><p><code>ball = make_ball()</code> puts it back above the bat, heading up, at the normal speed. One line, and the next level starts fairly.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; how does os.path.exists help?</summary>
+      <div class="hint"><p>It answers <code>True</code> or <code>False</code> for whether a file is there.</p><p>So instead of <code>if level &gt; 3</code> &mdash; a number you have to remember to change &mdash; you ask whether the next level file actually exists. If it does, load it. If not, they have finished.</p><p>Now the game finds out how long it is by looking, which means adding a level is just adding a file.</p></div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint"><pre><span class="kw">import</span> os
+
+level = <span class="nu">1</span>
+bricks = <span class="fn">load_level</span>(<span class="st">f"level{level:02}.txt"</span>)
+
+<span class="cm"># ... after the brick clear-out</span>
+
+        <span class="kw">if</span> <span class="fn">len</span>(bricks) == <span class="nu">0</span>:
+            level = level + <span class="nu">1</span>
+            next_file = <span class="st">f"level{level:02}.txt"</span>
+
+            <span class="kw">if</span> os.path.<span class="fn">exists</span>(next_file):
+                bricks = <span class="fn">load_level</span>(next_file)
+                ball = <span class="fn">make_ball</span>()
+            <span class="kw">else</span>:
+                mode = <span class="st">"won"</span></pre></div>
+    </details>
+
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Design a proper set.</strong> Six levels that get harder in a way you have thought about &mdash; not just more bricks, but shapes that make the ball behave differently. A funnel. A tunnel with one way in. A wall with a single gap.</p>
+      <p>Play each one and change it until it feels right. That is level design, and it is a completely different skill from programming &mdash; you cannot reason your way to it, you have to play it.</p>
+      <p><strong>Then let somebody else play.</strong> Watch where they get stuck without saying anything. It is the most useful and most uncomfortable half hour in making games.</p>
+      <p>Keep the level files. The Geometry Dash arc uses the same trick, and by then you will have opinions about it.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>FileNotFoundError: level02.txt</b>
+        <span>It does not exist yet, or the padding does not match the name &mdash; <code>{level:02}</code> looks for <code>level02.txt</code>, not <code>level2.txt</code>.</span>
+      </div>
+      <div class="err">
+        <b>The game skips straight to the win screen</b>
+        <span>The empty-wall check is running before any bricks were loaded, or the loader returned an empty list because the file has no hashes in it.</span>
+      </div>
+      <div class="err">
+        <b>Level two starts with the ball already inside a brick</b>
+        <span><code>ball = make_ball()</code> is missing from the level change. See Hint 2.</span>
+      </div>
+      <div class="err">
+        <b>It loops back to level one forever</b>
+        <span><code>level</code> is being reset somewhere it should not be &mdash; probably in the restart code, which should only run when the player presses R.</span>
+      </div>
+      <div class="err">
+        <b>Winning and losing look identical</b>
+        <span><code>render.py</code> is only checking for one mode. It needs a separate message for <code>"won"</code>.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'os' is not defined</b>
+        <span><code>import os</code> at the top of <code>main.py</code>, with the other imports.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs. That is Arkanoid, with levels you drew yourself.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

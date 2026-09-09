@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" data-session="17">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 17 &middot; Press To Fire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 17</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 3 &middot; Shooter</span>
+    </div>
+    <h1>Press To Fire</h1>
+    <p class="standfirst">Everything on screen so far has existed since the moment the program started. Today you make something out of nothing, while the game is running.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A space bar that fires. One press, one shot, straight up from the middle of the ship.</p>
+    <p class="caption">The shots never stop existing &mdash; they fly off the top of the screen and keep going forever. That gets sorted out next session.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>A list can grow while the game is running.</strong> You already know <code>append</code> from the stars. The difference is that the stars were all made before the window opened, and these get made in the middle of a frame, because somebody pressed something.</p>
+      <p><strong>A shot is just a dict, like everything else.</strong> An <code>x</code>, a <code>y</code>, and that is all it needs &mdash; it only ever goes one direction.</p>
+      <p><strong>And firing needs a different question from steering.</strong> Holding an arrow key should keep moving you. Holding the space bar should not keep firing &mdash; that is sixty shots a second. The picture below is the difference.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 244" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="A timeline of thirteen frames. The space bar is held down across six of them. The row for get_pressed is marked on every one of those six frames, which would fire six shots. The row for KEYDOWN is marked only on the first, which fires a single shot.">
+
+        <text x="20" y="18" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="currentColor">ONE PRESS OF THE SPACE BAR, HELD FOR SIX FRAMES</text>
+        <text x="20" y="54" font-size="12" fill="var(--ink)">the key</text>
+        <rect x="226" y="42" width="186" height="20" fill="var(--c3, #FFC24B)" opacity="0.30"/>
+        <line x1="132" y1="46" x2="132" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="166" y1="46" x2="166" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="200" y1="46" x2="200" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="234" y1="46" x2="234" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <rect x="230" y="43" width="8" height="18" fill="var(--c3, #FFC24B)"/>
+        <line x1="268" y1="46" x2="268" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <rect x="264" y="43" width="8" height="18" fill="var(--c3, #FFC24B)"/>
+        <line x1="302" y1="46" x2="302" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <rect x="298" y="43" width="8" height="18" fill="var(--c3, #FFC24B)"/>
+        <line x1="336" y1="46" x2="336" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <rect x="332" y="43" width="8" height="18" fill="var(--c3, #FFC24B)"/>
+        <line x1="370" y1="46" x2="370" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <rect x="366" y="43" width="8" height="18" fill="var(--c3, #FFC24B)"/>
+        <line x1="404" y1="46" x2="404" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <rect x="400" y="43" width="8" height="18" fill="var(--c3, #FFC24B)"/>
+        <line x1="438" y1="46" x2="438" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="472" y1="46" x2="472" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="506" y1="46" x2="506" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="540" y1="46" x2="540" y2="58" stroke="var(--edge)" stroke-width="1.2"/>
+        <text x="226" y="34" font-size="10.5" fill="var(--c3, #FFC24B)">down</text>
+        <text x="434" y="34" font-size="10.5" fill="currentColor">up</text>
+        <text x="20" y="118" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--c1, #3DE1E1)">get_pressed</text>
+        <line x1="132" y1="110" x2="132" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="166" y1="110" x2="166" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="200" y1="110" x2="200" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="234" y1="110" x2="234" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="234" cy="116" r="6" fill="var(--c1, #3DE1E1)"/>
+        <line x1="268" y1="110" x2="268" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="268" cy="116" r="6" fill="var(--c1, #3DE1E1)"/>
+        <line x1="302" y1="110" x2="302" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="302" cy="116" r="6" fill="var(--c1, #3DE1E1)"/>
+        <line x1="336" y1="110" x2="336" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="336" cy="116" r="6" fill="var(--c1, #3DE1E1)"/>
+        <line x1="370" y1="110" x2="370" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="370" cy="116" r="6" fill="var(--c1, #3DE1E1)"/>
+        <line x1="404" y1="110" x2="404" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="404" cy="116" r="6" fill="var(--c1, #3DE1E1)"/>
+        <line x1="438" y1="110" x2="438" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="472" y1="110" x2="472" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="506" y1="110" x2="506" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="540" y1="110" x2="540" y2="122" stroke="var(--edge)" stroke-width="1.2"/>
+        <text x="20" y="136" font-size="11" fill="currentColor">true on every frame</text>
+        <text x="578" y="120" font-size="12" font-weight="700" fill="var(--c1, #3DE1E1)">6 shots</text>
+        <text x="20" y="184" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--c2, #F857C1)">KEYDOWN</text>
+        <line x1="132" y1="176" x2="132" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="166" y1="176" x2="166" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="200" y1="176" x2="200" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="234" y1="176" x2="234" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <circle cx="234" cy="182" r="6" fill="var(--c2, #F857C1)"/>
+        <line x1="268" y1="176" x2="268" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="302" y1="176" x2="302" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="336" y1="176" x2="336" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="370" y1="176" x2="370" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="404" y1="176" x2="404" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="438" y1="176" x2="438" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="472" y1="176" x2="472" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="506" y1="176" x2="506" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <line x1="540" y1="176" x2="540" y2="188" stroke="var(--edge)" stroke-width="1.2"/>
+        <text x="20" y="202" font-size="11" fill="currentColor">once, as it goes down</text>
+        <text x="578" y="186" font-size="12" font-weight="700" fill="var(--c2, #F857C1)">1 shot</text>
+        <line x1="120" y1="216" x2="552" y2="216" stroke="currentColor" stroke-width="1"/>
+        <text x="336" y="232" font-size="11" text-anchor="middle" fill="currentColor">thirteen frames &#8212; about a fifth of a second</text>
+
+      </svg>
+      <figcaption><strong>Same press, two different questions.</strong> <code>get_pressed</code> asks "is it down <em>now</em>?" and the answer is yes on every frame you hold it. <code>KEYDOWN</code> is an event: it happens once, at the instant the key goes down, however long you keep it there. Steering wants the first. Firing wants the second.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 17</code>. Your ship from last time. The space bar does nothing.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>state.py</code>,</strong> where it says YOUR NEW FUNCTIONS GO HERE, write one that builds a shot:<br><code>def make_shot(ship):</code><br><span class="steplet">It returns a dict with an <code>x</code> and a <code>y</code>. For the <code>y</code>, use the ship's. For the <code>x</code>, you want the middle of the ship, minus half the shot's width so it sits centred &mdash; Hint 2 has it written out.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Underneath it, write the one that moves them all:<br><code>def update_shots(shots, dt):</code><br><span class="steplet">A loop through the list, taking <code>SHOT_SPEED * dt</code> off each one's <code>y</code>. Taking away, because up the screen is a smaller y.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>main.py</code>,</strong> make an empty list next to where the ship is made: <code>shots = []</code>. Then import your two new functions from <code>state</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Now the firing.</strong> In the event loop, where it says ONE-OFF KEY PRESSES:<br><code>if event.type == pygame.KEYDOWN:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;if event.key == pygame.K_SPACE:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shots.append(make_shot(ship))</code><br><span class="steplet">This sits inside <code>for event in pygame.event.get():</code>, indented to match the QUIT check just above it.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Call <code>update_shots(shots, dt)</code> in the loop, and change <code>draw(&hellip;)</code> to take the shots too. In <code>render.py</code>, add a loop that draws each one as a small rectangle in <code>SHOT_COLOUR</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it. Fire. Then <strong>hold the space bar down</strong> and count how many shots come out &mdash; exactly one, no matter how long you hold it. That is the whole point of <code>KEYDOWN</code>.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>SHOT_SPEED = 600</kbd><span>Try 80 for something you can watch crawl up the screen, and 4000 for something that is gone before you see it.</span></div>
+      <div class="knobrow"><kbd>SHOT_H = 14</kbd><span>Long thin shots read as lasers; square ones read as bullets. Try 40.</span></div>
+      <div class="knobrow"><kbd>SHOT_COLOUR</kbd><span>Amber at the moment. It wants to stand out against both the stars and the ship.</span></div>
+      <div class="knobrow"><kbd>K_SPACE</kbd><span>Any key you like. <code>K_UP</code>, <code>K_RETURN</code>, <code>K_f</code>. The names are always <code>K_</code> and then the key, shouting.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what is an "event"?</summary>
+      <div class="hint">
+        <p>Something that <em>happened</em>, rather than something that <em>is</em>.</p>
+        <p>Between one frame and the next, pygame keeps a little list of everything that went on &mdash; keys going down, keys coming up, the mouse moving, the window being closed. <code>pygame.event.get()</code> hands you that list, and the loop you have had since Session 6 goes through it.</p>
+        <p>You have been reading one kind of event all along: <code>event.type == pygame.QUIT</code> is how the X button gets noticed. <code>pygame.KEYDOWN</code> is another, and <code>event.key</code> says which key it was.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; how do I centre the shot on the ship?</summary>
+      <div class="hint">
+        <p>The ship's left edge is <code>ship["x"]</code>, so the middle of it is <code>ship["x"] + SHIP_W / 2</code>.</p>
+        <p>But <code>x</code> on the shot is <em>its</em> left edge too, so putting it exactly at the ship's middle leaves it half a shot too far right. Take off half the shot's width:</p>
+        <pre>shot = {
+    <span class="st">"x"</span>: ship[<span class="st">"x"</span>] + SHIP_W / <span class="nu">2</span> - SHOT_W / <span class="nu">2</span>,
+    <span class="st">"y"</span>: ship[<span class="st">"y"</span>],
+}</pre>
+        <p>Same trick as putting a rectangle in the middle of the screen back in Session 7.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; why does the shot go up when I take away?</summary>
+      <div class="hint">Because y counts downwards, which has been true since Session 7 and will never stop being surprising. The top of the screen is <code>y = 0</code>, so heading up means getting <em>smaller</em>.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># state.py</span>
+
+<span class="kw">def</span> <span class="fn">make_shot</span>(ship):
+    shot = {
+        <span class="st">"x"</span>: ship[<span class="st">"x"</span>] + SHIP_W / <span class="nu">2</span> - SHOT_W / <span class="nu">2</span>,
+        <span class="st">"y"</span>: ship[<span class="st">"y"</span>],
+    }
+    <span class="kw">return</span> shot
+
+
+<span class="kw">def</span> <span class="fn">update_shots</span>(shots, dt):
+    <span class="kw">for</span> shot <span class="kw">in</span> shots:
+        shot[<span class="st">"y"</span>] = shot[<span class="st">"y"</span>] - SHOT_SPEED * dt
+
+
+<span class="cm"># main.py, in the event loop</span>
+
+        <span class="kw">if</span> event.type == pygame.KEYDOWN:
+            <span class="kw">if</span> event.key == pygame.K_SPACE:
+                shots.<span class="fn">append</span>(<span class="fn">make_shot</span>(ship))
+
+
+<span class="cm"># render.py</span>
+
+<span class="kw">def</span> <span class="fn">draw</span>(screen, stars, ship, shots):
+    screen.<span class="fn">fill</span>(BG)
+
+    <span class="kw">for</span> star <span class="kw">in</span> stars:
+        pygame.draw.<span class="fn">rect</span>(screen, STAR_COLOUR, (star[<span class="nu">0</span>], star[<span class="nu">1</span>], STAR_SIZE, STAR_SIZE))
+
+    <span class="kw">for</span> shot <span class="kw">in</span> shots:
+        pygame.draw.<span class="fn">rect</span>(screen, SHOT_COLOUR, (shot[<span class="st">"x"</span>], shot[<span class="st">"y"</span>], SHOT_W, SHOT_H))
+
+    pygame.draw.<span class="fn">rect</span>(screen, SHIP_COLOUR, (ship[<span class="st">"x"</span>], ship[<span class="st">"y"</span>], SHIP_W, SHIP_H))</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Fire two shots at once</strong>, one from each side of the ship rather than one up the middle. Two <code>append</code> lines, two slightly different <code>x</code> values.</p>
+      <p>Then <strong>see what full automatic actually looks like.</strong> Swap the <code>KEYDOWN</code> check for a held-key one &mdash; <code>if keys[pygame.K_SPACE]:</code> down with the steering &mdash; and hold it for two seconds. Count what you get, then look at the picture at the top of this page again.</p>
+      <p>Put it back afterwards. Or do not, if you prefer it that way, but then you will want next session rather badly.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>Holding space fires a stream of shots</b>
+        <span>The check ended up with the steering keys instead of in the event loop. <code>get_pressed</code> is true on every frame; <code>KEYDOWN</code> happens once.</span>
+      </div>
+      <div class="err">
+        <b>AttributeError: 'Event' object has no attribute 'key'</b>
+        <span>Only keyboard events carry a <code>key</code>. Check <code>event.type == pygame.KEYDOWN</code> <em>first</em>, and put the <code>event.key</code> test inside it.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: draw() takes 3 positional arguments but 4 were given</b>
+        <span><code>draw</code> in <code>render.py</code> needs a fourth slot for the shots. Both ends have to change together, as always.</span>
+      </div>
+      <div class="err">
+        <b>ImportError: cannot import name 'make_shot' from 'state'</b>
+        <span>It is not in <code>state.py</code> yet, or the name is spelled differently there.</span>
+      </div>
+      <div class="err">
+        <b>The shots come out sideways from the ship</b>
+        <span>The <code>x</code> is using the ship's left edge without adding half its width. See Hint 2.</span>
+      </div>
+      <div class="err">
+        <b>The shots fall downwards</b>
+        <span>You added <code>SHOT_SPEED * dt</code> instead of taking it away. Up is a smaller y.</span>
+      </div>
+      <div class="err">
+        <b>It gets slower and slower the longer you play</b>
+        <span>Not a mistake &mdash; that is the whole point of next session. Every shot you have ever fired is still up there, being moved and drawn, forever.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

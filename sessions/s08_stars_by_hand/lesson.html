@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en" data-session="8">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 8 &middot; Three Stars By Hand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 8</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 1 &middot; First Pixels</span>
+    </div>
+    <h1>Three Stars By Hand</h1>
+    <p class="standfirst">Three stars, three variables, three nearly identical lines. Then you get rid of two of them.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A night sky with three stars in it, written out one star at a time. Then the same night sky in a lot less code.</p>
+    <p class="caption">You end up with exactly the same picture and four fewer lines of code.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>A tuple glues a few values into one thing.</strong> <code>star1 = (100, 80)</code> keeps an x and a y together so they travel as one star instead of two loose numbers. Round brackets.</p>
+      <p><strong>A list holds many things under one name.</strong> Square brackets. <code>stars = [star1, star2, star3]</code> and now three separate names are one name.</p>
+      <p><strong>And a <code>for</code> loop can walk through a list</strong>, handing you one item at a time. That is what turns three near-identical draw lines into one.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 412" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Three parts. First, a tuple: star1 equals 100 comma 80, drawn as two boxes numbered 0 and 1, with a padlock showing it cannot be changed once made. Second, a before-and-after comparison: before, three separate star variables and three separate draw lines, six lines in total and two edits to add a star; after, one list holding the three stars and a single for loop that draws them, two lines in total and one edit to add a star. Third, a note that a list will hold anything at all, showing a whole number, some text, a decimal and a true-false value side by side.">
+
+        <!-- ===== 1. what a tuple is ===== -->
+        <text x="20" y="16" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c2, #F857C1)">A TUPLE &#8212; VALUES THAT BELONG TOGETHER</text>
+        <text x="20" y="42" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">star1 = (100, 80)</text>
+
+        <rect x="20"  y="54" width="66" height="28" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5"/>
+        <rect x="90"  y="54" width="66" height="28" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5"/>
+        <text x="53"  y="73" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">100</text>
+        <text x="123" y="73" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">80</text>
+        <text x="53"  y="98" font-size="11.5" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--c3, #FFC24B)">0</text>
+        <text x="123" y="98" font-size="11.5" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--c3, #FFC24B)">1</text>
+
+        <path d="M 176 66 v-6 a7 7 0 0 1 14 0 v6" fill="none" stroke="var(--c2, #F857C1)" stroke-width="2"/>
+        <rect x="172" y="66" width="22" height="16" fill="var(--c2, #F857C1)"/>
+
+        <text x="212" y="60" font-size="12" fill="var(--ink)">One star, not two loose numbers.</text>
+        <text x="212" y="78" font-size="11.5" fill="currentColor">Round brackets. Numbered from 0.</text>
+        <text x="212" y="96" font-size="11.5" fill="currentColor">Locked once made &#8212; a tuple never changes.</text>
+
+        <!-- ===== 2. before / after ===== -->
+        <text x="20"  y="136" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c3, #FFC24B)">BEFORE &#8212; THREE OF EVERYTHING</text>
+        <text x="330" y="136" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c1, #3DE1E1)">AFTER &#8212; ONE LIST, ONE LOOP</text>
+
+        <rect x="20"  y="146" width="285" height="168" fill="var(--surface-2)" stroke="var(--c3, #FFC24B)" stroke-width="1.5"/>
+        <rect x="330" y="146" width="285" height="168" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+
+        <text x="36" y="172" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">star1 = (100, 80)</text>
+        <text x="36" y="192" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">star2 = (400, 200)</text>
+        <text x="36" y="212" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">star3 = (650, 120)</text>
+        <line x1="36" y1="228" x2="289" y2="228" stroke="var(--edge)" stroke-width="1"/>
+        <text x="36" y="250" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">draw(star1)</text>
+        <text x="36" y="270" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">draw(star2)</text>
+        <text x="36" y="290" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">draw(star3)</text>
+
+        <text x="346" y="172" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">stars = [star1, star2, star3]</text>
+        <text x="346" y="196" font-size="11" fill="currentColor">square brackets &#8212; one name for all three</text>
+        <line x1="346" y1="228" x2="599" y2="228" stroke="var(--edge)" stroke-width="1"/>
+        <text x="346" y="250" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">for star in stars:</text>
+        <text x="374" y="270" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--ink)">draw(star)</text>
+
+        <text x="20"  y="332" font-size="12" font-weight="700" fill="var(--c3, #FFC24B)">6 lines &#183; two edits to add a star</text>
+        <text x="330" y="332" font-size="12" font-weight="700" fill="var(--c1, #3DE1E1)">2 lines &#183; one edit to add a star</text>
+
+        <!-- ===== 3. a footnote worth knowing ===== -->
+        <text x="20" y="372" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="currentColor">AND A LIST WILL HOLD ANYTHING AT ALL</text>
+        <rect x="20"  y="382" width="44" height="24" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="72"  y="382" width="74" height="24" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="154" y="382" width="50" height="24" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="212" y="382" width="56" height="24" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <text x="42"  y="399" font-size="12" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">42</text>
+        <text x="109" y="399" font-size="12" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">"hello"</text>
+        <text x="179" y="399" font-size="12" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">3.5</text>
+        <text x="240" y="399" font-size="12" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">True</text>
+        <text x="284" y="392" font-size="11.5" fill="currentColor">a whole number, text, a decimal, a yes-or-no</text>
+        <text x="284" y="408" font-size="11.5" fill="var(--muted)">&#8212; all in the same list, if you want</text>
+
+      </svg>
+      <figcaption><strong>Same picture on screen, less code to keep straight.</strong> The tuples do not change &mdash; what changes is that they stop being three separate names and become one list, which a single loop can walk through. From then on, a new star costs one line instead of two.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 8</code>. Three stars. Find the three variables near the top and the three draw lines further down.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Move <code>star2</code> somewhere else by changing its two numbers. Which number moved it sideways?</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Add a fourth star.</strong> You need a new variable <em>and</em> a new draw line &mdash; two edits, in two different places, for one star. Remember that feeling.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Now the better way. Under the four star variables, put them all in a list:<br><code>stars = [star1, star2, star3, star4]</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Delete all four draw lines and put this in their place:<br><code>for star in stars:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(screen, STAR_COLOUR, (star[0], star[1], STAR_SIZE, STAR_SIZE))</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it. Exactly the same picture &mdash; from one draw line instead of four.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a fifth star. This time it is <em>one</em> edit: one more entry in the list. Nothing else changes.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Skip the separate variables altogether &mdash; write the tuples straight into the list: <code>stars = [(100, 80), (400, 200)]</code>. Same thing, less typing.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>star1 = (100, 80)</kbd><span>x across, y down &mdash; the same pair as Session 7. Push one past 800 and the star leaves the window.</span></div>
+      <div class="knobrow"><kbd>STAR_SIZE = 5</kbd><span>How big each one is. At 1 they are single pixels; at 30 they are not really stars.</span></div>
+      <div class="knobrow"><kbd>BG = (8, 9, 16)</kbd><span>Almost black, with a little blue in it. Try pure black and decide which looks more like night.</span></div>
+      <div class="knobrow"><kbd>the list order</kbd><span>Shuffle the entries around. The picture is identical &mdash; a list keeps its order, but here nothing depends on it.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what does the loop line actually do?</summary>
+      <div class="hint">
+        <p><code>for star in stars:</code> means "take each thing out of <code>stars</code>, one at a time, call it <code>star</code>, and run the indented lines".</p>
+        <p>So with four stars in the list, the draw line runs four times &mdash; with <code>star</code> holding a different tuple each go. You write it once; Python repeats it.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; how do I get the x back out of a star?</summary>
+      <div class="hint">By its position. <code>star[0]</code> is the first number you put in, <code>star[1]</code> is the second. Counting starts at 0, the same as it did with <code>range</code> in Session 4.</div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; why are there two sets of brackets?</summary>
+      <div class="hint">
+        <p>In <code>stars = [(100, 80), (400, 200)]</code> the square brackets are the <em>list</em>, and each pair of round brackets is a <em>tuple</em> inside it.</p>
+        <p>So the list has two entries, and each entry has two numbers. Two levels, two bracket shapes. The picture above shows the same thing.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre>stars = [
+    (<span class="nu">100</span>, <span class="nu">80</span>),
+    (<span class="nu">400</span>, <span class="nu">200</span>),
+    (<span class="nu">650</span>, <span class="nu">120</span>),
+    (<span class="nu">220</span>, <span class="nu">330</span>),
+    (<span class="nu">540</span>, <span class="nu">60</span>),
+]
+
+<span class="cm"># ... and down inside the game loop:</span>
+
+    <span class="kw">for</span> star <span class="kw">in</span> stars:
+        pygame.draw.<span class="fn">rect</span>(screen, STAR_COLOUR, (star[<span class="nu">0</span>], star[<span class="nu">1</span>], STAR_SIZE, STAR_SIZE))</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make a constellation.</strong> Look up a real one &mdash; Orion, the Plough, Cassiopeia &mdash; and place the stars roughly where they belong.</p>
+      <p>Then join them up with <code>pygame.draw.line</code> between the pairs that connect, using the same <code>star[0]</code>, <code>star[1]</code> trick to get at each one's position.</p>
+      <p>Ten or twelve stars is plenty. And notice that at ten, adding one more is still just one line &mdash; which it very much would not have been an hour ago.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>NameError: name 'star4' is not defined</b>
+        <span>You put <code>star4</code> in the list but never made it, or spelled it differently in the two places. Python will not guess.</span>
+      </div>
+      <div class="err">
+        <b>IndexError: tuple index out of range</b>
+        <span>You asked for <code>star[2]</code> but the tuple only has two numbers in it, at positions 0 and 1.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: 'int' object is not subscriptable</b>
+        <span>Your list holds loose numbers rather than tuples &mdash; <code>[100, 80]</code> instead of <code>[(100, 80)]</code>. Then <code>star</code> is a single number and <code>star[0]</code> means nothing.</span>
+      </div>
+      <div class="err">
+        <b>IndentationError: expected an indented block</b>
+        <span>The draw line after <code>for star in stars:</code> has to be pushed in, exactly like the lines inside an <code>if</code>.</span>
+      </div>
+      <div class="err">
+        <b>Only one star appears</b>
+        <span>The draw line is not indented, so it sits outside the loop and runs once at the end &mdash; with whatever <code>star</code> happened to be last.</span>
+      </div>
+      <div class="err">
+        <b>Nothing appears at all</b>
+        <span>The list is empty, or the loop is drawing before <code>screen.fill</code> rather than after it.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

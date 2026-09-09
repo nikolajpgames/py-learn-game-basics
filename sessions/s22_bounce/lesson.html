@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" data-session="22">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 22 &middot; The Bat Hits Back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 22</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 4 &middot; Arkanoid</span>
+    </div>
+    <h1>The Bat Hits Back</h1>
+    <p class="standfirst">The ball ignores your bat completely. Fixing that is easy. Making it feel good takes one more line, and that line is the whole game.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A ball that bounces off the bat &mdash; and comes off at a different angle depending on where along the bat it landed.</p>
+    <p class="caption">Without the angle you have a game you cannot steer. With it you can aim.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Bouncing off the bat is <code>overlaps</code> plus flipping <code>vy</code>.</strong> You have written both before. That part is five minutes.</p>
+      <p><strong>But you have to check the ball is going <em>down</em> first.</strong> Otherwise a ball that is already inside the bat flips every frame and sticks there, buzzing. One <code>if</code> stops it: no bouncing unless <code>vy</code> is positive.</p>
+      <p><strong>And then the important line.</strong> Rather than sending the ball straight back, work out how far from the middle of the bat it hit, and use that to set <code>vx</code>. Hit the middle and it goes straight up. Hit the left end and it comes off hard to the left.</p>
+      <p>That one line is the difference between watching a ball and playing a game. It is how every bat-and-ball game since 1976 has worked.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 22</code>. The ball goes straight past the bat, as it did last time.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>state.py</code>,</strong> add <code>overlaps(a, b)</code> &mdash; the one from Session 19, with each thing's own <code>w</code> and <code>h</code>. You can copy it across word for word.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Underneath, start <code>bounce_off_bat(ball, bat)</code>. First two lines: <code>if ball["vy"] &lt; 0: return</code>, then <code>if not overlaps(ball, bat): return</code>. <span class="steplet">Nothing to do unless the ball is heading down <em>and</em> touching.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Then put the ball on top of the bat and turn it round: <code>ball["y"] = bat["y"] - ball["h"]</code> and flip <code>vy</code>. Call it from <code>main.py</code> after <code>update_ball</code> and run it. It bounces &mdash; but always at the same angle.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Now the aiming.</strong> Work out how far the ball's middle is from the bat's middle:<br><code>hit = (ball["x"] + ball["w"] / 2) - (bat["x"] + bat["w"] / 2)</code><br><span class="steplet">That is a distance in pixels. Negative if the ball landed left of centre, positive if right.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Turn it into a sideways speed:<br><code>ball["vx"] = (hit / (bat["w"] / 2)) * BALL_SPEED</code><br><span class="steplet">Dividing by half the bat's width turns the distance into a number from about &minus;1 to 1, whatever size the bat is. Times the speed makes it a speed.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it and play for a minute. Try to hit the ball with the very end of the bat, then dead centre. You can steer it now.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>BAT_W = 110</kbd><span>Changes both how easy it is to hit and how sharply you can aim &mdash; the sums use the bat's own width, so a wide bat gives gentler control.</span></div>
+      <div class="knobrow"><kbd>BALL_SPEED = 340</kbd><span>Now sets the sideways speed as well as the up-and-down. Turn it up and everything gets faster together.</span></div>
+      <div class="knobrow"><kbd>hit / (bat["w"] / 2)</kbd><span>Try dividing by <code>bat["w"] / 4</code> instead. Now only the middle half of the bat gives you any control and the ends fire it off sideways.</span></div>
+      <div class="knobrow"><kbd>ball["vy"] &lt; 0</kbd><span>Take this check out and watch what happens when the ball catches the bat's edge. Put it back.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why check that the ball is going down?</summary>
+      <div class="hint"><p>Because <code>overlaps</code> is true for several frames in a row while the ball is passing through the bat.</p><p>Without the check: frame one it overlaps, so flip &mdash; now it is heading up. Frame two it is still overlapping, so flip again &mdash; heading down. It buzzes inside the bat instead of bouncing off it.</p><p>Only bouncing when it is heading down means the flip can only happen once, because straight afterwards it is heading up.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what is that hit sum actually doing?</summary>
+      <div class="hint"><p>Measuring, then scaling.</p><p><code>(ball's middle) - (bat's middle)</code> gives you a distance in pixels: 0 dead centre, about &minus;55 at the far left of a 110-wide bat, about 55 at the far right.</p><p>Dividing by half the bat's width squashes that into roughly &minus;1 to 1, no matter how wide the bat is. Multiplying by <code>BALL_SPEED</code> turns that fraction into an actual sideways speed.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; why move the ball to the top of the bat?</summary>
+      <div class="hint">Because it has usually sunk a few pixels in before you noticed. Setting <code>ball["y"] = bat["y"] - ball["h"]</code> lifts it back so its bottom is exactly resting on the bat's top, and then it leaves cleanly. Same idea as putting a bouncing box back against the wall.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint"><pre><span class="kw">def</span> <span class="fn">bounce_off_bat</span>(ball, bat):
+    <span class="cm"># only when the ball is heading downwards, or it sticks</span>
+    <span class="kw">if</span> ball[<span class="st">"vy"</span>] &lt; <span class="nu">0</span>:
+        <span class="kw">return</span>
+
+    <span class="kw">if</span> <span class="kw">not</span> <span class="fn">overlaps</span>(ball, bat):
+        <span class="kw">return</span>
+
+    ball[<span class="st">"y"</span>] = bat[<span class="st">"y"</span>] - ball[<span class="st">"h"</span>]
+    ball[<span class="st">"vy"</span>] = -ball[<span class="st">"vy"</span>]
+
+    hit = (ball[<span class="st">"x"</span>] + ball[<span class="st">"w"</span>] / <span class="nu">2</span>) - (bat[<span class="st">"x"</span>] + bat[<span class="st">"w"</span>] / <span class="nu">2</span>)
+    ball[<span class="st">"vx"</span>] = (hit / (bat[<span class="st">"w"</span>] / <span class="nu">2</span>)) * BALL_SPEED</pre></div>
+    </details>
+
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make the ball speed up.</strong> Every time it hits the bat, multiply both speeds by 1.02. A rally that goes on gets steadily more frightening, which is how the arcade ones kept your money.</p>
+      <p>You will need a ceiling on it or it eventually goes through walls. Stop it climbing past about three times where it started.</p>
+      <p><strong>Then make the bat shrink</strong> by a few pixels each time too. Nothing in the aiming sums breaks when you do, because every one of them uses <code>bat["w"]</code> rather than the number 110.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>The ball sticks to the bat and buzzes</b>
+        <span>The <code>if ball["vy"] &lt; 0: return</code> check is missing, so it flips on every frame it is touching.</span>
+      </div>
+      <div class="err">
+        <b>The ball goes straight up and down forever and you cannot get out of it</b>
+        <span>You are hitting the exact middle of the bat every time, which asks for <code>vx</code> of exactly 0 &mdash; the aiming working perfectly. Move the bat a little as you hit it.</span>
+      </div>
+      <div class="err">
+        <b>The ball passes through the bat when moving fast</b>
+        <span>In one frame it went from above the bat to below it without ever overlapping. Slow the ball down, or make the bat taller.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'overlaps' is not defined</b>
+        <span>It needs to be in <code>state.py</code> and imported into <code>main.py</code> if you call it there.</span>
+      </div>
+      <div class="err">
+        <b>The ball bounces off the bat's sides as well as its top</b>
+        <span>That is what <code>overlaps</code> honestly reports &mdash; it does not know which side. It rarely matters for a bat, and it very much will matter for bricks, which is Session 25.</span>
+      </div>
+      <div class="err">
+        <b>The ball bounces but always at the same angle</b>
+        <span>The <code>hit</code> lines are missing, or <code>vx</code> is being set before <code>vy</code> is flipped. Order does not matter for these two, but both have to be there.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

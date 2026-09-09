@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" data-session="10">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 10 &middot; It Moves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 10</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 2 &middot; Motion &amp; Time</span>
+    </div>
+    <h1>It Moves</h1>
+    <p class="standfirst">Everything so far has sat perfectly still. Today it stops doing that.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A box that slides across the window. It'll run straight off the edge and never come back &mdash; that's expected, and you'll fix it in Session 12.</p>
+    <p class="caption">It also picks up the two halves every game is built from: one that works out what happens next, and one that draws it.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>A function is a named set of instructions</strong> you can run whenever you like. <code>def update(x, y):</code> makes one called <code>update</code>. Writing <code>update(box_x, box_y)</code> further down runs it.</p>
+      <p>There are two functions in this file and they have completely different jobs.</p>
+      <p><strong><code>update</code> changes the state of the game</strong> &mdash; where everything is, how fast it is going, what has bumped into what. It moves the world on by one step and touches nothing you can see.</p>
+      <p><strong><code>draw</code> takes that state and paints one frame of it</strong> &mdash; a single picture of how the world looks right now &mdash; onto the screen. It only reads the state &mdash; it never changes it.</p>
+      <p>Neither one does the other's job. Ever.</p>
+      <p>That sounds fussy right now, with one box. By the time there's a player, spikes, music and a level, it's the thing that stops the whole program turning into spaghetti. Real games are built exactly like this.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 6 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 10</code>. The box slides right and leaves. It's gone for good &mdash; there's nothing out there.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Find <code>def update(x, y):</code>. Those three lines are the entire reason it moves.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>STEP</code> to 1, run it, then to 20, run it again.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Make <code>STEP</code> negative &mdash; <code>-4</code>. Which way does it go? Change <code>box_x</code> so it starts somewhere you can actually see it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Make it travel diagonally. <code>update</code> already gets <code>y</code> &mdash; it just never changes it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Read <code>draw</code> and check: does it change <code>x</code> or <code>y</code> anywhere? It should not &mdash; it only reads them. Keep it that way.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>STEP = 4</kbd><span>Pixels per frame. At 60 frames a second that's 240 pixels a second, though nothing in the code says so yet. Remember that for next time.</span></div>
+      <div class="knobrow"><kbd>FPS = 60</kbd><span>Frames per second. Try 10 &mdash; the box gets slower <em>and</em> juddery. That's two different problems and they're both fixed next session.</span></div>
+      <div class="knobrow"><kbd>box_x = 100</kbd><span>Where it starts. Try <code>-200</code> and watch it arrive from off-screen.</span></div>
+      <div class="knobrow"><kbd>BOX_SIZE = 40</kbd><span>Still just a rectangle. It'll be a cube with a face eventually.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; how do I make it go diagonally?</summary>
+      <div class="hint"><code>update</code> already has <code>y</code> handed to it, and already hands it back. All that's missing is a line that changes it on the way through &mdash; the same shape as the line that changes <code>x</code>.</div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what does "return" mean?</summary>
+      <div class="hint">
+        <p><code>update</code> works on its own private copies of <code>x</code> and <code>y</code>. Changing them inside doesn't touch <code>box_x</code> and <code>box_y</code> outside &mdash; so at the end it <code>return</code>s them, and the line that called it catches them:</p>
+        <p><code>box_x, box_y = update(box_x, box_y)</code></p>
+        <p>Delete that <code>box_x, box_y =</code> at the front and the box stops moving. Try it, then put it back.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># diagonal, down and to the right</span>
+
+STEP_X = <span class="nu">4</span>
+STEP_Y = <span class="nu">2</span>
+
+
+<span class="kw">def</span> <span class="fn">update</span>(x, y):
+    x = x + STEP_X
+    y = y + STEP_Y
+    <span class="kw">return</span> x, y</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Send it corner to corner.</strong> Make the box start at the bottom-left of the window and travel exactly to the top-right, leaving the screen right at the corner.</p>
+      <p>You'll need to think about what <code>y</code> has to do to go <em>up</em>, and you'll need the two step sizes to be in the right proportion to each other. Getting it dead-on is properly satisfying.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>The box leaves a smear behind it like a paint roller</b>
+        <span><code>screen.fill(BG)</code> got deleted from <code>draw</code>. Without it you're painting on top of the last frame instead of starting clean. Worth looking at for a second before you fix it &mdash; that smear is every frame you've drawn so far.</span>
+      </div>
+      <div class="err">
+        <b>Nothing moves at all</b>
+        <span>The result of <code>update</code> isn't being caught. The line needs to be <code>box_x, box_y = update(box_x, box_y)</code> &mdash; with the catching part at the front.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: update() takes 2 positional arguments but 3 were given</b>
+        <span>You're handing <code>update</code> more things than it has slots for. The brackets on the <code>def</code> line and the brackets where you call it have to match.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'STEP_Y' is not defined</b>
+        <span>You used it before you made it. Python reads top to bottom &mdash; it has to exist above the line that uses it.</span>
+      </div>
+      <div class="err">
+        <b>The box vanishes instantly</b>
+        <span><code>STEP</code> is enormous, so it crosses the whole window in one or two frames. Not broken, just very fast.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Arkanoid - all the numbers, in one place
+
+WIDTH = 800
+HEIGHT = 560
+FPS = 60
+
+BG = (12, 13, 26)
+
+BAT_W = 110
+BAT_H = 16
+BAT_Y = HEIGHT - 50
+BAT_COLOUR = (61, 225, 225)
+BAT_SPEED = 520
+
+BALL_SIZE = 12
+BALL_COLOUR = (255, 194, 75)
+BALL_SPEED = 340
+
+TEXT_COLOUR = (230, 230, 245)
+TEXT_SIZE = 28

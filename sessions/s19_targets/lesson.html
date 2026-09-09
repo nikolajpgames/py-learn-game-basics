@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" data-session="19">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 19 &middot; Something To Shoot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 19</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 3 &middot; Shooter</span>
+    </div>
+    <h1>Something To Shoot</h1>
+    <p class="standfirst">There are targets on screen now, drifting along the top. Your shots go straight through them, which is not much of a game.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Seven targets that bounce along the top of the screen and vanish when you hit them, taking the shot with them.</p>
+    <p class="caption">The four checks you wrote in Session 14 finally get a job.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Things need to know their own size.</strong> Back in Session 14 every box was <code>BOX_SIZE</code> across, so the checking function could just use that. A shot is 4 wide and a target is 44, so that will not do any more &mdash; each one carries its own <code>w</code> and <code>h</code>, and the checks read those instead.</p>
+      <p><strong>Which makes <code>overlaps</code> work on anything.</strong> Shot against target, ship against target, anything against anything &mdash; as long as both have an <code>x</code>, a <code>y</code>, a <code>w</code> and an <code>h</code>, the same function answers.</p>
+      <p><strong>And a hit removes two things at once.</strong> You cannot take either of them out of its list while you are looping, so mark them first and clear them out afterwards &mdash; the same "keep the ones you want" pattern as last session, run twice.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 19</code>. Seven pink targets bouncing along the top. Shoot at them &mdash; the shots sail straight through.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Look at <code>make_targets</code> in <code>state.py</code>. Each target already carries a <code>"w"</code> and an <code>"h"</code> of its own. Shots do not yet.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Give shots their size too.</strong> In <code>make_shot</code>, add <code>"w": SHOT_W</code> and <code>"h": SHOT_H</code> to the dict.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Write <code>overlaps</code></strong> where <code>state.py</code> says YOUR COLLISION CHECK GOES HERE. It is the one from Session 14, with <code>BOX_SIZE</code> swapped for each thing's own size:<br><code>if a["x"] + a["w"] &lt; b["x"]:</code><br><span class="steplet">That, three more like it, and <code>return True</code> at the end.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Find the hits.</strong> In <code>main.py</code>, where it says NOTHING NOTICES A HIT YET, check every shot against every target, and when one overlaps, mark them both:<br><code>shot["hit"] = True</code><br><code>target["hit"] = True</code><br><span class="steplet">Just marking. Do not try to remove anything inside these loops.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Then clear them out.</strong> Underneath, build a list of the shots without a <code>"hit"</code> in them and put it back in <code>shots</code>. Then do exactly the same for <code>targets</code>. <code>if "hit" not in shot:</code> asks whether that key was ever added.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it and clear the screen. When the last target goes, nothing happens at all &mdash; which is next session's problem.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>TARGET_COUNT = 7</kbd><span>Try 40 and see how quickly the screen fills. They are allowed to overlap each other &mdash; nothing checks targets against targets.</span></div>
+      <div class="knobrow"><kbd>TARGET_SPEED = 110</kbd><span>How fast they drift. At 600 they are genuinely hard to hit.</span></div>
+      <div class="knobrow"><kbd>TARGET_W = 44</kbd><span>Wide targets are easy; narrow ones are not. Try 8 and see how much the shot's own width starts to matter.</span></div>
+      <div class="knobrow"><kbd>randint(20, 160)</kbd><span>In <code>make_targets</code> &mdash; the band of the screen they start in. Widen it to <code>(20, 300)</code> and some come uncomfortably close.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why mark them instead of removing them?</summary>
+      <div class="hint">
+        <p>Because you are inside two loops, both walking lists, and taking something out of either one mid-walk is the bug from last session &mdash; twice over.</p>
+        <p>So the job splits in two. First pass: find out what got hit, and write it down on the thing itself. Second pass: build the lists again without them.</p>
+        <p>That "decide first, act afterwards" shape turns up constantly once games get bigger. It is nearly always the way out of "I cannot change this while I am looking at it".</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what does "hit" not in shot mean?</summary>
+      <div class="hint">
+        <p>It asks whether that dict has a key called <code>"hit"</code> at all.</p>
+        <p>Shots are built without one. The only way a shot gets a <code>"hit"</code> is if the collision code put it there &mdash; so its presence <em>is</em> the mark. No key means it survived.</p>
+        <p>You could equally give every shot <code>"hit": False</code> when it is made and check <code>if not shot["hit"]:</code>. Both are fine. The second is probably tidier; the first is less typing.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; one shot is killing several targets</summary>
+      <div class="hint">If a shot is wide enough, or targets are overlapping each other, one shot can be on top of two at once and both get marked. That is a real choice, not a bug &mdash; if you would rather one shot only ever took one target, stop checking that shot as soon as it hits something.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># state.py</span>
+
+<span class="kw">def</span> <span class="fn">overlaps</span>(a, b):
+    <span class="kw">if</span> a[<span class="st">"x"</span>] + a[<span class="st">"w"</span>] &lt; b[<span class="st">"x"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> b[<span class="st">"x"</span>] + b[<span class="st">"w"</span>] &lt; a[<span class="st">"x"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> a[<span class="st">"y"</span>] + a[<span class="st">"h"</span>] &lt; b[<span class="st">"y"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> b[<span class="st">"y"</span>] + b[<span class="st">"h"</span>] &lt; a[<span class="st">"y"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="kw">True</span>
+
+
+<span class="cm"># main.py, in the game loop</span>
+
+    <span class="kw">for</span> shot <span class="kw">in</span> shots:
+        <span class="kw">for</span> target <span class="kw">in</span> targets:
+            <span class="kw">if</span> <span class="fn">overlaps</span>(shot, target):
+                shot[<span class="st">"hit"</span>] = <span class="kw">True</span>
+                target[<span class="st">"hit"</span>] = <span class="kw">True</span>
+
+    kept_shots = []
+    <span class="kw">for</span> shot <span class="kw">in</span> shots:
+        <span class="kw">if</span> <span class="st">"hit"</span> <span class="kw">not</span> <span class="kw">in</span> shot:
+            kept_shots.<span class="fn">append</span>(shot)
+    shots = kept_shots
+
+    kept_targets = []
+    <span class="kw">for</span> target <span class="kw">in</span> targets:
+        <span class="kw">if</span> <span class="st">"hit"</span> <span class="kw">not</span> <span class="kw">in</span> target:
+            kept_targets.<span class="fn">append</span>(target)
+    targets = kept_targets</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make targets take two hits.</strong> Give each one a <code>"health"</code> of 2 when it is built. A hit takes one off instead of marking it, and only when it reaches 0 does the target go.</p>
+      <p>Make the damaged ones look damaged &mdash; a different colour, or drawn hollow using the outline trick from Session 15.</p>
+      <p>Then, if you want it to be an actual game: <strong>make the targets drift downwards as well as sideways</strong>, slowly. Now there is a reason to hurry.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>KeyError: 'w'</b>
+        <span>Shots do not have a <code>"w"</code> yet. <code>make_shot</code> needs the two new keys &mdash; and shots fired before you added them are long gone, so a restart clears it.</span>
+      </div>
+      <div class="err">
+        <b>Nothing ever gets hit</b>
+        <span>Check the collision loops are actually running &mdash; and that they sit <em>after</em> the shots and targets have moved this frame, not before.</span>
+      </div>
+      <div class="err">
+        <b>Targets vanish the moment the game starts</b>
+        <span>The <code>overlaps</code> checks are the wrong way round, so it returns <code>True</code> for things that are nowhere near each other. Compare each one carefully against Session 14's.</span>
+      </div>
+      <div class="err">
+        <b>The shot disappears but the target survives</b>
+        <span>Only one of the two <code>"hit"</code> marks is being set, or only one of the two clear-out loops was written.</span>
+      </div>
+      <div class="err">
+        <b>RuntimeError: dictionary changed size during iteration</b>
+        <span>Something is being removed inside the checking loops. Mark first, clear afterwards.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: draw() takes 4 positional arguments but 5 were given</b>
+        <span><code>draw</code> needs a slot for the targets. Both ends together, as ever.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

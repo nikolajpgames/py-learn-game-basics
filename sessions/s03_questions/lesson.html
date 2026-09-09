@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-session="3">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 3 &middot; Asking Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 3</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 0 &middot; Getting Started</span>
+    </div>
+    <h1>Asking Questions</h1>
+    <p class="standfirst">Up to now the computer has done every line, every time. Now it gets to choose.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A program that reacts. High score? Say well done. No lives left? Game over. Same file, different output depending on the numbers.</p>
+    <p class="caption">The bouncing box in Session 12 is four of these questions, one after another.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong><code>if</code> asks a question</strong>, and the lines underneath only run when the answer is yes. <code>else</code> covers the no.</p>
+      <p><strong>The indent is what decides which lines belong to the question.</strong> Most languages use curly brackets for this. Python uses <em>spaces</em>, which are invisible &mdash; so the shape of your code isn't decoration, it's the actual meaning.</p>
+      <p>Push a line in by four spaces and it's inside. Leave it against the left edge and it always runs.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 250" role="img" font-family="JetBrains Mono, ui-monospace, monospace"
+           aria-label="A code example showing that indented lines belong to an if statement. The four spaces at the start of two print lines are highlighted. Those two lines are marked as inside the if, running only when the answer is yes. A final unindented line is marked as outside, always running.">
+
+        <defs>
+          <marker id="ind-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c1, #3DE1E1)"/>
+          </marker>
+        </defs>
+
+        <!-- the invisible thing, made visible -->
+        <rect x="48" y="92" width="36" height="56" fill="var(--c3, #FFC24B)" opacity="0.30"/>
+        <text x="66" y="166" font-size="11" text-anchor="middle" fill="var(--c3, #FFC24B)">4 spaces</text>
+
+        <!-- the code -->
+        <text x="48"  y="42"  font-size="15" fill="currentColor">score = 150</text>
+        <text x="48"  y="82"  font-size="15" fill="var(--ink)">if score &gt; 100:</text>
+        <text x="84"  y="112" font-size="15" fill="var(--ink)">print("High score!")</text>
+        <text x="84"  y="140" font-size="15" fill="var(--ink)">print("Well done.")</text>
+        <text x="48"  y="196" font-size="15" fill="currentColor">print("This always runs.")</text>
+
+        <!-- inside -->
+        <line x1="310" y1="96" x2="310" y2="146" stroke="var(--c2, #F857C1)" stroke-width="2"/>
+        <line x1="310" y1="96"  x2="318" y2="96"  stroke="var(--c2, #F857C1)" stroke-width="2"/>
+        <line x1="310" y1="146" x2="318" y2="146" stroke="var(--c2, #F857C1)" stroke-width="2"/>
+        <text x="328" y="116" font-size="12.5" font-weight="700" fill="var(--c2, #F857C1)">INSIDE the question</text>
+        <text x="328" y="134" font-size="12" fill="currentColor">runs only when the answer is yes</text>
+
+        <!-- outside -->
+        <line x1="296" y1="192" x2="318" y2="192" stroke="var(--c1, #3DE1E1)" stroke-width="2"
+              marker-end="url(#ind-arrow)"/>
+        <text x="328" y="188" font-size="12.5" font-weight="700" fill="var(--c1, #3DE1E1)">OUTSIDE</text>
+        <text x="328" y="206" font-size="12" fill="currentColor">runs every single time</text>
+
+      </svg>
+      <figcaption><strong>Spaces are not decoration.</strong> The four spaces at the start of a line are the only thing telling Python that line belongs to the <code>if</code> above it. Take them away and the line escapes the question &mdash; it will then run whatever the answer was.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 3</code>. Four lines come out.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>score</code> to 50 and run it again. Two of those lines have vanished &mdash; the two inside the question.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Notice the <em>"This line is NOT indented"</em> line survived both times. That's the whole lesson in one line of output.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Now delete the four spaces in front of <code>print("  Well done.")</code> so it sits against the left edge. Run it with <code>score</code> at 50. It appears &mdash; even though the answer was no.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Put those four spaces back.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>lives</code> to 3 and run it. The <code>else</code> half is skipped instead.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>score &gt; 100</code> to <code>score &lt; 100</code> and predict the output <em>before</em> you run it.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>score = 150</kbd><span>The number the question gets asked about. Try 100 exactly &mdash; is 100 greater than 100? Find out.</span></div>
+      <div class="knobrow"><kbd>&gt; &lt; &gt;= &lt;= == !=</kbd><span>Greater, less, greater-or-equal, less-or-equal, <em>the same as</em>, and <em>not the same as</em>. Swap them around and see.</span></div>
+      <div class="knobrow"><kbd>lives = 0</kbd><span>Flips which half of the <code>if</code>/<code>else</code> happens.</span></div>
+      <div class="knobrow"><kbd>the four spaces</kbd><span>The most powerful knob on this page. Adding or removing them moves a line in or out of the question.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why is it == and not = ?</summary>
+      <div class="hint">
+        <p>They're two completely different jobs that unfortunately look alike.</p>
+        <p><code>=</code> means <em>put this in that box</em>. <code>score = 100</code> changes the score.</p>
+        <p><code>==</code> means <em>is this the same as that?</em> <code>score == 100</code> changes nothing and just answers yes or no.</p>
+        <p>Getting them the wrong way round is a rite of passage. Everyone does it, forever.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; how many spaces should I use?</summary>
+      <div class="hint">Four. It doesn't strictly have to be four, but everyone uses four and being consistent is what actually matters &mdash; mixing four and three in the same block is an error. Your editor's Tab key will usually do four for you.</div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; what is True and False?</summary>
+      <div class="hint">
+        <p>A question's answer. Put <code>print(score &gt; 100)</code> in your file and run it &mdash; you'll get <code>True</code> or <code>False</code> printed out, nothing else.</p>
+        <p>That's all <code>if</code> is doing: working the question out to <code>True</code> or <code>False</code>, then running the indented lines if it was <code>True</code>. Both need a capital letter.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 4 &mdash; does indenting hide a variable?</summary>
+      <div class="hint">
+        <p>No &mdash; and this one catches out people who have used other languages.</p>
+        <p>Indenting <em>groups</em> lines so Python knows which belong to the question. It does not build a private room. Anything made inside an <code>if</code> is still there afterwards:</p>
+        <pre><span class="kw">if</span> score &gt; <span class="nu">100</span>:
+    message = <span class="st">"well done"</span>
+
+<span class="fn">print</span>(message)   <span class="cm"># works fine, it is still here</span></pre>
+        <p>The same goes for <code>for</code> and <code>while</code>. In Python only a <strong>function</strong> makes a private area, and that is Session 5.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre>score = <span class="nu">150</span>
+lives = <span class="nu">2</span>
+
+<span class="kw">if</span> score &gt; <span class="nu">100</span>:
+    <span class="fn">print</span>(<span class="st">"High score!"</span>)
+
+<span class="kw">if</span> lives &gt; <span class="nu">0</span>:
+    <span class="fn">print</span>(<span class="st">"Still alive."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Game over."</span>)
+
+<span class="fn">print</span>(<span class="st">"Thanks for playing."</span>)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make it ask you a question.</strong> Add this line near the top:</p>
+      <p><code>answer = input("What is 6 times 7? ")</code></p>
+      <p>Then check it with <code>if answer == "42":</code> and print something different for right and wrong. Careful &mdash; <code>input</code> always hands back <em>words</em>, never a number, so the 42 needs its quotes.</p>
+      <p>Get that working and you've written a quiz. Add three more questions and a score that goes up.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>IndentationError: expected an indented block</b>
+        <span>You wrote an <code>if</code> line but the line under it isn't pushed in. An <code>if</code> has to have something inside it.</span>
+      </div>
+      <div class="err">
+        <b>IndentationError: unindent does not match any outer indentation level</b>
+        <span>The indents are inconsistent &mdash; four spaces on one line, three or five on the next. Line the left edges up exactly.</span>
+      </div>
+      <div class="err">
+        <b>SyntaxError: expected ':'</b>
+        <span>The colon on the end of the <code>if</code> line is missing. <code>if score &gt; 100</code> needs to be <code>if score &gt; 100:</code></span>
+      </div>
+      <div class="err">
+        <b>SyntaxError: invalid syntax. Maybe you meant '==' instead of '='?</b>
+        <span>Python has guessed correctly &mdash; you wrote one equals sign in a question. It wants two.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: '&gt;' not supported between instances of 'str' and 'int'</b>
+        <span>You're comparing words to a number. If it came from <code>input</code>, it's words &mdash; compare it against <code>"100"</code> with quotes, or convert it with <code>int(answer)</code>.</span>
+      </div>
+      <div class="err">
+        <b>A line runs when it shouldn't</b>
+        <span>It isn't indented, so it was never inside the question. Look at the left edge, not the words.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

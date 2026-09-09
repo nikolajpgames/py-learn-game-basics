@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" data-session="16">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 16 &middot; Your Ship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 16</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 3 &middot; Shooter</span>
+    </div>
+    <h1>Your Ship</h1>
+    <p class="standfirst">Fifteen sessions in, and nothing you have made has ever done what you told it to. That changes now.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A ship at the bottom of a starfield that you steer left and right with the arrow keys, and that cannot be driven off the edge of the screen.</p>
+    <p class="caption">The stars are the ones from Session 9. They have been sitting in a folder waiting for a use.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong><code>pygame.key.get_pressed()</code> tells you which keys are held down right now.</strong> It hands back something you can ask about any key: <code>keys[pygame.K_LEFT]</code> is <code>True</code> while the left arrow is down and <code>False</code> the moment it comes up.</p>
+      <p><strong>You check it every frame</strong>, in the game loop, sixty times a second. So holding a key means moving a little bit, sixty times a second, which adds up to smooth movement.</p>
+      <p><strong>But the keyboard is a pygame thing, and <code>state.py</code> does not do pygame.</strong> So <code>main.py</code> reads the keys and works out one number &mdash; &minus;1 for left, 1 for right, 0 for neither &mdash; and hands that to <code>update_ship</code>. The rules of the world get told <em>which way</em>, never <em>which key</em>.</p>
+      <p>That is worth more than it looks. Swap the arrows for A and D, or a gamepad, or make the ship follow the mouse, and only one line in one file changes.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 16</code>. Stars, and a cyan ship sitting still at the bottom. Press the arrow keys &mdash; nothing happens yet.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Open all four files and have a quick look at each. Four short files instead of one long one, exactly as you left them last session.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>main.py</code>, read the keyboard.</strong> Find the block marked WHICH WAY IS THE PLAYER PUSHING and replace the <code>direction = 0</code> line with:<br><code>keys = pygame.key.get_pressed()</code><br><code>direction = 0</code><br><code>if keys[pygame.K_LEFT]:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;direction = -1</code><br><code>if keys[pygame.K_RIGHT]:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;direction = 1</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it. Steer the ship left and right. It goes exactly where you tell it, for as long as you hold the key.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Drive it off the left edge and keep going. It is still there, quietly, thousands of pixels away. Come back if you can be bothered.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Stop it escaping.</strong> In <code>state.py</code>, at the end of <code>update_ship</code>, add two checks: if <code>ship["x"]</code> is less than 0, set it to 0. If <code>ship["x"] + SHIP_W</code> is more than <code>WIDTH</code>, set it to <code>WIDTH - SHIP_W</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it and hold left. The ship stops dead at the wall instead of sailing past it. Now add <code>K_a</code> and <code>K_d</code> as well, so both sets of keys work.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">In <code>config.py</code>, as always.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>SHIP_SPEED = 420</kbd><span>Pixels per second, so it means the same thing on any computer. Try 100 for something that feels like a barge, and 2000 for something unplayable.</span></div>
+      <div class="knobrow"><kbd>SHIP_W = 46</kbd><span>How wide the ship is. Make it 400 and see the edge-stopping still work perfectly &mdash; that is because you wrote <code>WIDTH - SHIP_W</code> rather than a fixed number.</span></div>
+      <div class="knobrow"><kbd>STAR_COUNT = 140</kbd><span>Space gets crowded fast. 2000 is a nebula.</span></div>
+      <div class="knobrow"><kbd>SHIP_COLOUR</kbd><span>Three numbers. Make it the same as <code>BG</code> and steer an invisible ship around by feel.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what does get_pressed() actually give me?</summary>
+      <div class="hint">
+        <p>A long row of <code>True</code> and <code>False</code> values, one for every key on the keyboard, describing this exact moment.</p>
+        <p>You look a key up by name: <code>keys[pygame.K_LEFT]</code>, <code>keys[pygame.K_SPACE]</code>, <code>keys[pygame.K_a]</code>. Those <code>K_</code> names are pygame's numbers for the keys, and there is one for everything.</p>
+        <p>It has to be called fresh every frame. Call it once before the loop and you get a snapshot of one instant, frozen forever.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; why not just move the ship in main.py?</summary>
+      <div class="hint">
+        <p>You could. It would work today.</p>
+        <p>But <code>update_ship</code> is where the rules live, and rules are worth keeping in one place. Right now it is one line; by the end of the arc it will also stop the ship at the walls and remember whether it is alive.</p>
+        <p>Handing it a plain number rather than the keyboard is what keeps it that way. The function does not care whether the player pressed an arrow, leaned a joystick, or whether you are testing it with <code>update_ship(ship, -1, 0.016)</code> and no keyboard at all.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; holding both arrows does something odd</summary>
+      <div class="hint">
+        <p>It goes right. Look at the order the two <code>if</code>s run in: left sets <code>direction</code> to &minus;1, and then right overwrites it with 1.</p>
+        <p>That is not a bug so much as a decision you have accidentally made. If you would rather both-at-once meant "don't move", change the second one to <code>elif</code> &mdash; or work out a way to add them together instead.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># main.py, inside the game loop</span>
+
+    keys = pygame.key.<span class="fn">get_pressed</span>()
+
+    direction = <span class="nu">0</span>
+    <span class="kw">if</span> keys[pygame.K_LEFT] <span class="kw">or</span> keys[pygame.K_a]:
+        direction = <span class="nu">-1</span>
+    <span class="kw">if</span> keys[pygame.K_RIGHT] <span class="kw">or</span> keys[pygame.K_d]:
+        direction = <span class="nu">1</span>
+
+    <span class="fn">update_ship</span>(ship, direction, dt)
+
+
+<span class="cm"># state.py</span>
+
+<span class="kw">def</span> <span class="fn">update_ship</span>(ship, direction, dt):
+    ship[<span class="st">"x"</span>] = ship[<span class="st">"x"</span>] + direction * SHIP_SPEED * dt
+
+    <span class="kw">if</span> ship[<span class="st">"x"</span>] &lt; <span class="nu">0</span>:
+        ship[<span class="st">"x"</span>] = <span class="nu">0</span>
+    <span class="kw">if</span> ship[<span class="st">"x"</span>] + SHIP_W &gt; WIDTH:
+        ship[<span class="st">"x"</span>] = WIDTH - SHIP_W</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make the stars drift downwards</strong>, so it looks like the ship is flying forwards. A star that falls off the bottom comes back on at the top, at a new random x.</p>
+      <p>The stars are tuples, and tuples cannot be changed &mdash; so this is the moment they need to become something else. Dicts, most likely.</p>
+      <p>If you want it to look properly good: give each star its own speed as well, slow ones and fast ones mixed together. Distant things move slowly and near things move quickly, and your eye reads that as depth without being told.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>The ship does not move at all</b>
+        <span><code>keys = pygame.key.get_pressed()</code> is outside the loop, so it was read once at the start and never again. It has to be inside, running every frame.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'keys' is not defined</b>
+        <span>The <code>get_pressed</code> line is missing, or sits below the lines that use it. Python reads top to bottom.</span>
+      </div>
+      <div class="err">
+        <b>AttributeError: module 'pygame' has no attribute 'K_Left'</b>
+        <span>Capitals matter: it is <code>K_LEFT</code>, shouting. Same for <code>K_RIGHT</code>, <code>K_SPACE</code>.</span>
+      </div>
+      <div class="err">
+        <b>The ship jumps across the screen instead of gliding</b>
+        <span>The <code>* dt</code> has gone missing, so it is moving 420 pixels every frame rather than every second.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'SHIP_W' is not defined &mdash; in state.py</b>
+        <span>That file needs its own <code>from config import *</code>. Files do not share what they have borrowed.</span>
+      </div>
+      <div class="err">
+        <b>The ship stops before the edge, or hangs over it</b>
+        <span><code>ship["x"]</code> is the ship's <em>left</em> side. To keep its right side on screen you have to compare <code>ship["x"] + SHIP_W</code> against <code>WIDTH</code>, the same as the boxes bouncing off walls.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" data-session="26">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 26 &middot; Three Lives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 26</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 4 &middot; Arkanoid</span>
+    </div>
+    <h1>Three Lives</h1>
+    <p class="standfirst">The ball falls past the bat, off the bottom, and keeps going forever. Nothing notices, and nothing ever ends.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Three lives, a ball that comes back when you lose one, and a game that finishes when you run out.</p>
+    <p class="caption">All of it is Session 20's state machine, applied to a different game.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Nothing new.</strong> A counter, a check, and the <code>mode</code> variable from Session 20 &mdash; the same three things, wearing different clothes.</p>
+      <p><strong>Losing the ball is one <code>if</code>.</strong> When the ball's <code>y</code> is past the bottom of the screen it has gone: take a life, and make a new ball.</p>
+      <p><strong>And when the lives run out, the mode changes.</strong> Everything stops moving, a message appears, and a key starts it over. Exactly the shape you built for the shooter.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 26</code>. Miss on purpose and watch the ball leave. Nothing happens.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>main.py</code>,</strong> before the loop, add <code>lives = START_LIVES</code> and <code>mode = "playing"</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">After the brick code, catch the lost ball:<br><code>if ball["y"] &gt; HEIGHT:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;lives = lives - 1</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;ball = make_ball()</code><br><span class="steplet">A brand new ball rather than moving the old one &mdash; <code>make_ball</code> already knows where a ball starts and how fast it goes.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Underneath that, <code>if lives == 0:</code> set <code>mode = "over"</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Make the mode do something.</strong> Wrap all the moving and hitting in <code>if mode == "playing":</code>. Everything freezes when it is over.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Show the numbers.</strong> Add the font to <code>render.py</code> as you did in Session 20 &mdash; <code>pygame.font.init()</code> and then the font itself &mdash; and draw <code>f"LIVES {lives}"</code> in a corner. Pass <code>lives</code> and <code>mode</code> into <code>draw</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">When <code>mode</code> is <code>"over"</code>, draw a message in the middle of the screen.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Let them try again.</strong> In the event loop, if the mode is <code>"over"</code> and R is pressed, reset the lives, the bricks, the ball and the mode. Lose three times and start again.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>START_LIVES = 3</kbd><span>The traditional number, for no reason anybody remembers. Try 1 for something tense and 10 for something relaxing.</span></div>
+      <div class="knobrow"><kbd>ball["y"] &gt; HEIGHT</kbd><span>Where the ball counts as lost. Use <code>&gt; BAT_Y</code> instead and you lose it the moment it passes the bat, which feels much harsher.</span></div>
+      <div class="knobrow"><kbd>make_ball()</kbd><span>The new ball always starts in the same place going the same way. Give it a random <code>vx</code> and no two lives start alike.</span></div>
+      <div class="knobrow"><kbd>mode</kbd><span>Add a <code>"paused"</code> mode and a key to toggle it. Nothing moves, nothing resets, and it is about four lines.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why make a new ball instead of moving the old one?</summary>
+      <div class="hint"><p>Because <code>make_ball()</code> already knows everything about where a ball starts &mdash; position, size, speed, direction. Moving the old one means setting all six of those by hand and remembering to reset the speeds as well.</p><p>Throwing the old one away and asking for a fresh one is less code and cannot get half-done.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what exactly should stop when the game is over?</summary>
+      <div class="hint"><p>The moving and the hitting. Not the drawing, and not the event loop.</p><p>Drawing has to keep going or the window goes blank. The event loop has to keep going or you cannot press R, or close the window.</p><p>So <code>if mode == "playing":</code> wraps the updates and the collisions, and nothing else.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; the restart only half works</summary>
+      <div class="hint"><p>Count what a new game needs: fresh bricks, a fresh ball, the lives back to full, and the mode back to <code>"playing"</code>. Miss any one and it goes wrong in its own way &mdash; no bricks, or instantly over again.</p><p>Four lines together in one place. If that feels repetitive, that is a fair instinct: it is the sort of thing that eventually becomes a <code>start_game()</code> function.</p></div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint"><pre><span class="cm"># main.py</span>
+
+lives = START_LIVES
+mode = <span class="st">"playing"</span>
+
+<span class="kw">while</span> running:
+    ...
+        <span class="kw">if</span> event.type == pygame.KEYDOWN:
+            <span class="kw">if</span> event.key == pygame.K_r <span class="kw">and</span> mode == <span class="st">"over"</span>:
+                bricks = <span class="fn">make_bricks</span>()
+                ball = <span class="fn">make_ball</span>()
+                lives = START_LIVES
+                mode = <span class="st">"playing"</span>
+
+    <span class="kw">if</span> mode == <span class="st">"playing"</span>:
+        <span class="fn">update_bat</span>(bat, direction, dt)
+        <span class="fn">update_ball</span>(ball, dt)
+        <span class="fn">bounce_off_bat</span>(ball, bat)
+
+        ...                       <span class="cm"># the brick code</span>
+
+        <span class="kw">if</span> ball[<span class="st">"y"</span>] &gt; HEIGHT:
+            lives = lives - <span class="nu">1</span>
+            ball = <span class="fn">make_ball</span>()
+            <span class="kw">if</span> lives == <span class="nu">0</span>:
+                mode = <span class="st">"over"</span>
+
+    <span class="fn">draw</span>(screen, bat, ball, bricks, lives, mode)</pre></div>
+    </details>
+
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Give them a moment to get ready.</strong> After losing a life, hold the ball still on top of the bat until they press space. Losing a life and instantly having a ball flying at you is a mean way to be treated.</p>
+      <p>That needs a third mode &mdash; <code>"waiting"</code> &mdash; where the bat moves and the ball sits glued to it. Three modes, and the game already feels finished.</p>
+      <p><strong>Then a score.</strong> A brick is worth more the higher up the wall it was, which is how the arcade one did it: the top row is hardest to reach.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>Lives go straight from 3 to 0</b>
+        <span>The check is running every frame while the ball is below the screen, because the new ball is not being made &mdash; or is being made below the bottom edge.</span>
+      </div>
+      <div class="err">
+        <b>The game ends but you cannot restart</b>
+        <span>The R check is inside <code>if mode == "playing":</code>, so it can never run. It belongs in the event loop.</span>
+      </div>
+      <div class="err">
+        <b>Everything freezes including the window</b>
+        <span>The <code>draw</code> call has ended up inside <code>if mode == "playing":</code>. Drawing has to happen whatever the mode.</span>
+      </div>
+      <div class="err">
+        <b>pygame.error: font not initialized</b>
+        <span><code>render.py</code> needs <code>pygame.font.init()</code> before it builds its font, because it gets imported before <code>main.py</code> runs <code>pygame.init()</code>. Same as Session 20.</span>
+      </div>
+      <div class="err">
+        <b>Lives go negative</b>
+        <span>The check is <code>if lives == 0</code> but something is taking one off after that. Test with <code>&lt;= 0</code> if you would rather be safe.</span>
+      </div>
+      <div class="err">
+        <b>The restart gives you no bricks</b>
+        <span><code>make_bricks()</code> is missing from the reset. A fresh game needs all four things put back.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

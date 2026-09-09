@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" data-session="6">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 6 &middot; Your First Window</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 6</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 1 &middot; First Pixels</span>
+    </div>
+    <h1>Your First Window</h1>
+    <p class="standfirst">Every game you've ever played started as an empty rectangle. Here's yours.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A window. It'll be the size you choose, the colour you choose, with your name in the title bar. Nothing will happen inside it yet &mdash; that's Session 7.</p>
+    <p class="caption">Sounds small. It isn't &mdash; every game you go on to make gets painted inside a rectangle like this one.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>A program that doesn't loop is over instantly.</strong> Python reads your file top to bottom, does what it says, and stops. If that's all we did, the window would flash up and vanish in about a thousandth of a second.</p>
+      <p>So we put the last part in a <code>while</code> loop &mdash; "keep doing this over and over until I say stop". That loop runs about 60 times a second, forever, and the window stays.</p>
+      <p>Every game ever made works this way. It's called the <em>game loop</em>, and you already have one.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 6 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Double-click <code>setup.bat</code> in the main folder. It takes a minute. You only ever do this once.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 6</code>. A window should appear. Close it with the X in the corner.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Open <code>main.py</code>. Find <code>(800, 450)</code> &mdash; that's the width and height. Change it to <code>(400, 400)</code> and run it again.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Find <code>screen.fill((20, 22, 34))</code>. Those three numbers are red, green and blue, each from 0 to 255. Make the window bright red.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Find <code>set_caption("Session 6")</code> and put your own name in the quotes. Run it and look at the title bar.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Set the size and colour to whatever you actually want. This is your window now.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">Change a number, run it again. You can't break anything here &mdash; and if you do, we can put it back.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>(800, 450)</kbd><span>Width and height in pixels. Try <code>(200, 700)</code> for a tall skinny window. Try <code>(1, 1)</code> and see what your computer does about it.</span></div>
+      <div class="knobrow"><kbd>(20, 22, 34)</kbd><span>How much <strong>red</strong>, <strong>green</strong> and <strong>blue</strong> light to mix, in that order, each from 0 (off) to 255 (full brightness). <code>(0, 0, 0)</code> is black &mdash; all three off. <code>(255, 255, 255)</code> is white &mdash; all three flat out. <code>(255, 0, 255)</code> is a bright pink that nobody should use on purpose.</span></div>
+      <div class="knobrow"><kbd>clock.tick(60)</kbd><span>The speed limiter, last line inside the loop. Delete it and the loop runs about <strong>ten thousand times a second</strong> instead of sixty, repainting the same colour as fast as it possibly can. Nothing looks any different &mdash; but listen to your computer's fan. Then put it back.</span></div>
+      <div class="knobrow"><kbd>"Session 6"</kbd><span>The text in the title bar. Anything inside the quotes works.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; where do I actually type?</summary>
+      <div class="hint">Right-click <code>main.py</code> and open it with VS Code, or with Notepad if that's easier for now. It's just text. Change it, save it (<code>Ctrl+S</code>), then run it again. Nothing happens until you save.</div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what are the three colour numbers?</summary>
+      <div class="hint">
+        <p>Screens don't have paint. Every colour you have ever seen on one is made by mixing three tiny lights: <strong>red</strong>, <strong>green</strong> and <strong>blue</strong>. That's what people mean by <em>RGB</em>.</p>
+        <p>Each number says how bright that one light is, from <code>0</code> (completely off) to <code>255</code> (as bright as it goes). They're always written in that order, so <code>(255, 0, 0)</code> is pure red, <code>(0, 255, 0)</code> is pure green, and <code>(0, 0, 255)</code> is pure blue.</p>
+        <p>Mixing light doesn't work like mixing paint, which catches people out. Red and green together &mdash; <code>(255, 255, 0)</code> &mdash; gives you <em>yellow</em>. Try it and see.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; which brackets are which?</summary>
+      <div class="hint">Round brackets <code>( )</code> group things together. The colour needs its own set of brackets <em>inside</em> the fill brackets, which is why <code>fill((20, 22, 34))</code> looks like it has too many. It doesn't &mdash; count them.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <p>The comments are stripped out here to keep it short. Leave the ones in your own file alone &mdash; they're there to remind you what each line does.</p>
+        <pre><span class="cm"># Session 6 - Your First Window</span>
+
+<span class="kw">import</span> pygame
+
+pygame.<span class="fn">init</span>()
+
+screen = pygame.display.<span class="fn">set_mode</span>((<span class="nu">600</span>, <span class="nu">600</span>))
+pygame.display.<span class="fn">set_caption</span>(<span class="st">"Made by me"</span>)
+clock = pygame.time.<span class="fn">Clock</span>()
+
+running = <span class="kw">True</span>
+<span class="kw">while</span> running:
+
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            running = <span class="kw">False</span>
+
+    screen.<span class="fn">fill</span>((<span class="nu">255</span>, <span class="nu">40</span>, <span class="nu">40</span>))
+
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="nu">60</span>)
+
+pygame.<span class="fn">quit</span>()</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Match a colour exactly.</strong> Pick any colour from a game you like &mdash; a Geometry Dash background, anything &mdash; and get your window to be that precise colour.</p>
+      <p>To find its three numbers, <strong>search the web for &ldquo;online colour picker&rdquo;</strong>. Loads of free ones will come up. They give you a rainbow to drag around, and show you the red, green and blue values for whatever colour you land on. Copy those three numbers straight into your <code>screen.fill(&hellip;)</code>.</p>
+      <p>If a colour picker gives you something like <code>#3DE1E1</code> instead, that's the same thing written differently &mdash; look for the box marked <strong>RGB</strong> and use those numbers instead.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>ModuleNotFoundError: No module named 'pygame'</b>
+        <span>Either <code>setup.bat</code> hasn't been run yet, or you started the file by double-clicking it instead of using <code>.\run.bat 6</code>. Use the bat file &mdash; it knows where the right Python lives.</span>
+      </div>
+      <div class="err">
+        <b>run.bat : The term 'run.bat' is not recognized&hellip;</b>
+        <span>PowerShell refuses to run a program from the folder you're standing in unless you point straight at it. Put <code>.\</code> on the front: <code>.\run.bat 6</code>. That form works in every Windows terminal, so it's the one worth getting into your fingers.</span>
+      </div>
+      <div class="err">
+        <b>The window says "Not Responding" and won't close</b>
+        <span>The <code>for event</code> block got deleted or broken. Windows needs the program to keep checking its messages, and that block is the checking. Put it back.</span>
+      </div>
+      <div class="err">
+        <b>The window flashes up and disappears</b>
+        <span>Something went wrong with the <code>while</code> loop. Check that <code>running = True</code> is above it and nothing set it to <code>False</code> too early.</span>
+      </div>
+      <div class="err">
+        <b>SyntaxError: unexpected EOF while parsing</b>
+        <span>A bracket got opened and never closed. Python read all the way to the end of the file still waiting for it.</span>
+      </div>
+      <div class="err">
+        <b>Nothing at all happens</b>
+        <span>Check the black window that <code>run.bat</code> opens &mdash; the error message is in there, and it's usually more helpful than it looks.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

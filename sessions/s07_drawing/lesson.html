@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-session="7">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 7 &middot; Drawing By Numbers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 7</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 1 &middot; First Pixels</span>
+    </div>
+    <h1>Drawing By Numbers</h1>
+    <p class="standfirst">You have a window. Now you get to put things in it &mdash; and find out where the computer thinks &ldquo;down&rdquo; is.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Rectangles, circles and lines, anywhere you want them. By the end you'll draw something of your own out of nothing but shapes.</p>
+    <p class="caption">Every game on earth is this, done very fast, with better shapes.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Every pixel has an address: two numbers, <code>x</code> and <code>y</code>.</strong> <code>x</code> is how far across, <code>y</code> is how far down.</p>
+      <p>Here's the part that catches everyone out: <strong>y counts downwards.</strong> The top-left corner is <code>(0, 0)</code>. Going <em>down</em> the screen makes y get <em>bigger</em>. It's upside-down compared to graphs in maths, and it's like that on nearly every computer ever built.</p>
+      <p>So <code>(0, 0)</code> is the top-left, and <code>(800, 450)</code> is the bottom-right corner of your window.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 560 348" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="A diagram of an 800 by 450 game window. The origin, written as 0 comma 0, sits at the top-left corner. The x axis runs to the right along the top; the y axis runs downwards along the left side, so y gets bigger as you move down the screen. A rectangle drawn at 200 across and 120 down is anchored by its top-left corner, and is 160 wide and 90 tall.">
+
+        <defs>
+          <marker id="cd-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+          </marker>
+          <marker id="cd-arrow-y" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c2, #F857C1)"/>
+          </marker>
+        </defs>
+
+        <!-- the window itself -->
+        <rect x="110" y="72" width="410" height="231"
+              fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+
+        <!-- x axis: across the top -->
+        <line x1="110" y1="36" x2="250" y2="36" stroke="currentColor" stroke-width="1.5"
+              marker-end="url(#cd-arrow)"/>
+        <text x="258" y="40" font-size="13" font-weight="700" fill="var(--ink)">x &#8212; across</text>
+
+        <!-- y axis: DOWN the left. the whole point of the picture -->
+        <line x1="84" y1="72" x2="84" y2="212" stroke="var(--c2, #F857C1)" stroke-width="2"
+              marker-end="url(#cd-arrow-y)"/>
+        <text x="74" y="146" font-size="13" font-weight="700" text-anchor="end"
+              fill="var(--c2, #F857C1)">y &#8212; down</text>
+
+        <!-- corners -->
+        <circle cx="110" cy="72" r="4.5" fill="var(--c2, #F857C1)"/>
+        <text x="110" y="62" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--ink)">(0, 0)</text>
+        <text x="520" y="62" font-size="12" text-anchor="end" fill="currentColor">(800, 0)</text>
+        <text x="110" y="322" font-size="12" text-anchor="middle" fill="currentColor">(0, 450)</text>
+        <text x="520" y="322" font-size="12" text-anchor="end" fill="currentColor">(800, 450)</text>
+
+        <!-- how you get to the rectangle: across first, then down -->
+        <line x1="110" y1="134" x2="212" y2="134" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="161" y="150" font-size="12" text-anchor="middle" fill="currentColor">200 across</text>
+
+        <line x1="212" y1="72" x2="212" y2="134" stroke="var(--c2, #F857C1)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="206" y="106" font-size="12" text-anchor="end" fill="var(--c2, #F857C1)">120 down</text>
+
+        <!-- the rectangle you draw -->
+        <rect x="212" y="134" width="82" height="46" fill="var(--c1, #3DE1E1)" opacity="0.9"/>
+        <circle cx="212" cy="134" r="4" fill="var(--ink)"/>
+        <text x="220" y="127" font-size="12.5" font-weight="700" fill="var(--ink)">(200, 120)</text>
+
+        <!-- width -->
+        <line x1="212" y1="194" x2="294" y2="194" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="212" y1="190" x2="212" y2="198" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="294" y1="190" x2="294" y2="198" stroke="currentColor" stroke-width="1.2"/>
+        <text x="253" y="211" font-size="12" text-anchor="middle" fill="currentColor">160 wide</text>
+
+        <!-- height -->
+        <line x1="308" y1="134" x2="308" y2="180" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="304" y1="134" x2="312" y2="134" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="304" y1="180" x2="312" y2="180" stroke="currentColor" stroke-width="1.2"/>
+        <text x="318" y="161" font-size="12" fill="currentColor">90 tall</text>
+
+      </svg>
+      <figcaption><strong>Across first, then down.</strong> Every position is two numbers: how far right, then how far <em>down</em> &mdash; so <code>y</code> gets bigger as you go towards the bottom of the screen. A rectangle is pinned by its <em>top-left</em> corner, which is why <code>pygame.draw.rect</code> wants <code>(x, y, width, height)</code> in that order.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 7</code>. There's a cyan rectangle. Find the line that draws it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">The four numbers are <code>(x, y, width, height)</code>. Change the first one to <code>600</code> and run it. The rectangle moved right.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Now change the <em>second</em> number to <code>300</code>. Which way did it go? Check whether that's the direction you expected.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Make the rectangle very wide and very short &mdash; like a floor to stand on.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a circle underneath the rect line:<br><code>pygame.draw.circle(screen, (248, 87, 193), (400, 200), 50)</code><br>A circle takes a <em>centre point</em> and a radius, not a corner.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a line:<br><code>pygame.draw.line(screen, (255, 194, 75), (0, 0), (800, 450), 3)</code><br>Two points and a thickness. It runs corner to corner.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Now add a <strong>second line going the other way</strong>, so the two together make a big X across the whole window. Every number you need is a corner from the picture further up this page.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Draw something of your own. A house, a face, a spaceship. Shapes only.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">All of today's knobs are the numbers inside the drawing lines.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>rect(x, y, w, h)</kbd><span>Top-left corner, then width and height. Negative width does nothing useful &mdash; try it and see.</span></div>
+      <div class="knobrow"><kbd>circle(&hellip;, r)</kbd><span>The point is the <em>middle</em>, and <code>r</code> is the radius. A radius of 0 draws nothing at all.</span></div>
+      <div class="knobrow"><kbd>line(&hellip;, w)</kbd><span>The last number is thickness. Try 1, try 40.</span></div>
+      <div class="knobrow"><kbd>FPS = 60</kbd><span>How many times a second the loop goes round. Nothing is moving yet, so changing it looks like nothing &mdash; its only job right now is to stop the program running flat out and warming up your computer.</span></div>
+      <div class="knobrow"><kbd>BG = (20, 22, 34)</kbd><span>Still there from Session 6. Try making the background the same colour as a shape and watch the shape vanish.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; my new shape isn't showing up</summary>
+      <div class="hint">Three usual suspects. Is it drawn <em>after</em> <code>screen.fill</code>? (fill paints over everything before it.) Is it the same colour as the background? Is it off the edge of the window &mdash; coordinates bigger than 800 or 450?</div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; which order do the numbers go in?</summary>
+      <div class="hint">
+        <p><code>rect</code> wants a corner and a size: <code>(x, y, width, height)</code>.<br>
+        <code>circle</code> wants a middle and a radius: <code>(x, y), radius</code>.<br>
+        <code>line</code> wants two points: <code>(x1, y1), (x2, y2)</code>.</p>
+        <p>Every one of them takes <code>screen</code> first and the colour second. That never changes.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; where exactly is the middle?</summary>
+      <div class="hint">Half of 800 is 400. Half of 450 is 225. So the centre of your window is <code>(400, 225)</code>. Better still, write <code>(WIDTH // 2, HEIGHT // 2)</code> &mdash; then it stays in the middle even if you resize the window later.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre>    screen.<span class="fn">fill</span>(BG)
+
+    <span class="cm"># ---- YOUR DRAWING GOES HERE ----------------</span>
+    <span class="cm"># ground</span>
+    pygame.draw.<span class="fn">rect</span>(screen, (<span class="nu">61</span>, <span class="nu">225</span>, <span class="nu">225</span>), (<span class="nu">0</span>, <span class="nu">380</span>, <span class="nu">800</span>, <span class="nu">70</span>))
+    <span class="cm"># sun</span>
+    pygame.draw.<span class="fn">circle</span>(screen, (<span class="nu">255</span>, <span class="nu">194</span>, <span class="nu">75</span>), (<span class="nu">660</span>, <span class="nu">90</span>), <span class="nu">45</span>)
+    <span class="cm"># a hill</span>
+    pygame.draw.<span class="fn">line</span>(screen, (<span class="nu">155</span>, <span class="nu">232</span>, <span class="nu">106</span>), (<span class="nu">0</span>, <span class="nu">380</span>), (<span class="nu">300</span>, <span class="nu">200</span>), <span class="nu">4</span>)
+    pygame.draw.<span class="fn">line</span>(screen, (<span class="nu">155</span>, <span class="nu">232</span>, <span class="nu">106</span>), (<span class="nu">300</span>, <span class="nu">200</span>), (<span class="nu">600</span>, <span class="nu">380</span>), <span class="nu">4</span>)
+    <span class="cm"># --------------------------------------------</span></pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Draw the Geometry Dash cube.</strong> A square, two smaller squares for eyes, and a darker square inside for the face. Four or five rectangles, that's all it takes.</p>
+      <p>Get it looking right and don't delete it &mdash; that cube is going to be the thing you're jumping over spikes with around Session 32.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>TypeError: function missing required argument</b>
+        <span>A drawing function didn't get everything it needs. Count the things inside the brackets and compare with the steps above &mdash; something got left out, usually the thickness on a line.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: invalid color argument</b>
+        <span>The colour needs its own brackets and exactly three numbers: <code>(255, 0, 0)</code>. Two numbers or four won't do.</span>
+      </div>
+      <div class="err">
+        <b>The shape is there but the window is one solid colour</b>
+        <span>You drew it, then <code>screen.fill</code> painted right over the top. Drawing has to come after the fill.</span>
+      </div>
+      <div class="err">
+        <b>IndentationError: unexpected indent</b>
+        <span>Your new line doesn't start in the same column as the ones around it. Line the left edges up exactly.</span>
+      </div>
+      <div class="err">
+        <b>The circle is an oval / in the wrong place</b>
+        <span>You gave <code>circle</code> a corner instead of a centre. It wants the middle of the circle.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

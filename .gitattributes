@@ -1,0 +1,9 @@
+# Keep everything as text, normalised in the repo.
+* text=auto
+
+# Windows batch files must arrive with CRLF endings, whatever the
+# cloner's git config says, and however the repo was downloaded.
+*.bat text eol=crlf
+
+# Level maps are read line by line by the game; keep them plain LF.
+*.txt text eol=lf

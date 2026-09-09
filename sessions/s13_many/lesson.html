@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en" data-session="13">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 13 &middot; Fifty Bouncers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 13</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 2 &middot; Motion &amp; Time</span>
+    </div>
+    <h1>Fifty Bouncers</h1>
+    <p class="standfirst">One box needed four separate names. Fifty boxes would need two hundred. You already know how this gets fixed &mdash; you did it to the stars.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Fifty boxes bouncing around at once, all from the same handful of lines that currently move one.</p>
+    <p class="caption">You will add the second one by hand first, which is the last time you will want to do that.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>A dict keeps several named values in one thing.</strong> <code>box = {"x": 100, "y": 60}</code> &mdash; curly brackets, and each value has a <em>name</em> rather than a position. You get at them with <code>box["x"]</code> instead of <code>box[0]</code>, which is a lot easier to read when there are four of them.</p>
+      <p><strong>And unlike a tuple, a dict can be changed.</strong> That is the whole reason for using one here. A bouncing box moves sixty times a second, and a tuple is locked the moment it is made &mdash; so a tuple simply cannot do this job.</p>
+      <p><strong>Which changes what happens when you hand one to a function.</strong> Session 5 showed you a number going in as a copy, with changes staying inside. A dict does not work like that, and the picture below is why.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 236" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Two panels. On the left, a number passed into a function: there are two separate boxes, the outer one still holding ten and the function's own copy holding nine hundred and ninety nine, so the original is unchanged. On the right, a dict passed into a function: there is only one dict, with both the outside name and the inside name pointing at it, so a change made inside is visible outside as well.">
+
+        <defs>
+          <marker id="dc-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c1, #3DE1E1)"/>
+          </marker>
+        </defs>
+
+        <text x="20" y="18" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">A NUMBER GOES IN AS A COPY</text>
+        <rect x="20" y="28" width="285" height="164" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+
+        <text x="38"  y="58" font-size="11" font-weight="700" letter-spacing="1.1" fill="currentColor">OUTSIDE</text>
+        <rect x="38"  y="68" width="96" height="34" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="86"  y="90" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">10</text>
+
+        <text x="180" y="58" font-size="11" font-weight="700" letter-spacing="1.1" fill="var(--c2, #F857C1)">INSIDE</text>
+        <rect x="180" y="68" width="96" height="34" fill="none" stroke="var(--c2, #F857C1)" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="228" y="90" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">999</text>
+
+        <text x="38" y="132" font-size="12" fill="var(--ink)">Two separate boxes.</text>
+        <text x="38" y="152" font-size="11.5" fill="currentColor">Changing one cannot touch the other,</text>
+        <text x="38" y="170" font-size="11.5" fill="currentColor">so outside is still 10.</text>
+
+        <text x="335" y="18" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--c1, #3DE1E1)">A DICT GOES IN AS THE SAME THING</text>
+        <rect x="335" y="28" width="285" height="164" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+
+        <text x="353" y="74" font-size="12" font-family="JetBrains Mono, monospace" fill="currentColor">outside</text>
+        <text x="353" y="122" font-size="12" font-family="JetBrains Mono, monospace" fill="var(--c2, #F857C1)">inside</text>
+
+        <line x1="412" y1="70" x2="470" y2="88" stroke="var(--c1, #3DE1E1)" stroke-width="2" marker-end="url(#dc-a)"/>
+        <line x1="404" y1="118" x2="470" y2="102" stroke="var(--c1, #3DE1E1)" stroke-width="2" marker-end="url(#dc-a)"/>
+
+        <rect x="478" y="76" width="124" height="38" fill="none" stroke="var(--c1, #3DE1E1)" stroke-width="2"/>
+        <text x="540" y="100" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">{"x": 999}</text>
+
+        <text x="353" y="152" font-size="12" fill="var(--ink)">Two names, one dict.</text>
+        <text x="353" y="170" font-size="11.5" fill="currentColor">A change made inside is the same change outside.</text>
+
+      </svg>
+      <figcaption><strong>Numbers travel as copies; dicts travel as themselves.</strong> That is why <code>update</code> can change a box without handing anything back &mdash; it is holding the very same dict the game loop is holding, not a photocopy of it.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 13</code>. One box, bouncing, exactly as you left it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Add a second box the hard way.</strong> Four more names &mdash; <code>box2_x</code>, <code>box2_y</code>, <code>box2_vx</code>, <code>box2_vy</code> &mdash; then a second <code>update(&hellip;)</code> line and a second <code>draw(&hellip;)</code> line. Start it somewhere else so you can tell them apart.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it. <strong>Only one box appears.</strong> Read <code>draw</code> carefully and work out what it is doing to the first box. This one is worth solving before you look at Hint 1.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Move <code>screen.fill(BG)</code> out of <code>draw</code> and into the game loop, just above the two draw lines. Run it. Two boxes.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Stop and count what a <em>third</em> box would cost: four more names, two more lines. Fifty would be two hundred names. Now delete <code>box2</code> entirely &mdash; you are going to do this properly.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Put the one box's four numbers into a dict:<br><code>box = {"x": 100.0, "y": 60.0, "vx": SPEED, "vy": SPEED}</code><br>and delete the four loose <code>box_</code> names.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Change <code>update</code> to take the whole box.</strong> Make the first line <code>def update(box, dt):</code>, change every <code>x</code> inside to <code>box["x"]</code>, every <code>vx</code> to <code>box["vx"]</code> and so on &mdash; then <strong>delete the <code>return</code> line</strong>. Change the call to just <code>update(box, dt)</code> with nothing catching it. Run it. It still works, and the picture above says why.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Now fifty. Make an empty list, build <code>BOX_COUNT</code> dicts in a loop with random positions, and use two loops in the game loop &mdash; one to update them all, one to draw them all.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>BOX_COUNT = 50</kbd><span>Try 3 to check it works, then 500. Somewhere past a thousand your frame rate starts to suffer &mdash; watch for the movement going choppy.</span></div>
+      <div class="knobrow"><kbd>BOX_SIZE = 24</kbd><span>Fifty boxes at 40 fills the screen. 8 looks like confetti.</span></div>
+      <div class="knobrow"><kbd>SPEED = 240</kbd><span>Try giving each box its own speed instead: <code>random.randint(60, 400)</code> when you build it.</span></div>
+      <div class="knobrow"><kbd>random.choice</kbd><span><code>random.choice([-SPEED, SPEED])</code> picks one or the other, so boxes start off in different directions. Without it they all move as one block.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why did the second box eat the first one?</summary>
+      <div class="hint">
+        <p><code>draw</code> starts with <code>screen.fill(BG)</code>, which paints over the whole window.</p>
+        <p>So the order was: clear, draw box one, <strong>clear again</strong>, draw box two. The first box was wiped out a fraction of a millisecond after it appeared.</p>
+        <p>Clearing the screen is a once-per-frame job, not a once-per-box job. It belongs in the game loop, above the drawing.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; dict, tuple or list?</summary>
+      <div class="hint">
+        <p>All three hold several things. They differ in how you get at them and whether they can change.</p>
+        <p><code>(100, 60)</code> &mdash; a <strong>tuple</strong>. By position, and locked forever.</p>
+        <p><code>[100, 60]</code> &mdash; a <strong>list</strong>. By position, and it can change and grow.</p>
+        <p><code>{"x": 100, "y": 60}</code> &mdash; a <strong>dict</strong>. By <em>name</em>, and it can change.</p>
+        <p>A bouncer needs to change, which rules out the tuple. And it has four different things in it rather than a row of the same thing, so names beat positions &mdash; <code>box["vy"]</code> tells you what it is; <code>box[3]</code> makes you go and count.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; why does update work with no return?</summary>
+      <div class="hint">
+        <p>Because <code>update</code> is not given a copy of the box. It is given the box.</p>
+        <p>When you call <code>update(box, dt)</code>, the name <code>box</code> inside the function and the name <code>box</code> outside are two labels stuck on the same dict. Change what is inside it and there is nothing to hand back &mdash; the change has already happened, everywhere.</p>
+        <p>That is the difference from Session 5, where <code>score</code> was a plain number and the function really did get its own copy. Numbers, text and tuples travel as copies. Lists and dicts travel as themselves.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="kw">def</span> <span class="fn">update</span>(box, dt):
+    box[<span class="st">"x"</span>] = box[<span class="st">"x"</span>] + box[<span class="st">"vx"</span>] * dt
+    box[<span class="st">"y"</span>] = box[<span class="st">"y"</span>] + box[<span class="st">"vy"</span>] * dt
+
+    <span class="kw">if</span> box[<span class="st">"x"</span>] &lt; <span class="nu">0</span>:
+        box[<span class="st">"vx"</span>] = -box[<span class="st">"vx"</span>]
+    <span class="kw">if</span> box[<span class="st">"x"</span>] + BOX_SIZE &gt; WIDTH:
+        box[<span class="st">"vx"</span>] = -box[<span class="st">"vx"</span>]
+    <span class="kw">if</span> box[<span class="st">"y"</span>] &lt; <span class="nu">0</span>:
+        box[<span class="st">"vy"</span>] = -box[<span class="st">"vy"</span>]
+    <span class="kw">if</span> box[<span class="st">"y"</span>] + BOX_SIZE &gt; HEIGHT:
+        box[<span class="st">"vy"</span>] = -box[<span class="st">"vy"</span>]
+
+
+<span class="cm"># build them, above the game loop</span>
+boxes = []
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(BOX_COUNT):
+    box = {
+        <span class="st">"x"</span>: <span class="fn">float</span>(random.<span class="fn">randint</span>(<span class="nu">0</span>, WIDTH - BOX_SIZE)),
+        <span class="st">"y"</span>: <span class="fn">float</span>(random.<span class="fn">randint</span>(<span class="nu">0</span>, HEIGHT - BOX_SIZE)),
+        <span class="st">"vx"</span>: random.<span class="fn">choice</span>([-SPEED, SPEED]),
+        <span class="st">"vy"</span>: random.<span class="fn">choice</span>([-SPEED, SPEED]),
+    }
+    boxes.<span class="fn">append</span>(box)
+
+
+<span class="cm"># ... and inside the game loop</span>
+
+    <span class="kw">for</span> box <span class="kw">in</span> boxes:
+        <span class="fn">update</span>(box, dt)
+
+    screen.<span class="fn">fill</span>(BG)
+
+    <span class="kw">for</span> box <span class="kw">in</span> boxes:
+        <span class="fn">draw</span>(screen, box)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Give every box its own colour.</strong> A dict can hold anything, so put one more thing in it when you build it &mdash; a colour is just three numbers, and you already know how to pick random ones.</p>
+      <p>Then use it in <code>draw</code> instead of <code>BOX_COLOUR</code>.</p>
+      <p>If that lands easily: give each one its own size as well, and make the wall checks use <code>box["size"]</code> rather than the setting at the top. That is the moment a box stops being "the box" and becomes properly its own thing.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>All fifty boxes move as one, perfectly on top of each other</b>
+        <span>You built <em>one</em> dict above the loop and appended that same dict fifty times. Fifty labels, one box. The dict has to be made <em>inside</em> the loop so each go makes a fresh one &mdash; which is the diagram above biting you for real.</span>
+      </div>
+      <div class="err">
+        <b>KeyError: 'X'</b>
+        <span>The name inside the brackets has to match exactly, capitals and all. You stored <code>"x"</code> and asked for <code>"X"</code>.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'x' is not defined</b>
+        <span>You wrote <code>box[x]</code> without quotes, so Python went looking for a variable called <code>x</code>. Dict names are text: <code>box["x"]</code>.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: update() takes 2 positional arguments but 5 were given</b>
+        <span>The <code>def</code> line now takes the whole box, but the call still hands over four loose numbers. Both ends have to change together.</span>
+      </div>
+      <div class="err">
+        <b>Only one box shows up</b>
+        <span><code>screen.fill</code> is still inside <code>draw</code>, wiping the window between every box.</span>
+      </div>
+      <div class="err">
+        <b>The boxes leave a smear behind them</b>
+        <span>The opposite &mdash; <code>screen.fill</code> has gone missing entirely, so nothing ever clears the last frame.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

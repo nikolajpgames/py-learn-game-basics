@@ -1,0 +1,13 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+
+  "include": ["sessions", "geometrydash", "tools"],
+  "exclude": ["**/__pycache__", ".venv"],
+
+  "typeCheckingMode": "standard",
+
+  "reportUnusedCallResult": "none",
+  "reportMissingTypeStubs": "none",
+  "reportUnusedVariable": "none"
+}

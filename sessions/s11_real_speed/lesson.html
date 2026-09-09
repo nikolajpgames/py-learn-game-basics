@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en" data-session="11">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 11 &middot; Real Speed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 11</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 2 &middot; Motion &amp; Time</span>
+    </div>
+    <h1>Real Speed</h1>
+    <p class="standfirst">Your box has a bug you haven't noticed yet. Change one number and it'll be obvious.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>The same sliding box &mdash; but moving at a speed you can state in actual words. "240 pixels every second", not "4 pixels every frame, and a frame is however long a frame happens to be."</p>
+    <p class="caption">Once that is sorted, the box moves at the same speed on any computer, including ones faster than yours.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 356" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Two comparisons over one second of real time. Without delta time, a slow computer running fifteen frames moves the box sixty pixels while a fast computer running sixty frames moves it two hundred and forty pixels: the same code runs four times faster on the faster machine. With delta time, the slow computer takes fifteen large steps of sixteen pixels and the fast computer takes sixty small steps of four pixels, and both arrive at exactly two hundred and forty pixels.">
+
+        <text x="20" y="16" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c3, #FFC24B)">WITHOUT dt &#8212; SAME CODE, TWO DIFFERENT SPEEDS</text>
+        <text x="20" y="38" font-size="11.5" fill="currentColor">each frame moves the box 4 pixels, whatever a frame is worth</text>
+        <text x="20" y="76" font-size="12" font-family="JetBrains Mono, monospace" fill="currentColor">15 fps</text>
+        <line x1="96" y1="72" x2="470" y2="72" stroke="var(--edge)" stroke-width="1.5"/>
+        <line x1="102.2" y1="67" x2="102.2" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="108.5" y1="67" x2="108.5" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="114.7" y1="67" x2="114.7" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="120.9" y1="67" x2="120.9" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="127.2" y1="67" x2="127.2" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="133.4" y1="67" x2="133.4" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="139.6" y1="67" x2="139.6" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="145.9" y1="67" x2="145.9" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="152.1" y1="67" x2="152.1" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="158.3" y1="67" x2="158.3" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="164.6" y1="67" x2="164.6" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="170.8" y1="67" x2="170.8" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="177.0" y1="67" x2="177.0" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="183.3" y1="67" x2="183.3" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="189.5" y1="67" x2="189.5" y2="77" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <rect x="184.5" y="65" width="10" height="14" fill="var(--c3, #FFC24B)"/>
+        <text x="490" y="76" font-size="11.5" font-family="JetBrains Mono, monospace" fill="var(--c3, #FFC24B)">15 &#215; 4px = 60px</text>
+        <text x="20" y="120" font-size="12" font-family="JetBrains Mono, monospace" fill="currentColor">60 fps</text>
+        <line x1="96" y1="116" x2="470" y2="116" stroke="var(--edge)" stroke-width="1.5"/>
+        <line x1="102.2" y1="111" x2="102.2" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="108.5" y1="111" x2="108.5" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="114.7" y1="111" x2="114.7" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="120.9" y1="111" x2="120.9" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="127.2" y1="111" x2="127.2" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="133.4" y1="111" x2="133.4" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="139.6" y1="111" x2="139.6" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="145.9" y1="111" x2="145.9" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="152.1" y1="111" x2="152.1" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="158.3" y1="111" x2="158.3" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="164.6" y1="111" x2="164.6" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="170.8" y1="111" x2="170.8" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="177.0" y1="111" x2="177.0" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="183.3" y1="111" x2="183.3" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="189.5" y1="111" x2="189.5" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="195.7" y1="111" x2="195.7" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="202.0" y1="111" x2="202.0" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="208.2" y1="111" x2="208.2" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="214.4" y1="111" x2="214.4" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="220.7" y1="111" x2="220.7" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="226.9" y1="111" x2="226.9" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="233.1" y1="111" x2="233.1" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="239.4" y1="111" x2="239.4" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="245.6" y1="111" x2="245.6" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="251.8" y1="111" x2="251.8" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="258.1" y1="111" x2="258.1" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="264.3" y1="111" x2="264.3" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="270.5" y1="111" x2="270.5" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="276.8" y1="111" x2="276.8" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="283.0" y1="111" x2="283.0" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="289.2" y1="111" x2="289.2" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="295.5" y1="111" x2="295.5" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="301.7" y1="111" x2="301.7" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="307.9" y1="111" x2="307.9" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="314.2" y1="111" x2="314.2" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="320.4" y1="111" x2="320.4" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="326.6" y1="111" x2="326.6" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="332.9" y1="111" x2="332.9" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="339.1" y1="111" x2="339.1" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="345.3" y1="111" x2="345.3" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="351.6" y1="111" x2="351.6" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="357.8" y1="111" x2="357.8" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="364.0" y1="111" x2="364.0" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="370.3" y1="111" x2="370.3" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="376.5" y1="111" x2="376.5" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="382.7" y1="111" x2="382.7" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="389.0" y1="111" x2="389.0" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="395.2" y1="111" x2="395.2" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="401.4" y1="111" x2="401.4" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="407.7" y1="111" x2="407.7" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="413.9" y1="111" x2="413.9" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="420.1" y1="111" x2="420.1" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="426.4" y1="111" x2="426.4" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="432.6" y1="111" x2="432.6" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="438.8" y1="111" x2="438.8" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="445.1" y1="111" x2="445.1" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="451.3" y1="111" x2="451.3" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="457.5" y1="111" x2="457.5" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="463.8" y1="111" x2="463.8" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="470.0" y1="111" x2="470.0" y2="121" stroke="var(--c3, #FFC24B)" stroke-width="1.4" opacity="0.55"/>
+        <rect x="465.0" y="109" width="10" height="14" fill="var(--c3, #FFC24B)"/>
+        <text x="490" y="120" font-size="11.5" font-family="JetBrains Mono, monospace" fill="var(--c3, #FFC24B)">60 &#215; 4px = 240px</text>
+        <text x="96" y="150" font-size="11.5" font-weight="700" fill="var(--c3, #FFC24B)">Four times the frames, four times the distance. That is the bug.</text>
+        <text x="20" y="200" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c1, #3DE1E1)">WITH dt &#8212; SAME CODE, SAME SPEED</text>
+        <text x="20" y="222" font-size="11.5" fill="currentColor">each frame moves the box 240 pixels-per-second &#215; however long that frame took</text>
+        <text x="20" y="260" font-size="12" font-family="JetBrains Mono, monospace" fill="currentColor">15 fps</text>
+        <line x1="96" y1="256" x2="470" y2="256" stroke="var(--edge)" stroke-width="1.5"/>
+        <line x1="120.9" y1="251" x2="120.9" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="145.9" y1="251" x2="145.9" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="170.8" y1="251" x2="170.8" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="195.7" y1="251" x2="195.7" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="220.7" y1="251" x2="220.7" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="245.6" y1="251" x2="245.6" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="270.5" y1="251" x2="270.5" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="295.5" y1="251" x2="295.5" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="320.4" y1="251" x2="320.4" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="345.3" y1="251" x2="345.3" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="370.3" y1="251" x2="370.3" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="395.2" y1="251" x2="395.2" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="420.1" y1="251" x2="420.1" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="445.1" y1="251" x2="445.1" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="470.0" y1="251" x2="470.0" y2="261" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <rect x="465.0" y="249" width="10" height="14" fill="var(--c1, #3DE1E1)"/>
+        <text x="490" y="260" font-size="11.5" font-family="JetBrains Mono, monospace" fill="var(--c1, #3DE1E1)">15 &#215; 16px = 240px</text>
+        <text x="20" y="304" font-size="12" font-family="JetBrains Mono, monospace" fill="currentColor">60 fps</text>
+        <line x1="96" y1="300" x2="470" y2="300" stroke="var(--edge)" stroke-width="1.5"/>
+        <line x1="102.2" y1="295" x2="102.2" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="108.5" y1="295" x2="108.5" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="114.7" y1="295" x2="114.7" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="120.9" y1="295" x2="120.9" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="127.2" y1="295" x2="127.2" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="133.4" y1="295" x2="133.4" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="139.6" y1="295" x2="139.6" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="145.9" y1="295" x2="145.9" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="152.1" y1="295" x2="152.1" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="158.3" y1="295" x2="158.3" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="164.6" y1="295" x2="164.6" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="170.8" y1="295" x2="170.8" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="177.0" y1="295" x2="177.0" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="183.3" y1="295" x2="183.3" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="189.5" y1="295" x2="189.5" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="195.7" y1="295" x2="195.7" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="202.0" y1="295" x2="202.0" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="208.2" y1="295" x2="208.2" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="214.4" y1="295" x2="214.4" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="220.7" y1="295" x2="220.7" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="226.9" y1="295" x2="226.9" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="233.1" y1="295" x2="233.1" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="239.4" y1="295" x2="239.4" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="245.6" y1="295" x2="245.6" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="251.8" y1="295" x2="251.8" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="258.1" y1="295" x2="258.1" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="264.3" y1="295" x2="264.3" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="270.5" y1="295" x2="270.5" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="276.8" y1="295" x2="276.8" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="283.0" y1="295" x2="283.0" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="289.2" y1="295" x2="289.2" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="295.5" y1="295" x2="295.5" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="301.7" y1="295" x2="301.7" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="307.9" y1="295" x2="307.9" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="314.2" y1="295" x2="314.2" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="320.4" y1="295" x2="320.4" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="326.6" y1="295" x2="326.6" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="332.9" y1="295" x2="332.9" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="339.1" y1="295" x2="339.1" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="345.3" y1="295" x2="345.3" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="351.6" y1="295" x2="351.6" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="357.8" y1="295" x2="357.8" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="364.0" y1="295" x2="364.0" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="370.3" y1="295" x2="370.3" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="376.5" y1="295" x2="376.5" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="382.7" y1="295" x2="382.7" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="389.0" y1="295" x2="389.0" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="395.2" y1="295" x2="395.2" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="401.4" y1="295" x2="401.4" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="407.7" y1="295" x2="407.7" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="413.9" y1="295" x2="413.9" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="420.1" y1="295" x2="420.1" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="426.4" y1="295" x2="426.4" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="432.6" y1="295" x2="432.6" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="438.8" y1="295" x2="438.8" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="445.1" y1="295" x2="445.1" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="451.3" y1="295" x2="451.3" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="457.5" y1="295" x2="457.5" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="463.8" y1="295" x2="463.8" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <line x1="470.0" y1="295" x2="470.0" y2="305" stroke="var(--c1, #3DE1E1)" stroke-width="1.4" opacity="0.55"/>
+        <rect x="465.0" y="293" width="10" height="14" fill="var(--c1, #3DE1E1)"/>
+        <text x="490" y="304" font-size="11.5" font-family="JetBrains Mono, monospace" fill="var(--c1, #3DE1E1)">60 &#215; 4px = 240px</text>
+        <line x1="96" y1="326" x2="470" y2="326" stroke="currentColor" stroke-width="1"/>
+        <line x1="96" y1="322" x2="96" y2="330" stroke="currentColor" stroke-width="1"/>
+        <line x1="470" y1="322" x2="470" y2="330" stroke="currentColor" stroke-width="1"/>
+        <text x="283" y="344" font-size="11" text-anchor="middle" fill="currentColor">one second of real time</text>
+
+      </svg>
+      <figcaption><strong>The ticks are frames; the box is where you end up.</strong> Both machines run for the same one second. Without <code>dt</code> the faster one simply gets more goes, so it travels further. With <code>dt</code> each go is worth however much time it actually took &mdash; fewer, bigger steps or more, smaller ones &mdash; and they finish level.</figcaption>
+    </figure>
+    <div class="idea-body">
+      <p><strong>Frames are not all the same length</strong>, and you can't control how long they are. A slow computer, a busy computer, a 144&nbsp;Hz monitor &mdash; all different.</p>
+      <p>So <code>clock.tick(FPS)</code> hands you a number: <strong>how many <em>milliseconds</em> the last frame took.</strong> A millisecond is a thousandth of a second &mdash; there are 1000 in one second &mdash; so dividing by 1000 turns that number into seconds. That number is called <code>dt</code>, short for <em>delta time</em>, which just means "the change in time".</p>
+      <p>Then instead of "move 4 pixels", you say <strong>"move 240 pixels-per-second, times however much of a second just went by"</strong>. Long frame, big move. Short frame, small move. Same real speed either way.</p>
+      <p><strong>This is how every real game works.</strong> A game never asks "which frame is this?" &mdash; it asks "how much time has gone by?" and moves the whole world along by that much. Someone on a 144&nbsp;Hz gaming monitor and someone on a laptop struggling at 30 gets the same game at the same speed. The fast machine just draws more, smaller steps in between, so it looks smoother.</p>
+      <p>And frames are never evenly spaced anyway. A frame with a hundred things on screen takes longer than an empty one, and your computer has other jobs to do. <code>dt</code> is measured fresh every single frame for exactly that reason.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 6 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 11</code>. Same box as last time. Time roughly how long it takes to cross the window &mdash; count it out loud.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>FPS</code> to 15. Run it and count again. <strong>That's the bug.</strong> You didn't touch the speed, but the speed changed.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Leave <code>FPS</code> at 15 for now, so you can tell when it's fixed. Rename <code>STEP = 4</code> to <code>SPEED = 240</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Now the fix. Four small edits that only work together</strong> &mdash; the program will be broken until all four are done, so do them in one go.<br><br><strong>1.</strong> In the game loop, change <code>clock.tick(FPS)</code> to <code>dt = clock.tick(FPS) / 1000.0</code><br><span class="steplet">A millisecond is a thousandth of a second. <code>tick</code> hands back how many of them the last frame took, so dividing by 1000 gives seconds &mdash; and <code>dt</code> is the box you keep that in.</span><br><br><strong>2.</strong> Change the function's first line to <code>def update(x, y, dt):</code><br><span class="steplet">So it has somewhere to receive that number.</span><br><br><strong>3.</strong> Change the line that <em>calls</em> it to <code>box_x, box_y = update(box_x, box_y, dt)</code><br><span class="steplet">Easy one to forget. The brackets have to match in both places, every time.</span><br><br><strong>4.</strong> Inside <code>update</code>, change the move to <code>x = x + SPEED * dt</code><br><span class="steplet">This is the whole point: how far it moves now depends on how much time went by, not on how many frames happened.</span><br><br><strong>Now run it.</strong> The frame rate and the speed of the box have come apart, and nothing you do to one affects the other any more.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Prove it. Try <code>FPS</code> at 15, then 30, then 120, counting out loud each time. The box should take exactly as long to cross at every one of them &mdash; choppy at 15, smooth at 120, but the same speed.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>box_x = 100</code> to <code>box_x = 100.0</code>. Ask why that dot matters &mdash; the answer's in Hint 3.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">Once it's fixed, these two should stop affecting each other completely.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>SPEED = 240</kbd><span>Pixels per second. 240 crosses an 800-wide window in a bit over three seconds. Check that with a stopwatch &mdash; the maths should actually work out.</span></div>
+      <div class="knobrow"><kbd>FPS = 60</kbd><span>How often it redraws. At 10 it looks like a flipbook, but it should <em>arrive</em> at exactly the same time as at 120. Choppy and slow are different things.</span></div>
+      <div class="knobrow"><kbd>box_x = 100.0</kbd><span>Where it starts. The <code>.0</code> matters now.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what does clock.tick actually do?</summary>
+      <div class="hint">
+        <p>Two jobs at once, which is why one short line does so much.</p>
+        <p><strong>It waits.</strong> If the frame finished early it pauses just long enough to hold you near the frames-per-second you asked for. That is the speed limiter you have had since Session 6.</p>
+        <p><strong>And it reports.</strong> It hands back how many <em>milliseconds</em> have gone by since the last time you called it &mdash; a millisecond being a thousandth of a second. 1000 of them make one second, which is why <code>/ 1000</code> turns it into seconds.</p>
+        <p>At 60 FPS a frame takes about 16 milliseconds, so <code>dt</code> lands around <code>0.016</code>. Put <code>print(dt)</code> inside the loop and watch the numbers go by.</p>
+        <p>One detail if you do: it only ever gives <em>whole</em> milliseconds, so at 60 FPS you will see 16 and 17 rather than a tidy 16.67. Across a whole second they even out.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; tick() or get_time()?</summary>
+      <div class="hint">
+        <p>Think of a stopwatch with a lap button.</p>
+        <p><code>clock.tick()</code> is <strong>pressing the lap button</strong>. It records how long that lap took, hands you the number, and immediately starts timing the next one. Pressing it changes something.</p>
+        <p><code>clock.get_time()</code> is <strong>reading the last lap time off the display</strong>. It gives you the same number <code>tick()</code> already returned, and pressing nothing. You can read it as often as you like and it never changes.</p>
+        <p>That is why <code>tick()</code> belongs exactly once per frame. Every call waits for a full frame's worth of time and then measures from the call before it &mdash; so calling it twice in one frame makes your game run at <em>half speed</em>. It is a horrible bug to find, because nothing looks wrong.</p>
+        <p>Use the number <code>tick()</code> hands back. <code>get_time()</code> is only for when some other part of the program wants that same number and you would rather not pass it around.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; check the maths on 240 &times; 0.016</summary>
+      <div class="hint">That's about 3.9 pixels &mdash; near enough the 4 you had before. So at 60&nbsp;FPS nothing visibly changes. The difference only shows up when the frame rate does something you weren't expecting, which on someone else's computer it always will.</div>
+    </details>
+
+    <details>
+      <summary>Hint 4 &mdash; why does the box only move sometimes?</summary>
+      <div class="hint">
+        <p>If <code>box_x</code> starts as a whole number like <code>100</code>, Python may keep chopping the fraction off every frame. At a slow speed each frame only adds a fraction of a pixel, that fraction gets thrown away, and the box never moves at all.</p>
+        <p>Writing <code>100.0</code> tells Python this number is allowed to have a decimal point. Then the fractions add up properly.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre>SPEED = <span class="nu">240</span>       <span class="cm"># pixels per SECOND</span>
+
+
+<span class="kw">def</span> <span class="fn">update</span>(x, y, dt):
+    x = x + SPEED * dt
+    <span class="kw">return</span> x, y
+
+
+<span class="cm"># ... and in the game loop:</span>
+
+<span class="kw">while</span> running:
+    dt = clock.<span class="fn">tick</span>(FPS) / <span class="nu">1000.0</span>
+
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            running = <span class="kw">False</span>
+
+    box_x, box_y = <span class="fn">update</span>(box_x, box_y, dt)
+    <span class="fn">draw</span>(screen, box_x, box_y)
+
+    pygame.display.<span class="fn">flip</span>()</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Predict, then check.</strong> Work out on paper how many seconds a box at <code>SPEED = 100</code> should take to cross a window that's 800 pixels wide. Write your answer down <em>before</em> you run it.</p>
+      <p>Then run it with a stopwatch. If your number's right, you've just proved your game understands real time &mdash; and you can trust <code>dt</code> from here on.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>TypeError: update() missing 1 required positional argument: 'dt'</b>
+        <span>You added <code>dt</code> to the <code>def</code> line but not to the line that calls it. Both have to change together, every time.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'dt' is not defined</b>
+        <span>The opposite problem &mdash; you're using <code>dt</code> inside <code>update</code> but never gave it a slot on the <code>def</code> line.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'STEP' is not defined</b>
+        <span>Renaming <code>STEP</code> to <code>SPEED</code> means renaming it <em>everywhere</em>. There's one left behind inside <code>update</code>.</span>
+      </div>
+      <div class="err">
+        <b>Everything runs at half speed and nothing looks broken</b>
+        <span>You have <code>clock.tick()</code> in the loop more than once. Each call waits for its own full frame, so two calls means two waits. There should be exactly one, at the top of the loop.</span>
+      </div>
+      <div class="err">
+        <b>The box moves ludicrously fast</b>
+        <span>You've got <code>SPEED = 240</code> but forgot the <code>* dt</code>, so it's moving 240 pixels every single frame instead of every second. Sixty times too fast.</span>
+      </div>
+      <div class="err">
+        <b>The box doesn't move at all, at slow speeds</b>
+        <span>Whole-number problem &mdash; see Hint 3. Make the starting position <code>100.0</code>.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

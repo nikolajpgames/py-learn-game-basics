@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en" data-session="27">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 27 &middot; Levels From A File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 27</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 4 &middot; Arkanoid</span>
+    </div>
+    <h1>Levels From A File</h1>
+    <p class="standfirst">So far the shape of the wall has been decided by a loop. From now on it is decided by a text file you can open in Notepad.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A level drawn as characters in a text file, and a loader that turns it into bricks.</p>
+    <p class="caption">Change the file, save, run. No Python touched at all.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong><code>open</code> gives you a file to read.</strong> Looping over it hands you one line at a time, in order, as text.</p>
+      <p><strong>A line of text can be looked at character by character</strong>, exactly like a list. <code>line[0]</code> is the first character, <code>line[3]</code> the fourth &mdash; counting from zero, as always.</p>
+      <p><strong>So the file <em>is</em> the grid.</strong> Which line you are on is the row; how far along that line you are is the column. The nested loop from Session 23 does not change at all &mdash; it just asks the text what belongs at each square instead of filling every one.</p>
+      <p>Geometry Dash levels work exactly this way too &mdash; the same nested loop, reading different characters out of a different file.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 232" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="On the left, five lines of text made of dots and hashes, forming a shape. On the right, the same shape drawn as coloured bricks: every hash has become a brick, and every dot has become empty space.">
+
+        <text x="34"  y="26" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">level01.txt</text>
+        <text x="330" y="26" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--c2, #F857C1)">WHAT YOU GET</text>
+
+        <text x="34" y="72" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">..........</text>
+        <text x="34" y="98" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">.########.</text>
+        <text x="34" y="124" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">.########.</text>
+        <text x="34" y="150" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">..######..</text>
+        <text x="34" y="176" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">...####...</text>
+        <rect x="357" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="384" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="411" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="438" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="465" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="492" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="519" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="546" y="84" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="357" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="384" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="411" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="438" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="465" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="492" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="519" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="546" y="110" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="384" y="136" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="411" y="136" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="438" y="136" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="465" y="136" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="492" y="136" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="519" y="136" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="411" y="162" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="438" y="162" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="465" y="162" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="492" y="162" width="24" height="18" fill="var(--c2, #F857C1)" opacity="0.85"/>
+
+        <text x="34" y="206" font-size="12" fill="currentColor">Line number becomes the row.</text>
+        <text x="34" y="224" font-size="12" fill="currentColor">Position along the line becomes the column.</text>
+        <text x="330" y="206" font-size="12" font-weight="700" fill="var(--c2, #F857C1)"># makes a brick</text>
+        <text x="330" y="224" font-size="12" fill="currentColor">anything else leaves a gap</text>
+
+      </svg>
+      <figcaption><strong>The level is a picture made of characters.</strong> It is the same nested loop as Session 23 &mdash; but instead of filling every square, it asks the text what belongs at each one. Which means the shape of the wall stops being something you program and becomes something you draw.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 27</code>. Same game as last time, with the wall still built by a loop.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Open <code>level01.txt</code> in the session folder. Five lines of dots and hashes, in the shape of the wall you are about to get.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>state.py</code>,</strong> where it says YOUR LEVEL LOADER GOES HERE, start <code>load_level(filename)</code>. Read the file into a list of lines:<br><code>rows = []</code><br><code>with open(filename) as f:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;for line in f:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line = line.rstrip("\\n")</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if line != "":</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows.append(line)</code><br><span class="steplet"><code>rstrip("\\n")</code> takes off the invisible newline at the end of each line. Without it every row is one character longer than it looks.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Then the nested loop &mdash; but counting the text, not the settings:<br><code>for row in range(len(rows)):</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;for col in range(len(rows[row])):</code><br><span class="steplet"><code>len(rows)</code> is how many lines there are; <code>len(rows[row])</code> is how long that particular line is.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Inside both loops: <code>if rows[row][col] == "#":</code> build a brick and append it. The two position sums are exactly the ones from Session 23, using <code>BRICK_LEFT</code> from <code>config.py</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><code>return bricks</code>, then in <code>main.py</code> swap <code>make_bricks()</code> for <code>load_level("level01.txt")</code>. Run it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Now the good bit.</strong> Open <code>level01.txt</code> in Notepad, change some hashes to dots and some dots to hashes, save, and run again. You just designed a level without writing any code.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Draw something of your own. A face, a letter, your initials. Ten wide and five deep is enough for most things.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>level01.txt</kbd><span>The whole level. Hashes are bricks, everything else is empty space. Editable in any text editor on earth.</span></div>
+      <div class="knobrow"><kbd>BRICK_LEFT = 13</kbd><span>Where the wall starts. If your level is narrower than ten columns you may want it further right.</span></div>
+      <div class="knobrow"><kbd>BRICK_W / BRICK_H</kbd><span>Still control the size, so a level file that looks square comes out wide or tall depending on these.</span></div>
+      <div class="knobrow"><kbd>rows[row][col] == "#"</kbd><span>Try <code>!= "."</code> instead, so any character except a dot makes a brick. Now you can write words in the file and they come out as bricks.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what is the with in "with open"?</summary>
+      <div class="hint"><p>It means "open this, let me use it, and close it properly afterwards even if something goes wrong".</p><p>You can open a file without it, but then you have to remember to close it, and a file left open can lose what you wrote to it. <code>with</code> makes that impossible to forget, so it is what everyone uses.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what is rstrip doing?</summary>
+      <div class="hint"><p>Every line in a text file ends with an invisible newline character, which is what makes the next line start. When you read a line, that character comes along with it.</p><p>So <code>".........."</code> arrives as eleven characters, not ten, and the last one is invisible. <code>rstrip("\\n")</code> takes it off the right-hand end.</p><p>Leave it in and you get a phantom column that never becomes a brick &mdash; harmless here, and confusing the moment you count anything.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; two square brackets in a row?</summary>
+      <div class="hint"><p><code>rows[row]</code> picks one line out of the list &mdash; a piece of text. <code>rows[row][col]</code> then picks one character out of <em>that</em>.</p><p>Left to right, one step at a time. Same as <code>stars[0][1]</code> would have been back in Session 9.</p></div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint"><pre><span class="kw">def</span> <span class="fn">load_level</span>(filename):
+    bricks = []
+    rows = []
+
+    <span class="kw">with</span> <span class="fn">open</span>(filename) <span class="kw">as</span> f:
+        <span class="kw">for</span> line <span class="kw">in</span> f:
+            line = line.<span class="fn">rstrip</span>(<span class="st">"\\n"</span>)
+            <span class="kw">if</span> line != <span class="st">""</span>:
+                rows.<span class="fn">append</span>(line)
+
+    <span class="kw">for</span> row <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(rows)):
+        <span class="kw">for</span> col <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(rows[row])):
+            <span class="kw">if</span> rows[row][col] == <span class="st">"#"</span>:
+                brick = {
+                    <span class="st">"x"</span>: BRICK_LEFT + col * (BRICK_W + BRICK_GAP),
+                    <span class="st">"y"</span>: BRICK_TOP + row * (BRICK_H + BRICK_GAP),
+                    <span class="st">"w"</span>: BRICK_W,
+                    <span class="st">"h"</span>: BRICK_H,
+                    <span class="st">"colour"</span>: BRICK_COLOURS[row % <span class="fn">len</span>(BRICK_COLOURS)],
+                }
+                bricks.<span class="fn">append</span>(brick)
+
+    <span class="kw">return</span> bricks</pre></div>
+    </details>
+
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Use different characters for different bricks.</strong> A <code>#</code> for a normal one, an <code>X</code> for one that takes two hits, a <code>*</code> for one worth double points.</p>
+      <p>The loader already looks at the character &mdash; it just only asks one question about it. Ask two or three instead, and put the answer in the brick's dict.</p>
+      <p><strong>Then let the file choose its own colours.</strong> Digits <code>1</code> to <code>5</code> picking out of <code>BRICK_COLOURS</code>, so a level can be striped, or spell something in colour. <code>int(character)</code> turns a digit-character into a number.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>FileNotFoundError: level01.txt</b>
+        <span>The file is not in the same folder as <code>main.py</code>, or the name has a typo. Windows sometimes hides the <code>.txt</code>, so <code>level01.txt.txt</code> is a real possibility.</span>
+      </div>
+      <div class="err">
+        <b>The wall is one column wider than the file looks</b>
+        <span>The <code>rstrip</code> is missing, so the invisible newline is being counted as a column.</span>
+      </div>
+      <div class="err">
+        <b>IndexError: string index out of range</b>
+        <span>The lines are not all the same length &mdash; a short one has fewer columns than you are asking for. Using <code>len(rows[row])</code> rather than a fixed number avoids this entirely.</span>
+      </div>
+      <div class="err">
+        <b>Only the first row of bricks appears</b>
+        <span><code>return bricks</code> is inside a loop again. It belongs at the very end of the function.</span>
+      </div>
+      <div class="err">
+        <b>Nothing appears at all</b>
+        <span>Either the file has no hashes in it, or the check is looking for a different character than the file contains. Print the rows list and see what actually arrived.</span>
+      </div>
+      <div class="err">
+        <b>The bricks are in one column down the left</b>
+        <span>The <code>x</code> sum is not using <code>col</code>. Compare it against Session 23's.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

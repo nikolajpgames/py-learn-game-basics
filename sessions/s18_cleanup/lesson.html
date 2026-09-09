@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" data-session="18">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 18 &middot; Cleaning Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 18</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 3 &middot; Shooter</span>
+    </div>
+    <h1>Cleaning Up</h1>
+    <p class="standfirst">Every shot you have ever fired is still out there, somewhere above the screen, being moved and drawn sixty times a second. Time to let them go.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>The same game, except a shot stops existing once it leaves the top of the screen.</p>
+    <p class="caption">Nothing will look different. Fire two hundred shots and then compare how it feels &mdash; that is where you will see it.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Things need taking out of lists as well as putting in.</strong> Anything that spawns while a game runs eventually has to stop existing, or the list grows forever and the game slowly grinds.</p>
+      <p><strong>The obvious way is a trap.</strong> Walking through a list and removing items from that same list as you go makes Python lose its place, and some items never get looked at. It is one of the most common bugs there is, and it does not crash &mdash; it just quietly gets it wrong.</p>
+      <p><strong>So turn it round: build a list of the ones you want to keep.</strong> Go through the old list, put the survivors into a fresh one, and use that from then on. Nothing is removed from anything, so nothing can lose its place.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 250" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Two panels showing why removing from a list while looping over it goes wrong. In the first, the loop is looking at item zero and removes it. In the second, the remaining items have all shuffled one place to the left to close the gap, but the loop moves on to position one, which now holds item two. Item one was never looked at.">
+
+        <text x="20" y="18" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--c3, #FFC24B)">THE LOOP IS AT POSITION 0, AND REMOVES WHAT IT FINDS</text>
+
+        <rect x="20"  y="34" width="66" height="40" fill="var(--c3, #FFC24B)" opacity="0.3" stroke="var(--c3, #FFC24B)" stroke-width="1.5"/>
+        <rect x="90"  y="34" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="160" y="34" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="230" y="34" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="300" y="34" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <text x="53"  y="60" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 0</text>
+        <text x="123" y="60" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 1</text>
+        <text x="193" y="60" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 2</text>
+        <text x="263" y="60" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 3</text>
+        <text x="333" y="60" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 4</text>
+        <text x="53"  y="92" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--c3, #FFC24B)">0</text>
+        <text x="123" y="92" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">1</text>
+        <text x="193" y="92" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">2</text>
+        <text x="263" y="92" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">3</text>
+        <text x="333" y="92" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">4</text>
+        <text x="390" y="52" font-size="12" fill="var(--c3, #FFC24B)">looking here &#8212;</text>
+        <text x="390" y="70" font-size="12" fill="var(--c3, #FFC24B)">off the screen, so remove it</text>
+
+        <text x="20" y="140" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--c2, #F857C1)">EVERYTHING SHUFFLES LEFT &#8212; BUT THE LOOP MOVES RIGHT</text>
+
+        <rect x="20"  y="156" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="90"  y="156" width="66" height="40" fill="var(--c2, #F857C1)" opacity="0.3" stroke="var(--c2, #F857C1)" stroke-width="1.5"/>
+        <rect x="160" y="156" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="230" y="156" width="66" height="40" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <text x="53"  y="182" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 1</text>
+        <text x="123" y="182" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 2</text>
+        <text x="193" y="182" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 3</text>
+        <text x="263" y="182" font-size="14" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">shot 4</text>
+        <text x="53"  y="214" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">0</text>
+        <text x="123" y="214" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--c2, #F857C1)">1</text>
+        <text x="193" y="214" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">2</text>
+        <text x="263" y="214" font-size="11" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">3</text>
+        <text x="330" y="174" font-size="12" font-weight="700" fill="var(--c2, #F857C1)">the loop goes to position 1&#8230;</text>
+        <text x="330" y="192" font-size="12" fill="currentColor">&#8230;which is shot 2 now.</text>
+        <text x="330" y="212" font-size="12" font-weight="700" fill="var(--ink)">Shot 1 is never looked at.</text>
+
+      </svg>
+      <figcaption><strong>The list closed the gap while the loop was still counting.</strong> A loop keeps its place by position, not by which item it was holding &mdash; so taking one out slides everything after it back by one, and the next position it visits has already moved past something.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 18</code> and fire a few times. Everything works, and nothing is obviously wrong.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>See the problem.</strong> In <code>main.py</code>, just before <code>draw</code>, add <code>print(len(shots))</code>. Run it, fire twenty times, and watch the black window. The number never goes down.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Hold the space bar and mash it for thirty seconds, then look at the number. Every one of those is still being moved and drawn, every frame, forever.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Now the fix, in <code>state.py</code>.</strong> Change <code>update_shots</code> so that instead of just moving them, it builds a list of the ones worth keeping:<br><code>def update_shots(shots, dt):</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;kept = []</code><br><span class="steplet">Then in the loop, after moving a shot, keep it only if it is still on screen &mdash; <code>if shot["y"] + SHOT_H &gt; 0:</code> &mdash; and <code>return kept</code> at the end.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">The function now hands something back, so <code>main.py</code> has to catch it:<br><code>shots = update_shots(shots, dt)</code><br><span class="steplet">Miss this and nothing changes at all &mdash; you would be throwing the new list away every frame.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run it and watch the number again. It goes up when you fire and back down to 0 a second later.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Take the <code>print</code> out. It has done its job, and printing sixty times a second slows the game down more than the shots ever did.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>shot["y"] + SHOT_H &gt; 0</kbd><span>Where a shot counts as gone. Change the <code>0</code> to <code>200</code> and shots vanish halfway up the screen, which looks like they hit an invisible ceiling.</span></div>
+      <div class="knobrow"><kbd>SHOT_SPEED</kbd><span>Slow shots live longer, so more of them are on screen at once. Try 60 and watch the number climb.</span></div>
+      <div class="knobrow"><kbd>print(len(shots))</kbd><span>Put it back any time you want to know what is really in there. Printing is the oldest debugging tool there is and still the most used.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what does "keep the ones you want" look like?</summary>
+      <div class="hint">
+        <p>Three moves: an empty list before the loop, an <code>append</code> inside it for the survivors, and a <code>return</code> at the end.</p>
+        <pre><span class="kw">def</span> <span class="fn">update_shots</span>(shots, dt):
+    kept = []
+
+    <span class="kw">for</span> shot <span class="kw">in</span> shots:
+        shot[<span class="st">"y"</span>] = shot[<span class="st">"y"</span>] - SHOT_SPEED * dt
+        <span class="kw">if</span> shot[<span class="st">"y"</span>] + SHOT_H &gt; <span class="nu">0</span>:
+            kept.<span class="fn">append</span>(shot)
+
+    <span class="kw">return</span> kept</pre>
+        <p>Exactly the same shape as building the stars in Session 9. The only difference is that this one runs every frame instead of once.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; why not just use remove?</summary>
+      <div class="hint">
+        <p>There is a <code>remove</code>, and it does work &mdash; the trouble is only when you use it <em>while looping over the same list</em>, which is exactly when you want it.</p>
+        <p>Try it and see. Fire three shots close together so several go off the top at once, then use <code>shots.remove(shot)</code> inside the loop. Some will hang around for an extra frame or two before finally going, because they got skipped.</p>
+        <p>It never crashes and it looks nearly right, which is what makes it nasty. The picture above is what is actually happening.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; why "+ SHOT_H" in the check?</summary>
+      <div class="hint"><code>shot["y"]</code> is the shot's <em>top</em> edge, so it goes below 0 while most of the shot is still visible. Adding its height gives you the bottom edge, and only when <em>that</em> passes 0 has the whole thing really gone. Same edge-thinking as the boxes and the walls.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># state.py</span>
+
+<span class="kw">def</span> <span class="fn">update_shots</span>(shots, dt):
+    kept = []
+
+    <span class="kw">for</span> shot <span class="kw">in</span> shots:
+        shot[<span class="st">"y"</span>] = shot[<span class="st">"y"</span>] - SHOT_SPEED * dt
+
+        <span class="kw">if</span> shot[<span class="st">"y"</span>] + SHOT_H &gt; <span class="nu">0</span>:
+            kept.<span class="fn">append</span>(shot)
+
+    <span class="kw">return</span> kept
+
+
+<span class="cm"># main.py, in the game loop</span>
+
+    shots = <span class="fn">update_shots</span>(shots, dt)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Give shots a lifetime instead of an edge.</strong> Put an <code>"age"</code> in each shot when it is made, add <code>dt</code> to it every frame, and throw the shot away once it gets past a second and a half.</p>
+      <p>Same pattern, different question. Now shots die of old age wherever they happen to be, which is how a lot of games handle bullets, sparks and explosions.</p>
+      <p>Try both together: gone if it leaves the screen <em>or</em> gets too old. Two reasons to drop something, one list of keepers.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>The number still never goes down</b>
+        <span><code>main.py</code> is not catching what the function hands back. It has to be <code>shots = update_shots(shots, dt)</code>, with the <code>shots =</code> on the front.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: 'NoneType' object is not iterable</b>
+        <span><code>update_shots</code> has no <code>return</code> at the end, so it hands back nothing, and <code>shots</code> becomes nothing. Then drawing them falls over.</span>
+      </div>
+      <div class="err">
+        <b>Every shot disappears the instant you fire it</b>
+        <span>The check is the wrong way round, so it keeps the ones that have gone and throws away the ones on screen.</span>
+      </div>
+      <div class="err">
+        <b>Shots vanish while still visible near the top</b>
+        <span>The check is using <code>shot["y"] &gt; 0</code> rather than <code>shot["y"] + SHOT_H &gt; 0</code>. See Hint 3.</span>
+      </div>
+      <div class="err">
+        <b>The game stutters every time you fire</b>
+        <span>The <code>print</code> is still in there. Writing to the terminal sixty times a second is genuinely slow.</span>
+      </div>
+      <div class="err">
+        <b>A few shots hang around one frame too long</b>
+        <span>You used <code>remove</code> inside the loop. That is the bug in the picture, in the wild.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

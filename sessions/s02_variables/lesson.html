@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en" data-session="2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 2 &middot; Boxes With Names</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 2</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 0 &middot; Getting Started</span>
+    </div>
+    <h1>Boxes With Names</h1>
+    <p class="standfirst">Printing the same words every time gets dull fast. Now the computer gets somewhere to keep things.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A tiny scoreboard. A name, a score and a number of lives &mdash; which then change, and print differently the second time.</p>
+    <p class="caption">Every game you've played is doing this constantly. Your score is a box, and something keeps putting bigger numbers in it.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 446" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Four rows. First, score equals 100, with an arrow showing the 100 goes into the box called score. Second, score equals score plus 50: the right-hand side is worked out first to 150, and only then does it go into the box. Third, a comparison of the two signs: a single equals puts a value into a box, while a double equals asks whether two things are the same and answers True or False. Fourth, the four kinds of thing a box can hold: text, a whole number, a decimal, and a yes-or-no value.">
+
+        <defs>
+          <marker id="as-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c1, #3DE1E1)"/>
+          </marker>
+          <marker id="as-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c4, #9BE86A)"/>
+          </marker>
+        </defs>
+
+        <!-- ===== 1. plain assignment ===== -->
+        <text x="30" y="18" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c1, #3DE1E1)">PUTTING A VALUE IN A BOX</text>
+        <text x="30"  y="52" font-size="17" font-family="JetBrains Mono, monospace" fill="var(--ink)">score</text>
+        <text x="125" y="52" font-size="17" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--c1, #3DE1E1)">=</text>
+        <text x="180" y="52" font-size="17" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">100</text>
+        <polyline points="180,62 180,80 58,80 58,60" fill="none" stroke="var(--c1, #3DE1E1)" stroke-width="2" marker-end="url(#as-a)"/>
+        <text x="119" y="98" font-size="12" text-anchor="middle" fill="var(--c1, #3DE1E1)">goes into</text>
+        <text x="250" y="56" font-size="12" fill="currentColor">Not "score is the same as 100".</text>
+        <text x="250" y="74" font-size="12" fill="currentColor">It means: put 100 into the box called score.</text>
+
+        <!-- ===== 2. assignment with a sum ===== -->
+        <text x="30" y="136" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c4, #9BE86A)">THE RIGHT-HAND SIDE HAPPENS FIRST</text>
+        <text x="30"  y="170" font-size="17" font-family="JetBrains Mono, monospace" fill="var(--ink)">score</text>
+        <text x="125" y="170" font-size="17" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--c4, #9BE86A)">=</text>
+        <rect x="148" y="152" width="122" height="25" fill="none" stroke="var(--c4, #9BE86A)" stroke-width="1.5"/>
+        <text x="209" y="170" font-size="17" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">score + 50</text>
+        <text x="284" y="168" font-size="12" fill="var(--c4, #9BE86A)">1. work this out &#8212; 100 + 50 is 150</text>
+        <polyline points="209,180 209,198 58,198 58,178" fill="none" stroke="var(--c4, #9BE86A)" stroke-width="2" marker-end="url(#as-b)"/>
+        <text x="133" y="216" font-size="12" text-anchor="middle" fill="var(--c4, #9BE86A)">2. then put it in</text>
+        <text x="284" y="200" font-size="12" fill="currentColor">As maths it would be nonsense.</text>
+        <text x="284" y="218" font-size="12" fill="currentColor">As an instruction it is perfectly clear.</text>
+
+        <!-- ===== 3. = versus == ===== -->
+        <text x="30" y="262" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="currentColor">TWO SIGNS THAT LOOK ALIKE</text>
+
+        <rect x="30" y="274" width="285" height="82" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+        <text x="48"  y="312" font-size="30" font-family="JetBrains Mono, monospace" fill="var(--c1, #3DE1E1)">=</text>
+        <text x="92"  y="300" font-size="12.5" font-weight="700" fill="var(--ink)">puts a value into a box</text>
+        <text x="92"  y="320" font-size="12.5" font-family="JetBrains Mono, monospace" fill="currentColor">score = 100</text>
+        <text x="92"  y="340" font-size="11.5" fill="currentColor">the score is now different</text>
+
+        <rect x="335" y="274" width="275" height="82" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5"/>
+        <text x="353" y="312" font-size="30" font-family="JetBrains Mono, monospace" fill="var(--c2, #F857C1)">==</text>
+        <text x="410" y="300" font-size="12.5" font-weight="700" fill="var(--ink)">asks if two things match</text>
+        <text x="410" y="320" font-size="12.5" font-family="JetBrains Mono, monospace" fill="currentColor">score == 100</text>
+        <text x="410" y="340" font-size="11.5" fill="currentColor">changes nothing &#183; True or False</text>
+
+        <!-- ===== 4. the four kinds ===== -->
+        <text x="30" y="392" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c1, #3DE1E1)">WHAT A BOX CAN HOLD</text>
+
+        <rect x="30"  y="402" width="90" height="26" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+        <rect x="134" y="402" width="60" height="26" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+        <rect x="208" y="402" width="66" height="26" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+        <rect x="288" y="402" width="76" height="26" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+        <text x="75"  y="420" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">"Sam"</text>
+        <text x="164" y="420" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">7</text>
+        <text x="241" y="420" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">3.5</text>
+        <text x="326" y="420" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">True</text>
+
+        <text x="396" y="410" font-size="12" fill="currentColor">text &#183; whole number &#183; decimal &#183; yes-or-no</text>
+        <text x="396" y="428" font-size="11.5" fill="var(--muted)">string &#183; integer &#183; float &#183; boolean</text>
+
+      </svg>
+      <figcaption><strong>Read an <code>=</code> line from the right.</strong> Whatever is on the right gets worked out first, and only then does the answer go into the box named on the left. In maths <code>=</code> means "is the same as" &mdash; in Python that question is <code>==</code>, which arrives next session.</figcaption>
+    </figure>
+    <div class="idea-body">
+      <p><strong>A variable is a name with something kept inside it.</strong> <code>score = 0</code> makes a box called <code>score</code> and puts <code>0</code> in it. From then on, writing <code>score</code> means "whatever is in that box right now".</p>
+      <p><strong>The <code>=</code> sign is not maths.</strong> It doesn't mean "is equal to", it means <em>put this in that box</em>. Which is why <code>score = score + 100</code> makes sense: work out what's in the box, add 100, put the answer back.</p>
+      <p><strong>A box can hold four kinds of thing.</strong> Text like <code>"Sam"</code> (its proper name is a <em>string</em>). Whole numbers like <code>7</code> (an <em>integer</em>). Decimals like <code>3.5</code> (a <em>float</em>). And yes-or-no values, <code>True</code> and <code>False</code> (a <em>boolean</em>). The picture below has all four.</p>
+      <p><strong>Text and numbers behave differently.</strong> <code>"3"</code> with quotes is a character. <code>3</code> without them is a number you can do sums with. They look the same and are not.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 2</code>. Read it through. The same three boxes get printed twice with different things inside.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>name</code> to your own name and run it again. It changed in three places at once, because all three were asking the same box.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change the starting <code>score</code> to 1000. Run it. Work out why the second number is 1100 before you look.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a fourth box of your own &mdash; <code>level = 1</code> &mdash; and print it alongside the others.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Make the player lose two lives instead of one.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Look at the <code>f"&hellip;"</code> line at the bottom. The <code>f</code> lets you drop a box straight into a sentence using <code>{ }</code>. Add your <code>level</code> to that sentence.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Try to break it: change <code>lives = 3</code> to <code>lives = "3"</code> and run it. Read the error. Then take the quotes off again.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>name = "Player One"</kbd><span>Quotes, because it's words. Try your own name, or something silly.</span></div>
+      <div class="knobrow"><kbd>score = 0</kbd><span>No quotes, because it's a number and we want to do sums with it.</span></div>
+      <div class="knobrow"><kbd>score + 100</kbd><span>Try <code>* 2</code> to double it, or <code>- 50</code>. The box only changes if you put the answer back in it.</span></div>
+      <div class="knobrow"><kbd>f"{name} has&hellip;"</kbd><span>Anything inside the curly brackets gets swapped for what's in that box. Try putting a sum in there: <code>{score * 2}</code>.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why does score = score + 100 work?</summary>
+      <div class="hint">
+        <p>Read it right-to-left, not as maths. The right-hand side is worked out <em>first</em>: whatever is in <code>score</code>, plus 100. Then the answer is dropped back into the box on the left.</p>
+        <p>So if score was 0, the right-hand side works out to 100, and 100 goes into the box. As maths it would be nonsense. As an instruction it's perfectly clear.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what's the difference between 3 and "3"?</summary>
+      <div class="hint">
+        <p><code>3</code> is a number. You can double it, add to it, compare it.</p>
+        <p><code>"3"</code> is a character, the same as <code>"a"</code> or <code>"?"</code>. It just happens to look like a number.</p>
+        <p><code>3 + 3</code> gives <code>6</code>. But <code>"3" + "3"</code> gives <code>"33"</code>, because gluing two lots of text together is what <code>+</code> means for words. This catches people out for years.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; what is the f in front of the quotes?</summary>
+      <div class="hint">Short for <em>format</em>. It tells Python "there are boxes hidden in this sentence, look for the curly brackets". Without the <code>f</code>, <code>"{name}"</code> just prints the characters <code>{name}</code>, which is a good way to check you actually typed it.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre>name = <span class="st">"Sam"</span>
+score = <span class="nu">0</span>
+lives = <span class="nu">3</span>
+level = <span class="nu">1</span>
+
+score = score + <span class="nu">250</span>
+lives = lives - <span class="nu">2</span>
+level = level + <span class="nu">1</span>
+
+<span class="fn">print</span>(<span class="st">f"{name} reached level {level} with {score} points."</span>)
+<span class="fn">print</span>(<span class="st">f"Lives left: {lives}"</span>)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Build a character sheet.</strong> Pick a character from a game you like and give them boxes: health, attack, speed, a name, whatever fits.</p>
+      <p>Then have them take a hit &mdash; knock the health down, print the sheet again. If you want to push it, work the damage out from the numbers rather than typing it in: <code>health = health - attack</code>.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>NameError: name 'levl' is not defined</b>
+        <span>A box by that name has never been made &mdash; almost always a typo. Python is fussy about spelling and won't guess.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: unsupported operand type(s) for -: 'str' and 'int'</b>
+        <span><code>str</code> means text and <code>int</code> means whole number. You're trying to subtract a number from some words, which is what happens if a number accidentally has quotes around it.</span>
+      </div>
+      <div class="err">
+        <b>SyntaxError: cannot assign to literal</b>
+        <span>You've written it backwards: <code>100 = score</code>. The box always goes on the left of the <code>=</code>.</span>
+      </div>
+      <div class="err">
+        <b>It prints {name} instead of the name</b>
+        <span>The <code>f</code> is missing from in front of the opening quote.</span>
+      </div>
+      <div class="err">
+        <b>The number doesn't change</b>
+        <span>You worked out <code>score + 100</code> but never put the answer anywhere. It needs to be <code>score = score + 100</code>.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

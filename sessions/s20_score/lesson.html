@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-session="20">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 20 &middot; Score And Game Over</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 20</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 3 &middot; Shooter</span>
+    </div>
+    <h1>Score And Game Over</h1>
+    <p class="standfirst">You can shoot things. Nothing counts, nothing ends, and nothing tells you how you did. Those three things are the difference between a toy and a game.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A score in the corner that goes up when you hit something, a game that ends when you clear the screen, and a key that starts it again.</p>
+    <p class="caption">By the end of this you have a complete game. Somebody else could sit down and play it without you explaining anything.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Drawing words takes two steps.</strong> First you make a <em>font</em> &mdash; once, before the loop, because it is slow. Then every frame you ask it to turn some text into a little picture, and paste that picture onto the screen with <code>blit</code>.</p>
+      <p><strong><code>blit</code> just means "stick this picture there".</strong> It is how everything that is not a plain rectangle gets drawn, and it is the same call you will use for real sprites later.</p>
+      <p><strong>And a game needs to know what it is currently doing.</strong> One variable &mdash; <code>mode</code> &mdash; holding either <code>"playing"</code> or <code>"over"</code>. The loop looks at it and decides what to update and what to draw. That is a <em>state machine</em>, and it is how every menu, pause screen and death screen ever made works.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 8 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 20</code>. Shooting works and targets vanish, exactly as you left it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Make a font.</strong> In <code>render.py</code>, above <code>draw</code>, add <em>two</em> lines:<br><code>pygame.font.init()</code><br><code>font = pygame.font.Font(None, TEXT_SIZE)</code><br><span class="steplet">The first one wakes up pygame's font machinery. It is needed because <code>render.py</code> gets imported <em>before</em> <code>main.py</code> reaches its <code>pygame.init()</code>, and fonts will not be built until something has started them up. <code>None</code> means "use the one built into pygame", so there is no file to go and find.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Draw the score.</strong> Give <code>draw</code> a <code>score</code> slot, and at the bottom of it:<br><code>img = font.render(f"SCORE {score}", True, TEXT_COLOUR)</code><br><code>screen.blit(img, (12, 10))</code><br><span class="steplet">The <code>True</code> in the middle asks for smooth edges. The two numbers are where the top-left of the text goes.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">In <code>main.py</code>, make <code>score = 0</code> before the loop, pass it to <code>draw</code>, and run it. A score of 0 in the corner that never moves.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Where a hit gets marked, add <code>score = score + 1</code>. Run it and shoot something. That number is the first thing you have made that keeps track of how well somebody is doing.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Add the mode.</strong> Before the loop, <code>mode = "playing"</code>. Then after the collision code:<br><code>if len(targets) == 0:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;mode = "over"</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Make the mode matter.</strong> Wrap the moving and colliding in <code>if mode == "playing":</code> so everything stops when it is over. Pass <code>mode</code> into <code>draw</code>, and when it is <code>"over"</code>, blit a second line of text in the middle of the screen.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Let them go again.</strong> In the event loop: if <code>mode == "over"</code> and the player presses R, set <code>targets = make_targets()</code>, <code>shots = []</code>, <code>score = 0</code> and <code>mode = "playing"</code>. Play it three times in a row.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>TEXT_SIZE = 30</kbd><span>How big the font is. It is set when the font is made, so changing it means restarting &mdash; fonts are not re-made every frame.</span></div>
+      <div class="knobrow"><kbd>(12, 10)</kbd><span>Where the score sits. Try <code>(WIDTH - 150, 10)</code> for the other corner.</span></div>
+      <div class="knobrow"><kbd>score + 1</kbd><span>Try <code>+ 10</code>, or make faster targets worth more by using their speed. Scoring is entirely made up, and always has been.</span></div>
+      <div class="knobrow"><kbd>"playing" / "over"</kbd><span>Just text you chose. Python does not care what the words are &mdash; <code>"alive"</code> and <code>"dead"</code> would work identically. Pick words you will still understand in a month.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why is the font made outside the loop?</summary>
+      <div class="hint">
+        <p>Because building a font means loading and measuring a whole alphabet, and that is slow. Doing it sixty times a second would cost more than everything else in the game put together.</p>
+        <p><code>font.render</code> is the cheap part, and that does belong in the loop, because the score changes.</p>
+        <p>Same rule as the stars in Session 9: make the expensive thing once, up front; use it every frame.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what is blit?</summary>
+      <div class="hint">
+        <p>Copying one picture onto another. <code>font.render</code> hands you a small picture of your words, and <code>screen.blit(img, (12, 10))</code> stamps it onto the screen with its top-left corner at that spot.</p>
+        <p><code>pygame.draw.rect</code> paints a shape; <code>blit</code> pastes a picture. When you swap the rectangles for real artwork, every one of them becomes a <code>blit</code>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; how do I put the text in the middle?</summary>
+      <div class="hint">
+        <p>The picture knows its own size, so ask it and take off half:</p>
+        <pre>img = font.<span class="fn">render</span>(<span class="st">"ALL CLEAR - PRESS R"</span>, <span class="kw">True</span>, TEXT_COLOUR)
+x = WIDTH / <span class="nu">2</span> - img.<span class="fn">get_width</span>() / <span class="nu">2</span>
+y = HEIGHT / <span class="nu">2</span> - img.<span class="fn">get_height</span>() / <span class="nu">2</span>
+screen.<span class="fn">blit</span>(img, (x, y))</pre>
+        <p>Exactly the same half-the-width trick as centring a shot on the ship.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># render.py</span>
+
+pygame.font.<span class="fn">init</span>()
+font = pygame.font.<span class="fn">Font</span>(<span class="kw">None</span>, TEXT_SIZE)
+
+
+<span class="kw">def</span> <span class="fn">draw</span>(screen, stars, ship, shots, targets, score, mode):
+    ...                                  <span class="cm"># everything you already had</span>
+
+    img = font.<span class="fn">render</span>(<span class="st">f"SCORE {score}"</span>, <span class="kw">True</span>, TEXT_COLOUR)
+    screen.<span class="fn">blit</span>(img, (<span class="nu">12</span>, <span class="nu">10</span>))
+
+    <span class="kw">if</span> mode == <span class="st">"over"</span>:
+        img = font.<span class="fn">render</span>(<span class="st">"ALL CLEAR - PRESS R"</span>, <span class="kw">True</span>, TEXT_COLOUR)
+        screen.<span class="fn">blit</span>(img, (WIDTH / <span class="nu">2</span> - img.<span class="fn">get_width</span>() / <span class="nu">2</span>,
+                          HEIGHT / <span class="nu">2</span> - img.<span class="fn">get_height</span>() / <span class="nu">2</span>))
+
+
+<span class="cm"># main.py</span>
+
+score = <span class="nu">0</span>
+mode = <span class="st">"playing"</span>
+
+<span class="kw">while</span> running:
+    ...
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        ...
+        <span class="kw">if</span> event.type == pygame.KEYDOWN:
+            <span class="kw">if</span> event.key == pygame.K_SPACE <span class="kw">and</span> mode == <span class="st">"playing"</span>:
+                shots.<span class="fn">append</span>(<span class="fn">make_shot</span>(ship))
+            <span class="kw">if</span> event.key == pygame.K_r <span class="kw">and</span> mode == <span class="st">"over"</span>:
+                targets = <span class="fn">make_targets</span>()
+                shots = []
+                score = <span class="nu">0</span>
+                mode = <span class="st">"playing"</span>
+
+    <span class="kw">if</span> mode == <span class="st">"playing"</span>:
+        <span class="fn">update_ship</span>(ship, direction, dt)
+        shots = <span class="fn">update_shots</span>(shots, dt)
+        <span class="fn">update_targets</span>(targets, dt)
+
+        <span class="kw">for</span> shot <span class="kw">in</span> shots:
+            <span class="kw">for</span> target <span class="kw">in</span> targets:
+                <span class="kw">if</span> <span class="fn">overlaps</span>(shot, target):
+                    shot[<span class="st">"hit"</span>] = <span class="kw">True</span>
+                    target[<span class="st">"hit"</span>] = <span class="kw">True</span>
+                    score = score + <span class="nu">1</span>
+
+        ...                              <span class="cm"># the two clear-out loops</span>
+
+        <span class="kw">if</span> <span class="fn">len</span>(targets) == <span class="nu">0</span>:
+            mode = <span class="st">"over"</span>
+
+    <span class="fn">draw</span>(screen, stars, ship, shots, targets, score, mode)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Make it possible to lose.</strong> Give the targets a slow downward drift, and add a third mode &mdash; <code>"dead"</code> &mdash; for when one of them reaches the ship. The ship has an <code>x</code>, a <code>y</code>, and now needs a <code>w</code> and an <code>h</code>, and then <code>overlaps</code> works on it like anything else.</p>
+      <p>Two ways to finish, two different messages. Winning and losing should not look the same.</p>
+      <p>Then <strong>a proper front screen</strong>: start in a <code>"title"</code> mode that shows the name of the game and waits for a key. Three modes and the game has a beginning, a middle and an end.</p>
+      <p>Keep a best score across restarts while you are at it. It only has to be a variable that the restart does not reset &mdash; which is a nice little puzzle in itself.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>pygame.error: font not initialized</b>
+        <span>The <code>pygame.font.init()</code> line is missing from the top of <code>render.py</code>. Python runs that whole file the moment <code>main.py</code> imports it, which is several lines <em>before</em> <code>pygame.init()</code> &mdash; so the font machinery has to be started up there and then.</span>
+      </div>
+      <div class="err">
+        <b>The score never changes</b>
+        <span><code>score = score + 1</code> is inside a function somewhere, so it is changing a copy. Numbers travel as copies &mdash; the counting has to happen in <code>main.py</code>, where the real <code>score</code> lives.</span>
+      </div>
+      <div class="err">
+        <b>The score jumps up by ten at a time</b>
+        <span>One shot is overlapping a target for several frames before either gets cleared, or one shot is hitting more than one target. Check the clear-out loops actually run every frame.</span>
+      </div>
+      <div class="err">
+        <b>Everything freezes and R does nothing</b>
+        <span>The restart is inside <code>if mode == "playing":</code>, so it can never run once the mode is <code>"over"</code>. It belongs in the event loop, outside that check.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: draw() takes 5 positional arguments but 7 were given</b>
+        <span><code>draw</code> needs slots for <code>score</code> and <code>mode</code> as well. Both ends together.</span>
+      </div>
+      <div class="err">
+        <b>The game-over text is off to the left</b>
+        <span>You used <code>WIDTH / 2</code> without taking off half the picture's width. <code>img.get_width()</code> asks it how wide it turned out.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs. That is a whole game.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" data-session="25">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 25 &middot; Which Side Did It Hit?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 25</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 4 &middot; Arkanoid</span>
+    </div>
+    <h1>Which Side Did It Hit?</h1>
+    <p class="standfirst">The ball sometimes clips the side of a brick and carries on straight through the wall. Today you work out which way it should have gone.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>A ball that bounces off the side of a brick as convincingly as it bounces off the bottom.</p>
+    <p class="caption">One short function, twelve lines long. The same twelve lines decide whether a player lands on a platform or slides down its side.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Flipping <code>vy</code> is a guess, and it is wrong about a third of the time.</strong> It assumes the ball arrived from above or below. Come in from the side and the ball needs <code>vx</code> flipped instead.</p>
+      <p><strong>So work out which edge it came in through.</strong> In one frame the ball only moves a few pixels &mdash; so whichever of the brick's edges it has <em>barely</em> got past is the one it just crossed. The edge it is deep inside, it must have been lined up with all along.</p>
+      <p><strong>Four subtractions and a comparison.</strong> Measure how far past the left, the right, the top and the bottom it has got, take the smallest across and the smallest down, and flip whichever is shallower.</p>
+      <p>This is exactly how landing on a platform works, which is why it is worth getting right now rather than in the middle of the Geometry Dash arc.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 262" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="A ball overlapping the bottom-left corner of a brick. It has got three pixels past the brick's left edge but ten pixels past its bottom edge. Because three is smaller than ten, it must have come in through the side, so the sideways speed is the one to flip.">
+
+        <text x="20" y="22" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">HOW FAR PAST EACH EDGE HAS IT GOT?</text>
+
+        <rect x="180" y="50" width="260" height="96" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="2"/>
+        <text x="310" y="104" font-size="13" text-anchor="middle" fill="var(--c2, #F857C1)">the brick</text>
+
+        <rect x="150" y="118" width="60" height="60" fill="var(--c3, #FFC24B)" opacity="0.85"/>
+        <text x="180" y="196" font-size="12" text-anchor="middle" fill="var(--c3, #FFC24B)">the ball</text>
+
+        <line x1="180" y1="88" x2="210" y2="88" stroke="var(--c1, #3DE1E1)" stroke-width="2.5"/>
+        <text x="222" y="84" font-size="12" font-weight="700" fill="var(--c1, #3DE1E1)">3 px past the left edge</text>
+        <text x="222" y="100" font-size="11" fill="currentColor">the shallower one</text>
+
+        <line x1="166" y1="118" x2="166" y2="146" stroke="currentColor" stroke-width="2.5"/>
+        <text x="70" y="130" font-size="12" font-weight="700" text-anchor="end" fill="currentColor">10 px past</text>
+        <text x="70" y="146" font-size="12" font-weight="700" text-anchor="end" fill="currentColor">the bottom edge</text>
+        <line x1="76" y1="126" x2="160" y2="130" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <line x1="20" y1="216" x2="620" y2="216" stroke="var(--edge)" stroke-width="1"/>
+        <text x="20" y="238" font-size="12.5" font-weight="700" fill="var(--c1, #3DE1E1)">3 is less than 10, so it came in through the side</text>
+        <text x="20" y="256" font-size="12.5" fill="currentColor">&#8212; flip <tspan font-family="JetBrains Mono, monospace" fill="var(--ink)">vx</tspan>, not <tspan font-family="JetBrains Mono, monospace" fill="var(--ink)">vy</tspan></text>
+
+      </svg>
+      <figcaption><strong>The shallowest edge is the one it came in through.</strong> In one frame a ball only moves a few pixels, so whichever edge it has barely got past is the one it just crossed. The one it is deep inside, it must have been lined up with all along.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 25</code> and reproduce the bug on purpose: get the ball to clip a brick's side and watch it plough on.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>state.py</code>,</strong> where it says YOUR PROPER BOUNCE GOES HERE, start <code>bounce_off_brick(ball, brick)</code> and measure all four:<br><code>from_left = (ball["x"] + ball["w"]) - brick["x"]</code><br><span class="steplet">How far the ball's right side has got past the brick's left edge. The other three are the same idea from the other directions &mdash; the picture above shows two of them.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Take the shallower of each pair:<br><code>across = min(from_left, from_right)</code><br><code>down = min(from_top, from_bottom)</code><br><span class="steplet"><code>min</code> hands back the smaller of two numbers. It is built into Python.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Then decide: <code>if across &lt; down:</code> flip <code>vx</code>, <code>else:</code> flip <code>vy</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>main.py</code>,</strong> change the hit code. Instead of a <code>hit_one</code> flag, keep the <em>first</em> brick that was hit in a variable called <code>first_hit</code>, starting as <code>None</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Afterwards, <code>if first_hit is not None:</code> call <code>bounce_off_brick(ball, first_hit)</code>. Import it, and run it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Go and clip a brick's side again. It bounces properly now. Try to find a hit it still gets wrong &mdash; corners are the place to look.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>BALL_SPEED</kbd><span>The faster the ball, the deeper it gets into a brick in one frame, and the more it starts to guess. Above about 900 it gets unreliable &mdash; which is true of nearly every game that does it this way.</span></div>
+      <div class="knobrow"><kbd>across &lt; down</kbd><span>Swap it to <code>&lt;=</code> and see whether you can tell the difference. Exact corner hits are a coin toss either way.</span></div>
+      <div class="knobrow"><kbd>BRICK_H = 26</kbd><span>Tall thin bricks get hit on the side far more often. Try 60 and the old bug would have been unbearable.</span></div>
+      <div class="knobrow"><kbd>first_hit</kbd><span>Try using the <em>last</em> brick hit rather than the first. Mostly identical, occasionally different, and neither is more correct.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why is the shallowest edge the right one?</summary>
+      <div class="hint"><p>Because of how little happens in a sixtieth of a second.</p><p>A ball at 340 pixels a second moves under six pixels per frame. So when it is found overlapping a brick, it can only have got a few pixels past whichever edge it came through &mdash; there has not been time for more.</p><p>The other edges it is 'past' by a lot, because it was already lined up with them before it ever arrived. Deep means it was always there; shallow means it just happened.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; what do the four sums mean?</summary>
+      <div class="hint"><p>Each one is a depth. Take <code>from_left</code>:</p><p><code>(ball["x"] + ball["w"])</code> is the ball's right-hand side. <code>brick["x"]</code> is the brick's left-hand side. Subtract and you get how far the ball's right side has pushed past the brick's left edge.</p><p>If the ball is only just poking in from the left, that is a small number. If it is right through the middle of the brick, it is a big one.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; what is None?</summary>
+      <div class="hint"><p>Python's word for nothing at all, and the usual way to say "no answer yet".</p><p><code>first_hit = None</code> means no brick has been hit this frame. If one is, it goes in that variable. Afterwards, <code>if first_hit is not None:</code> asks whether anything ever turned up.</p><p>You met it in Session 5 without knowing: a function with no <code>return</code> hands back <code>None</code>.</p></div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint"><pre><span class="kw">def</span> <span class="fn">bounce_off_brick</span>(ball, brick):
+    from_left = (ball[<span class="st">"x"</span>] + ball[<span class="st">"w"</span>]) - brick[<span class="st">"x"</span>]
+    from_right = (brick[<span class="st">"x"</span>] + brick[<span class="st">"w"</span>]) - ball[<span class="st">"x"</span>]
+    from_top = (ball[<span class="st">"y"</span>] + ball[<span class="st">"h"</span>]) - brick[<span class="st">"y"</span>]
+    from_bottom = (brick[<span class="st">"y"</span>] + brick[<span class="st">"h"</span>]) - ball[<span class="st">"y"</span>]
+
+    across = <span class="fn">min</span>(from_left, from_right)
+    down = <span class="fn">min</span>(from_top, from_bottom)
+
+    <span class="kw">if</span> across &lt; down:
+        ball[<span class="st">"vx"</span>] = -ball[<span class="st">"vx"</span>]
+    <span class="kw">else</span>:
+        ball[<span class="st">"vy"</span>] = -ball[<span class="st">"vy"</span>]
+
+
+<span class="cm"># main.py</span>
+
+    first_hit = <span class="kw">None</span>
+    <span class="kw">for</span> brick <span class="kw">in</span> bricks:
+        <span class="kw">if</span> <span class="fn">overlaps</span>(ball, brick):
+            brick[<span class="st">"gone"</span>] = <span class="kw">True</span>
+            <span class="kw">if</span> first_hit <span class="kw">is</span> <span class="kw">None</span>:
+                first_hit = brick
+
+    <span class="kw">if</span> first_hit <span class="kw">is</span> <span class="kw">not</span> <span class="kw">None</span>:
+        <span class="fn">bounce_off_brick</span>(ball, first_hit)</pre></div>
+    </details>
+
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Use it on the walls too.</strong> The screen edges are just four very large bricks. Write them as brick-shaped dicts &mdash; one down each side, one across the top &mdash; and let the same function handle them.</p>
+      <p>Everything gets simpler when the walls stop being a special case. And it sets up the Geometry Dash arc, where the ground is just another block.</p>
+      <p><strong>Harder:</strong> a brick that takes two hits. It only vanishes on the second, but the ball must bounce properly both times. Nothing about the bounce changes &mdash; only what happens to the brick afterwards.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>The ball still goes through the wall sideways</b>
+        <span><code>bounce_off_brick</code> is written but never called, or <code>main.py</code> still has the old <code>vy</code> flip in it as well. Only one of them should survive.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: '&lt;' not supported between instances of 'NoneType' and 'int'</b>
+        <span><code>bounce_off_brick</code> is being handed <code>None</code>, so the <code>if first_hit is not None:</code> guard is missing or the wrong way round.</span>
+      </div>
+      <div class="err">
+        <b>The ball bounces off nothing, in mid-air</b>
+        <span>The bounce is being called every frame rather than only when something was hit. Check what it is indented under.</span>
+      </div>
+      <div class="err">
+        <b>Corner hits look random</b>
+        <span>They are. At an exact corner both depths are equal and it picks one. Every game that does it this way has the same wobble, and nobody has ever noticed while playing.</span>
+      </div>
+      <div class="err">
+        <b>The ball gets faster and faster</b>
+        <span>Something is flipping a speed twice. Check there is exactly one bounce call per frame, and that the old <code>hit_one</code> code is gone.</span>
+      </div>
+      <div class="err">
+        <b>ImportError: cannot import name 'bounce_off_brick' from 'state'</b>
+        <span>It is not in <code>state.py</code> yet, or it is spelled differently there.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

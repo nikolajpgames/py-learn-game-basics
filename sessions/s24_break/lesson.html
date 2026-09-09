@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" data-session="24">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 24 &middot; Knock Them Out</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 24</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 4 &middot; Arkanoid</span>
+    </div>
+    <h1>Knock Them Out</h1>
+    <p class="standfirst">The ball goes straight through fifty bricks as though they were not there. One <code>overlaps</code> call away from being a game.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Bricks that vanish when the ball hits them, and a ball that turns round when it does.</p>
+    <p class="caption">It will be almost right. There is one thing wrong with it that you will see within a minute, and fixing that is next session.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Nothing new at all &mdash; this is Session 19 again.</strong> Check the moving thing against everything in a list, mark what got hit, then rebuild the list without them.</p>
+      <p><strong>Mark first, clear afterwards.</strong> You cannot take bricks out of the list while you are looping through it. Session 18's picture explains why, and it has not stopped being true.</p>
+      <p><strong>Turning the ball round is one line: flip <code>vy</code>.</strong> Which is right when the ball comes up from underneath, and wrong the rest of the time. Write it anyway &mdash; you will spot the problem faster by playing it than by reading about it.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 24</code>. Fifty bricks, and a ball that ignores them.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>In <code>main.py</code>,</strong> where it says NOTHING BREAKS A BRICK YET, loop through the bricks and mark any the ball is touching:<br><code>for brick in bricks:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;if overlaps(ball, brick):</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;brick["gone"] = True</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Keep a <code>hit_one</code> variable that starts <code>False</code> and becomes <code>True</code> if anything was marked. Afterwards, if it is <code>True</code>, flip <code>ball["vy"]</code>. <span class="steplet">One flip per frame, however many bricks got hit &mdash; two flips would cancel out and the ball would sail on through.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Underneath that, build a list of the bricks without a <code>"gone"</code> in them and put it back in <code>bricks</code>. Same three lines as the shots in Session 18.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Import <code>overlaps</code> into <code>main.py</code> and run it. Bricks break.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Clear the bottom row and play on. Watch what happens when the ball catches a brick on its <strong>side</strong> rather than underneath.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Do that a few times until you are sure of what you are seeing. Then read the challenge.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>BALL_SPEED</kbd><span>Slow it right down to 120 and the side-hit problem becomes much easier to watch happen.</span></div>
+      <div class="knobrow"><kbd>BRICK_GAP = 6</kbd><span>A bigger gap means more chances to hit a brick's side. Try 24 and the problem shows up constantly.</span></div>
+      <div class="knobrow"><kbd>hit_one</kbd><span>Try flipping <code>vy</code> inside the loop instead of once afterwards. Hit two bricks at once and the ball carries straight on, because it flipped twice.</span></div>
+      <div class="knobrow"><kbd>BRICK_ROWS</kbd><span>Fewer rows means you reach the awkward side-on hits sooner.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why one flip per frame rather than one per brick?</summary>
+      <div class="hint"><p>Because flipping twice puts it back where it started.</p><p>When the ball catches two bricks in the same frame &mdash; easily done at a corner &mdash; a flip inside the loop runs twice, <code>vy</code> ends up unchanged, and the ball ploughs on through the wall as though nothing happened.</p><p>So: find out whether <em>anything</em> was hit, then turn the ball round once.</p></div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; the ball sometimes goes through the wall sideways</summary>
+      <div class="hint"><p>Good. You have found the thing this session is deliberately leaving broken.</p><p>Flipping <code>vy</code> assumes the ball hit the top or the bottom of a brick. When it clips a brick's <em>side</em>, the right answer is to flip <code>vx</code> &mdash; and flipping <code>vy</code> instead sends it onwards through the wall, bouncing off nothing.</p><p>That is Session 25, and it is a better session because you have seen the problem first.</p></div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint"><pre><span class="cm"># main.py, after the ball has moved</span>
+
+    hit_one = <span class="kw">False</span>
+    <span class="kw">for</span> brick <span class="kw">in</span> bricks:
+        <span class="kw">if</span> <span class="fn">overlaps</span>(ball, brick):
+            brick[<span class="st">"gone"</span>] = <span class="kw">True</span>
+            hit_one = <span class="kw">True</span>
+
+    <span class="kw">if</span> hit_one:
+        ball[<span class="st">"vy"</span>] = -ball[<span class="st">"vy"</span>]
+
+    kept = []
+    <span class="kw">for</span> brick <span class="kw">in</span> bricks:
+        <span class="kw">if</span> <span class="st">"gone"</span> <span class="kw">not</span> <span class="kw">in</span> brick:
+            kept.<span class="fn">append</span>(brick)
+    bricks = kept</pre></div>
+    </details>
+
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Work out the rule before you are told it.</strong> Play until you catch the ball going through a brick's side, then think about what the code should have done instead.</p>
+      <p>You know the ball's position and size, and the brick's. From those four numbers on each, you can tell which edge the ball has only <em>just</em> crossed &mdash; and that is the edge it came in through.</p>
+      <p>Have a go at writing it. Then compare with Session 25, which does exactly that. Getting it yourself first is worth more than reading it.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>The ball goes through the wall sideways sometimes</b>
+        <span>Expected. That is the bug this session leaves in on purpose &mdash; see Hint 2 and then Session 25.</span>
+      </div>
+      <div class="err">
+        <b>Hitting two bricks at once sends the ball straight through</b>
+        <span>The flip is inside the loop, so it happened twice and cancelled itself out. Move it outside, guarded by <code>hit_one</code>.</span>
+      </div>
+      <div class="err">
+        <b>RuntimeError: dictionary changed size during iteration</b>
+        <span>Something is being removed inside the checking loop. Mark first, clear afterwards.</span>
+      </div>
+      <div class="err">
+        <b>Every brick disappears at once</b>
+        <span><code>overlaps</code> is returning <code>True</code> for everything &mdash; the comparisons are probably the wrong way round. Compare it against Session 19's.</span>
+      </div>
+      <div class="err">
+        <b>The bricks come back</b>
+        <span>The rebuilt list is not being put back into <code>bricks</code>. It needs <code>bricks = kept</code> at the end.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'overlaps' is not defined</b>
+        <span>It lives in <code>state.py</code>, so <code>main.py</code> has to import it by name.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

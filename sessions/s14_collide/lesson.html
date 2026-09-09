@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" data-session="14">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 14 &middot; When Boxes Meet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 14</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 2 &middot; Motion &amp; Time</span>
+    </div>
+    <h1>When Boxes Meet</h1>
+    <p class="standfirst">Your boxes notice walls. They do not notice each other &mdash; they slide straight through like ghosts. Today they stop doing that.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Six big boxes drifting around, each one lighting up pink the moment it touches another.</p>
+    <p class="caption">This is the single most useful thing in any game. A ball hitting a bat, a player hitting a spike, a bullet hitting anything &mdash; all the same four questions.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>Two boxes are touching only if they overlap <em>across</em> and <em>down</em> at the same time.</strong> Overlapping on just one of those is not touching at all &mdash; two boxes can sit in the same column of the screen and be miles apart vertically.</p>
+      <p><strong>Which is four questions, and they are the same shape as your wall checks.</strong> Instead of asking "is this box past the edge of the screen?", you ask "is this box entirely past the edge of <em>that other box</em>?" four times. If the answer is no every time, they must be touching.</p>
+      <p>A function that answers yes or no like this is worth writing on its own, so you can use it anywhere. It hands back <code>True</code> or <code>False</code> &mdash; the same two values an <code>if</code> works on.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 250" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Three cases side by side. In the first, two boxes overlap horizontally but one is far below the other, so they are not touching. In the second, they line up vertically but sit far apart horizontally, so again they are not touching. In the third, they overlap both across and down, and only then are they actually touching.">
+
+        <text x="20"  y="24" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">OVERLAP ACROSS ONLY</text>
+        <text x="225" y="24" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">OVERLAP DOWN ONLY</text>
+        <text x="430" y="24" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--c2, #F857C1)">OVERLAP BOTH</text>
+
+        <rect x="20"  y="34" width="190" height="150" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="225" y="34" width="190" height="150" fill="var(--surface-2)" stroke="var(--edge)" stroke-width="1.5"/>
+        <rect x="430" y="34" width="190" height="150" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5"/>
+
+        <rect x="42"  y="52"  width="52" height="46" fill="var(--c1, #3DE1E1)" opacity="0.85"/>
+        <rect x="66"  y="122" width="52" height="46" fill="var(--c1, #3DE1E1)" opacity="0.85"/>
+        <line x1="42" y1="196" x2="118" y2="196" stroke="var(--c4, #9BE86A)" stroke-width="2"/>
+        <text x="128" y="200" font-size="11" fill="var(--c4, #9BE86A)">across: yes</text>
+        <line x1="30" y1="52" x2="30" y2="98"  stroke="var(--c3, #FFC24B)" stroke-width="2"/>
+        <line x1="30" y1="122" x2="30" y2="168" stroke="var(--c3, #FFC24B)" stroke-width="2"/>
+        <text x="42" y="222" font-size="11.5" font-weight="700" fill="currentColor">down: no &#8594; not touching</text>
+
+        <rect x="247" y="70"  width="52" height="46" fill="var(--c1, #3DE1E1)" opacity="0.85"/>
+        <rect x="340" y="92"  width="52" height="46" fill="var(--c1, #3DE1E1)" opacity="0.85"/>
+        <line x1="418" y1="92" x2="418" y2="116" stroke="var(--c4, #9BE86A)" stroke-width="2"/>
+        <text x="300" y="200" font-size="11" text-anchor="middle" fill="var(--c4, #9BE86A)">down: yes</text>
+        <text x="247" y="222" font-size="11.5" font-weight="700" fill="currentColor">across: no &#8594; not touching</text>
+
+        <rect x="462" y="66"  width="52" height="46" fill="var(--c1, #3DE1E1)" opacity="0.85"/>
+        <rect x="494" y="96"  width="52" height="46" fill="var(--c2, #F857C1)" opacity="0.85"/>
+        <rect x="494" y="96"  width="20" height="16" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <text x="530" y="200" font-size="11" text-anchor="middle" fill="var(--c4, #9BE86A)">across: yes &#183; down: yes</text>
+        <text x="462" y="222" font-size="11.5" font-weight="700" fill="var(--c2, #F857C1)">touching</text>
+
+      </svg>
+      <figcaption><strong>Both, or it does not count.</strong> The little outlined square in the third panel is the bit they actually share. If there is no shared bit in one direction, there is no shared bit at all &mdash; which is why one <code>False</code> out of the four checks is enough to say no.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 14</code>. Six big boxes. Watch two of them cross and go straight through each other.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Give every box its own colour when you build it: add <code>"colour": BOX_COLOUR</code> to the dict, and use <code>box["colour"]</code> in <code>draw</code> instead of <code>BOX_COLOUR</code>. Run it &mdash; nothing looks different yet, which is what you want.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Write the question.</strong> Add a function that takes two boxes and answers yes or no:<br><code>def overlaps(a, b):</code><br><span class="steplet">Four <code>if</code> lines, each one <code>return False</code>. If none of them fire, <code>return True</code> at the end. Hint 1 has the first one written out.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">In the game loop, just after the updating, set every box back to <code>BOX_COLOUR</code>. Every frame starts with nobody touching.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Then check every box against every other box</strong> with a loop inside a loop:<br><code>for a in boxes:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;for b in boxes:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if a is not b and overlaps(a, b):</code><br><span class="steplet"><code>a is not b</code> means "these are not the same box". Without it, every box finds itself and thinks it is touching something.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Inside that <code>if</code>, set <code>a["colour"] = HIT_COLOUR</code>. Run it. Boxes flash pink whenever they meet.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Turn <code>BOX_COUNT</code> up to 20 and <code>BOX_SIZE</code> down to 40. Now there is almost always something touching something.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>BOX_SIZE = 70</kbd><span>Big boxes meet often; small ones almost never. Try 15 and see how long you have to wait for a single pink flash.</span></div>
+      <div class="knobrow"><kbd>BOX_COUNT = 6</kbd><span>More boxes means far more pairs to check. Six boxes is 30 checks a frame; sixty boxes is 3540.</span></div>
+      <div class="knobrow"><kbd>HIT_COLOUR</kbd><span>Any three numbers. Try making it the same as <code>BG</code> &mdash; touching boxes now vanish instead of flashing.</span></div>
+      <div class="knobrow"><kbd>SPEED = 150</kbd><span>Slower makes the touches easier to watch. Faster and they are gone before you see them.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; how do I write one of the four checks?</summary>
+      <div class="hint">
+        <p>Take them one at a time. This one asks "is box <code>a</code> entirely to the left of box <code>b</code>?"</p>
+        <pre><span class="kw">if</span> a[<span class="st">"x"</span>] + BOX_SIZE &lt; b[<span class="st">"x"</span>]:
+    <span class="kw">return</span> <span class="kw">False</span></pre>
+        <p><code>a["x"] + BOX_SIZE</code> is a's right-hand edge, the same trick you used on the wall in Session 12. If that edge has not even reached b's left edge, there is no way they are touching, so you can stop right there.</p>
+        <p>The next three are the same sentence with the names swapped round, and then with <code>y</code> instead of <code>x</code>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; why does it return False four times and True once?</summary>
+      <div class="hint">
+        <p>Because it is much easier to prove two things are <em>apart</em> than to prove they are together.</p>
+        <p>Each check looks for one reason they cannot possibly be touching. Finding any one of them settles it, and <code>return</code> stops the function on the spot &mdash; the rest never run.</p>
+        <p>So if the function gets all the way to the bottom, every reason to say no has been ruled out. Whatever is left must be a yes.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; what does "a is not b" mean?</summary>
+      <div class="hint">
+        <p>"These two names are not pointing at the same box."</p>
+        <p>Session 13 showed you that two names can be labels on one dict. The inner loop goes through <em>every</em> box, so sooner or later it reaches the same one the outer loop is holding &mdash; and a box always overlaps itself perfectly.</p>
+        <p>Without that check every box would light up pink permanently, which is at least an easy bug to spot.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="kw">def</span> <span class="fn">overlaps</span>(a, b):
+    <span class="kw">if</span> a[<span class="st">"x"</span>] + BOX_SIZE &lt; b[<span class="st">"x"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> b[<span class="st">"x"</span>] + BOX_SIZE &lt; a[<span class="st">"x"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> a[<span class="st">"y"</span>] + BOX_SIZE &lt; b[<span class="st">"y"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> b[<span class="st">"y"</span>] + BOX_SIZE &lt; a[<span class="st">"y"</span>]:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="kw">True</span>
+
+
+<span class="cm"># ... inside the game loop, after everything has moved</span>
+
+    <span class="kw">for</span> box <span class="kw">in</span> boxes:
+        box[<span class="st">"colour"</span>] = BOX_COLOUR
+
+    <span class="kw">for</span> a <span class="kw">in</span> boxes:
+        <span class="kw">for</span> b <span class="kw">in</span> boxes:
+            <span class="kw">if</span> a <span class="kw">is</span> <span class="kw">not</span> b <span class="kw">and</span> <span class="fn">overlaps</span>(a, b):
+                a[<span class="st">"colour"</span>] = HIT_COLOUR</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Put something dangerous in the middle.</strong> Make one extra box that never moves &mdash; give it no <code>vx</code> or <code>vy</code>, or just skip it when you update &mdash; and park it in the centre of the screen.</p>
+      <p>Then colour any box that touches it. Everything else can go back to ignoring everything else.</p>
+      <p>You have just written spike detection. In the Geometry Dash arc, the thing that kills you is exactly this: one still object, one moving object, and these four questions.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>Every box is pink, all the time</b>
+        <span>The <code>a is not b</code> part is missing, so each box is finding itself. A box overlaps itself completely, every frame, forever.</span>
+      </div>
+      <div class="err">
+        <b>Boxes go pink and stay pink</b>
+        <span>Nothing sets them back to <code>BOX_COLOUR</code> at the start of the frame. Colour has to be worked out fresh each time, not remembered.</span>
+      </div>
+      <div class="err">
+        <b>KeyError: 'colour'</b>
+        <span>The colour was never put in the dict when the box was built. Every box needs all four &mdash; sorry, all five &mdash; of its keys from the start.</span>
+      </div>
+      <div class="err">
+        <b>They only notice each other sometimes, at high speed</b>
+        <span>Not your fault. At 2000 pixels a second a box can be fully left of another on one frame and fully right of it on the next, never overlapping on any frame you actually checked. Real games have this problem too. Slow them down.</span>
+      </div>
+      <div class="err">
+        <b>Trying to make them bounce off each other, and they stick together juddering</b>
+        <span>Worth knowing before you try: flipping both boxes' speeds when they touch does not work. They are still overlapping on the very next frame, so they flip back, and again, forever. Making things bounce off <em>each other</em> properly is a much bigger job than detecting the touch &mdash; and Pong does not need it, because a bat does not move when a ball hits it.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: overlaps() missing 1 required positional argument: 'b'</b>
+        <span>It needs two boxes to compare. You have called it with one.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

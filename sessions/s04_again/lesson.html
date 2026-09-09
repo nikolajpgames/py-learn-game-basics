@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" data-session="4">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 4 &middot; Doing It Again</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 4</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 0 &middot; Getting Started</span>
+    </div>
+    <h1>Doing It Again</h1>
+    <p class="standfirst">Computers are not clever, but they are extremely patient. Today you put that to work.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Two counters. One counts up because it was told exactly how many times, the other counts down until a condition stops being true.</p>
+    <p class="caption">The second kind is the one every game is built on. When you open a window in Session 6, it stays open because of a loop just like it.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong><code>for</code> repeats a known number of times.</strong> <code>for i in range(5):</code> means "do the indented lines five times", and <code>i</code> holds a different number each go.</p>
+      <p><strong><code>while</code> repeats as long as something stays true.</strong> It asks its question before every single go round, and the moment the answer is no, it stops.</p>
+      <p>Both use the same indent rule as <code>if</code>: what's pushed in is inside the loop, what isn't, isn't. That rule now covers everything.</p>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 4</code>. Two loops, one after the other.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Count the lines from the <code>for</code> loop. Five of them &mdash; but they read 0, 1, 2, 3, 4. Computers start counting at zero, and they never stop doing that.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Change <code>range(5)</code> to <code>range(100)</code>. Run it. You just wrote a hundred lines of output with one line of code.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Put it back to something small, then change <code>countdown = 3</code> to <code>countdown = 10</code>.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a second line inside the <code>for</code> loop &mdash; indented to match &mdash; and check it runs every time round, not just once.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Deliberately break it.</strong> Delete the line <code>countdown = countdown - 1</code> and run it. It will never stop. Press <code>Ctrl+C</code> to kill it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Put that line back. Then work out, in words, why removing it did that.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">One of these can hang your program. That's step 6, and it's on purpose.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>range(5)</kbd><span>How many times round. <code>range(1)</code> goes once. <code>range(0)</code> doesn't go at all &mdash; try it, the loop just gets skipped.</span></div>
+      <div class="knobrow"><kbd>countdown = 3</kbd><span>Where the while loop starts. Set it to 0 and the loop body never runs once, because the question is already no.</span></div>
+      <div class="knobrow"><kbd>countdown - 1</kbd><span>How fast it heads for the exit. Change it to <code>- 2</code> and it skips numbers. Change it to <code>+ 1</code> and it runs forever.</span></div>
+      <div class="knobrow"><kbd>Ctrl+C</kbd><span>Not code &mdash; hold Ctrl and press C in the black window to stop a program that won't stop itself. Worth knowing by heart.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what is i, and why does it start at 0?</summary>
+      <div class="hint">
+        <p><code>i</code> is just a variable, like <code>score</code>. The loop makes it for you and puts a different number in it each time round.</p>
+        <p><code>range(5)</code> gives 0, 1, 2, 3, 4. That's five numbers, but it stops <em>before</em> 5. It looks wrong and there's a good reason for it, which will make sense the first time you count through a list.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; why did deleting one line make it run forever?</summary>
+      <div class="hint">
+        <p>A <code>while</code> loop checks its question before every go. <code>while countdown &gt; 0</code> asks: is countdown bigger than zero?</p>
+        <p>The line you deleted was the only thing making countdown smaller. Without it, countdown stays at 3 forever, the answer is always yes, and the loop never gets to stop.</p>
+        <p>Every <code>while</code> loop needs something inside it that eventually makes the answer no. Forgetting that is the classic way to hang a program &mdash; and now you've done it on purpose, so it'll be familiar when you do it by accident.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; which loop should I use?</summary>
+      <div class="hint">If you know the number in advance &mdash; 200 stars, 5 lives, every brick in a wall &mdash; use <code>for</code>. If you're waiting for something to happen and don't know how long &mdash; until the player quits, until the ball goes off screen &mdash; use <code>while</code>.</div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># the seven times table</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">13</span>):
+    <span class="fn">print</span>(i, <span class="st">"x 7 ="</span>, i * <span class="nu">7</span>)
+
+<span class="fn">print</span>()
+
+<span class="cm"># halve it until it gets small</span>
+number = <span class="nu">1000</span>
+
+<span class="kw">while</span> number &gt; <span class="nu">1</span>:
+    <span class="fn">print</span>(number)
+    number = number / <span class="nu">2</span>
+
+<span class="fn">print</span>(<span class="st">"Done."</span>)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Build a pyramid.</strong> Get the output to look like this, using one loop:</p>
+      <pre>*
+**
+***
+****
+*****</pre>
+      <p>There is more than one way to do this and none of them is the right one. Here are two worth knowing:</p>
+      <p><strong>Repeat the text.</strong> <code>"*" * 3</code> gives you <code>"***"</code> &mdash; multiplying a piece of text repeats it. Short and neat, though it is more of a Python party trick than something you will reach for often.</p>
+      <p><strong>Or build it up as you go.</strong> Start with nothing and add one more each time round:</p>
+      <pre>stars = "**"
+stars = stars + "*"     <span class="cm"># stars is now "***"</span></pre>
+      <p>That is the same shape as <code>score = score + 100</code> from Session 2 &mdash; work out the right-hand side, put the answer back in the box. Growing something a piece at a time inside a loop is one of the most useful patterns there is, and it works in every language, so this is the one worth really understanding.</p>
+      <p>Pick whichever makes more sense to you and get it working. Then make it upside down. Then, if you are feeling mean to yourself, centre it into a proper triangle.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>It runs forever and won't stop</b>
+        <span>Nothing inside the <code>while</code> is moving it towards the exit. Press <code>Ctrl+C</code>, then look for what should be changing each go.</span>
+      </div>
+      <div class="err">
+        <b>The loop only prints one thing</b>
+        <span>The line you wanted repeated isn't indented, so it sits outside the loop and runs once at the end.</span>
+      </div>
+      <div class="err">
+        <b>It printed one fewer than expected</b>
+        <span><code>range(5)</code> stops before 5. If you want 1 to 5, use <code>range(1, 6)</code>.</span>
+      </div>
+      <div class="err">
+        <b>IndentationError: expected an indented block</b>
+        <span>A <code>for</code> or <code>while</code> line with nothing pushed in underneath it. A loop has to have something to repeat.</span>
+      </div>
+      <div class="err">
+        <b>SyntaxError: expected ':'</b>
+        <span>Missing colon at the end of the <code>for</code> or <code>while</code> line. Same rule as <code>if</code>.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'i' is not defined</b>
+        <span>Usually just a typo in the name. Worth knowing though: <code>i</code> does survive after the loop ends, holding whatever it had on the last go. You only get this error if the loop never ran at all &mdash; <code>range(0)</code> &mdash; so <code>i</code> was never made.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en" data-session="15">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 15 &middot; Three Files</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 15</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 2 &middot; Motion &amp; Time</span>
+    </div>
+    <h1>Three Files</h1>
+    <p class="standfirst">The screen looks exactly the same at the end of this one as it did at the start. What changes is the shape of the code behind it.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Exactly what you already have &mdash; twenty boxes bouncing and flashing &mdash; but living in four small files instead of one long one.</p>
+    <p class="caption">Nothing on screen changes. What changes is that you can find things again.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+    <div class="idea-body">
+      <p><strong>A file can borrow things from another file.</strong> <code>from config import *</code> at the top of a file means "go and fetch everything that file made, and let me use it here as though I had written it myself".</p>
+      <p><strong>So a program can be split up by job.</strong> One file for the numbers you fiddle with, one for the rules of the world, one for the drawing, and one to run the loop.</p>
+      <p><strong>Every file needs its own imports.</strong> This is the bit that trips people up. Files do not share what they have borrowed &mdash; if <code>state.py</code> uses <code>WIDTH</code>, then <code>state.py</code> needs its own <code>from config import *</code>, no matter what <code>main.py</code> already did.</p>
+      <p>Look at where <code>pygame</code> ends up in the picture. <strong><code>state.py</code> does not import it at all</strong> &mdash; the part that knows the rules of the world knows nothing about pixels. That is what lets you check your bouncing and your collisions are right without ever opening a window.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 288" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="A diagram of four files. At the top, main dot py, holding the game loop and nothing else. Below it and to the left, state dot py, holding the rules of the world and importing no pygame at all. Below and to the right, render dot py, holding everything that draws. At the bottom, config dot py, holding all the numbers. Arrows run from main down to state and render, and from all three down into config.">
+
+        <defs>
+          <marker id="fs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <rect x="235" y="14" width="170" height="52" fill="var(--surface-2)" stroke="var(--c1, #3DE1E1)" stroke-width="1.5"/>
+        <text x="320" y="36" font-size="13.5" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">main.py</text>
+        <text x="320" y="55" font-size="11" text-anchor="middle" fill="currentColor">the game loop, and nothing else</text>
+
+        <rect x="50" y="112" width="190" height="76" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5"/>
+        <text x="145" y="134" font-size="13.5" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">state.py</text>
+        <text x="145" y="153" font-size="11" text-anchor="middle" fill="currentColor">the rules of the world</text>
+        <text x="145" y="174" font-size="11" font-weight="700" text-anchor="middle" fill="var(--c2, #F857C1)">imports no pygame at all</text>
+
+        <rect x="400" y="112" width="190" height="76" fill="var(--surface-2)" stroke="var(--c4, #9BE86A)" stroke-width="1.5"/>
+        <text x="495" y="134" font-size="13.5" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">render.py</text>
+        <text x="495" y="153" font-size="11" text-anchor="middle" fill="currentColor">everything that draws</text>
+        <text x="495" y="174" font-size="11" text-anchor="middle" fill="currentColor">the only file full of pygame</text>
+
+        <rect x="235" y="230" width="170" height="52" fill="var(--surface-2)" stroke="var(--c3, #FFC24B)" stroke-width="1.5"/>
+        <text x="320" y="252" font-size="13.5" font-family="JetBrains Mono, monospace" text-anchor="middle" fill="var(--ink)">config.py</text>
+        <text x="320" y="271" font-size="11" text-anchor="middle" fill="currentColor">every number, in one place</text>
+
+        <line x1="278" y1="68" x2="170" y2="108" stroke="currentColor" stroke-width="1.5" marker-end="url(#fs-a)"/>
+        <line x1="362" y1="68" x2="470" y2="108" stroke="currentColor" stroke-width="1.5" marker-end="url(#fs-a)"/>
+        <line x1="320" y1="68" x2="320" y2="226" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#fs-a)"/>
+        <line x1="170" y1="192" x2="276" y2="228" stroke="currentColor" stroke-width="1.5" marker-end="url(#fs-a)"/>
+        <line x1="470" y1="192" x2="364" y2="228" stroke="currentColor" stroke-width="1.5" marker-end="url(#fs-a)"/>
+
+      </svg>
+      <figcaption><strong>An arrow means "reads from".</strong> Everything can reach the settings; nothing reaches back up. <code>state.py</code> and <code>render.py</code> never speak to each other &mdash; the loop in <code>main.py</code> is what puts them together, one after the other, every frame.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 15</code>. Twenty boxes, bouncing and flashing. Then scroll through <code>main.py</code> &mdash; it is a hundred lines now, and finding anything means hunting.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Make <code>config.py</code></strong> in the same folder as <code>main.py</code>. <em>Cut</em> the whole SETTINGS block out of <code>main.py</code> and paste it in. Nothing else goes in this file, ever.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">At the top of <code>main.py</code>, under the other imports, add:<br><code>from config import *</code><br><span class="steplet">Run it. It should look exactly as it did before. If it does, the borrowing worked.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Make <code>state.py</code></strong> and cut three whole functions into it: <code>overlaps</code>, <code>update</code> and <code>make_boxes</code>. Give it its own two lines at the top:<br><code>import random</code><br><code>from config import *</code></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Back in <code>main.py</code>, borrow them:<br><code>from state import overlaps, update, make_boxes</code><br><span class="steplet">Run it. Notice you had to name the three things you wanted &mdash; that is a good habit, because now anyone reading <code>main.py</code> can see where they came from.</span></span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt"><strong>Make <code>render.py</code></strong> and cut <code>draw</code> into it. It needs <code>import pygame</code> and <code>from config import *</code>. Then <code>from render import draw</code> in <code>main.py</code>. Run it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Read <code>main.py</code> from top to bottom. It is about twenty-five lines, and every one of them is the loop. Now open <code>state.py</code> and check it: there should be no <code>import pygame</code> anywhere in it.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+    <p class="caption">All of them live in one file now, which is rather the point.</p>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>config.py</kbd><span>Open it on its own. Every number that decides what this looks like is in there, and nothing else is. No more hunting through a hundred lines for the one you want.</span></div>
+      <div class="knobrow"><kbd>BOX_COUNT</kbd><span>Still works exactly as before, from its new home. So does everything else.</span></div>
+      <div class="knobrow"><kbd>from config import *</kbd><span>Delete it from <code>state.py</code> and run it. Read the error &mdash; it is the clearest possible demonstration that files do not share imports.</span></div>
+      <div class="knobrow"><kbd>state.py</kbd><span>Try adding <code>import pygame</code> to it. Nothing breaks, but resist. Keeping pygame out of that file is what makes it checkable on its own.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; what does the star in "import *" mean?</summary>
+      <div class="hint">
+        <p>"Everything". <code>from config import *</code> brings in every name that file made &mdash; <code>WIDTH</code>, <code>BG</code>, all of them &mdash; and you use them exactly as before.</p>
+        <p>The other way is to name them one by one, like <code>from state import overlaps, update, make_boxes</code>. That is more typing but easier to read later, because you can see at a glance what came from where.</p>
+        <p>The star is fine for a settings file, where you genuinely do want all of it. It is a bit lazy for anything else.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; which things go in which file?</summary>
+      <div class="hint">
+        <p>Ask what each one is <em>for</em>.</p>
+        <p><strong>A number you might fiddle with</strong> &mdash; config.py.</p>
+        <p><strong>Works out what happens</strong>, and would still make sense if the game were played over the telephone &mdash; state.py. Moving, bouncing, deciding what is touching what.</p>
+        <p><strong>Puts something on the screen</strong> &mdash; render.py. If the line mentions <code>screen</code> or <code>pygame.draw</code>, it lives here.</p>
+        <p><strong>Runs the loop</strong> &mdash; main.py. Ideally nothing else at all.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; why keep pygame out of state.py?</summary>
+      <div class="hint">
+        <p>Because then you can run it on its own, with no window, and check that the rules work.</p>
+        <p>Later on, when a box goes through a wall and you cannot see why, being able to test the moving and the touching without anything being drawn is the difference between finding it in a minute and losing an evening.</p>
+        <p>It is also a good way to think. The rules of a game and the way it is painted are genuinely two different things, and keeping them in two different files stops them getting tangled.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="cm"># ---------- config.py ----------</span>
+WIDTH = <span class="nu">800</span>
+HEIGHT = <span class="nu">450</span>
+FPS = <span class="nu">60</span>
+BG = (<span class="nu">12</span>, <span class="nu">13</span>, <span class="nu">26</span>)
+BOX_COLOUR = (<span class="nu">61</span>, <span class="nu">225</span>, <span class="nu">225</span>)
+HIT_COLOUR = (<span class="nu">248</span>, <span class="nu">87</span>, <span class="nu">193</span>)
+BOX_SIZE = <span class="nu">40</span>
+BOX_COUNT = <span class="nu">20</span>
+SPEED = <span class="nu">150</span>
+
+
+<span class="cm"># ---------- state.py ----------</span>
+<span class="kw">import</span> random
+<span class="kw">from</span> config <span class="kw">import</span> *
+
+
+<span class="kw">def</span> <span class="fn">overlaps</span>(a, b):
+    ...          <span class="cm"># the four checks from last session</span>
+
+
+<span class="kw">def</span> <span class="fn">update</span>(box, dt):
+    ...          <span class="cm"># moving and bouncing off walls</span>
+
+
+<span class="kw">def</span> <span class="fn">make_boxes</span>():
+    ...          <span class="cm"># builds and returns the list</span>
+
+
+<span class="cm"># ---------- render.py ----------</span>
+<span class="kw">import</span> pygame
+<span class="kw">from</span> config <span class="kw">import</span> *
+
+
+<span class="kw">def</span> <span class="fn">draw</span>(screen, boxes):
+    screen.<span class="fn">fill</span>(BG)
+    <span class="kw">for</span> box <span class="kw">in</span> boxes:
+        pygame.draw.<span class="fn">rect</span>(screen, box[<span class="st">"colour"</span>],
+                         (box[<span class="st">"x"</span>], box[<span class="st">"y"</span>], BOX_SIZE, BOX_SIZE))
+
+
+<span class="cm"># ---------- main.py ----------</span>
+<span class="kw">import</span> pygame
+<span class="kw">from</span> config <span class="kw">import</span> *
+<span class="kw">from</span> state <span class="kw">import</span> overlaps, update, make_boxes
+<span class="kw">from</span> render <span class="kw">import</span> draw
+
+pygame.<span class="fn">init</span>()
+screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT))
+clock = pygame.time.<span class="fn">Clock</span>()
+
+boxes = <span class="fn">make_boxes</span>()
+
+running = <span class="kw">True</span>
+<span class="kw">while</span> running:
+    dt = clock.<span class="fn">tick</span>(FPS) / <span class="nu">1000.0</span>
+
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            running = <span class="kw">False</span>
+
+    <span class="kw">for</span> box <span class="kw">in</span> boxes:
+        <span class="fn">update</span>(box, dt)
+        box[<span class="st">"colour"</span>] = BOX_COLOUR
+
+    <span class="kw">for</span> a <span class="kw">in</span> boxes:
+        <span class="kw">for</span> b <span class="kw">in</span> boxes:
+            <span class="kw">if</span> a <span class="kw">is</span> <span class="kw">not</span> b <span class="kw">and</span> <span class="fn">overlaps</span>(a, b):
+                a[<span class="st">"colour"</span>] = HIT_COLOUR
+
+    <span class="fn">draw</span>(screen, boxes)
+    pygame.display.<span class="fn">flip</span>()
+
+pygame.<span class="fn">quit</span>()</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Give every box its own colour.</strong> In <code>state.py</code>, write a small function that invents one:</p>
+      <pre>def random_colour():
+    r = random.randint(100, 255)
+    g = random.randint(100, 255)
+    b = random.randint(100, 255)
+    return (r, g, b)</pre>
+      <p>Then use it in <code>make_boxes</code> so each box is built with a colour of its own instead of <code>BOX_COLOUR</code>.</p>
+      <p>You will hit a snag straight away: they all turn cyan again after a single frame. Something in the game loop is setting every box's colour, sixty times a second. Find it, and work out what each box needs to <em>remember</em> so it can go back to its own colour instead of everyone's.</p>
+
+      <p><strong>Two more, if that one lands easily.</strong> The interesting part is where each of them goes.</p>
+
+      <p><strong>Outlines instead of solid blocks</strong> &mdash; <code>pygame.draw.rect</code> takes one more number after the position, and it is the thickness of the border. Give it <code>3</code> and the box comes out hollow. Draw a box hollow when it is not touching anything, and solid when it is.</p>
+      <p><strong>Wrap around instead of bouncing</strong> &mdash; a box that goes off the right edge comes back on the left, like Asteroids. Replace the four wall checks with something more like <code>if box["x"] &gt; WIDTH: box["x"] = -BOX_SIZE</code> and work out the other three yourself.</p>
+
+      <p>Before you start either one, guess which file you will be opening. Then check whether you were right &mdash; you should be, every time, and that is the whole reason for having split them up.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>ModuleNotFoundError: No module named 'config'</b>
+        <span><code>config.py</code> is not in the same folder as <code>main.py</code>, or its name has a typo. They all have to sit side by side.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'WIDTH' is not defined &mdash; in state.py</b>
+        <span>The one everybody hits. Every file needs its own imports; <code>state.py</code> cannot see what <code>main.py</code> borrowed. Put <code>from config import *</code> at the top of it too.</span>
+      </div>
+      <div class="err">
+        <b>ImportError: cannot import name 'update' from 'state'</b>
+        <span>That function is not actually in <code>state.py</code> &mdash; probably still sitting in <code>main.py</code>, or the cut only half-worked. Open the file and look.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'random' is not defined &mdash; in state.py</b>
+        <span>Same rule again. <code>make_boxes</code> uses <code>random</code>, so <code>state.py</code> needs its own <code>import random</code>.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'pygame' is not defined &mdash; in render.py</b>
+        <span>And again. <code>render.py</code> is the file that draws, so it is the file that needs <code>import pygame</code>.</span>
+      </div>
+      <div class="err">
+        <b>Everything imports fine but the window is black</b>
+        <span><code>draw</code> moved out but is never called, or <code>pygame.display.flip()</code> got left behind in the cut. Check the bottom of the loop in <code>main.py</code>.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs. Next arc, it becomes a game you can lose.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>

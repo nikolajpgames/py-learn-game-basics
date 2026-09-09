@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en" data-session="5">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 5 &middot; Your Own Words</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../_shared/lesson.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Session 5</span>
+      <span class="ticks" id="ticks" aria-hidden="true"></span>
+      <span>Arc 0 &middot; Getting Started</span>
+    </div>
+    <h1>Your Own Words</h1>
+    <p class="standfirst">This is how you stop writing the same lines over and over.</p>
+  </header>
+
+  <section id="make">
+    <div class="head"><span></span><h2>What you're making</h2></div>
+    <p>Two words that don't exist in Python until you invent them &mdash; <code>say_hello</code> and <code>double</code>. Then a small experiment that shows something genuinely surprising about how they work.</p>
+    <p class="caption">You've been using other people's functions since Session 1. <code>print</code> is one. Now you get to write your own.</p>
+  </section>
+
+  <section id="idea">
+    <div class="head"><span></span><h2>New this session</h2></div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 252" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="A box representing the whole file contains a variable WIDTH set to 800 near the top, and inside it a smaller dashed box representing a function called draw. Inside the function, print of x finds x right there because it is the function's own. Print of WIDTH does not find it inside, so an arrow leads out of the function box and up to the WIDTH line in the file, showing that Python looks outward when a name is not found locally.">
+
+        <defs>
+          <marker id="lk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c1, #3DE1E1)"/>
+          </marker>
+        </defs>
+
+        <text x="20" y="24" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="currentColor">THE WHOLE FILE</text>
+        <rect x="20" y="34" width="580" height="200" fill="none" stroke="currentColor" stroke-width="1.5"/>
+
+        <text x="40" y="66" font-size="14" font-family="JetBrains Mono, monospace" fill="var(--ink)">WIDTH = 800</text>
+        <text x="40" y="52" font-size="11.5" fill="currentColor">set once, up here at the top</text>
+
+        <text x="52" y="104" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="var(--c2, #F857C1)">INSIDE draw()</text>
+        <rect x="40" y="86" width="330" height="130" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+        <text x="56" y="136" font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">def draw(x):</text>
+        <text x="70" y="162" font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">print(x)</text>
+        <text x="70" y="190" font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">print(WIDTH)</text>
+
+        <text x="196" y="162" font-size="11" fill="var(--c2, #F857C1)">found right here</text>
+        <text x="196" y="190" font-size="11" fill="currentColor">not in here&#8230;</text>
+
+        <polyline points="196,196 398,196 398,66 134,66" fill="none" stroke="var(--c1, #3DE1E1)" stroke-width="2" marker-end="url(#lk-arrow)"/>
+        <text x="412" y="120" font-size="12" font-weight="700" fill="var(--c1, #3DE1E1)">&#8230;so Python looks</text>
+        <text x="412" y="138" font-size="12" font-weight="700" fill="var(--c1, #3DE1E1)">further out, and finds it</text>
+
+      </svg>
+      <figcaption><strong>Inside first, then outward.</strong> A name is looked for in the function itself, and only if it is not there does Python go looking in the file around it. That is why the settings at the top of every one of these programs work anywhere below. Reading them like this is fine &mdash; <em>changing</em> one from inside a function is a different matter, and Hint 5 explains why.</figcaption>
+    </figure>
+    <div class="idea-body">
+      <p><strong>These are called <em>functions</em>, and they exist so you can write something once and use it over and over.</strong> You have been using other people's all along &mdash; <code>print</code> is a function, so is <code>range</code>. Today you write your own.</p>
+      <p><strong><code>def</code> invents a new word.</strong> Nothing happens when Python reads it &mdash; it just makes a note. The lines inside only run when you <em>use</em> the word later, and you can use it as many times as you like.</p>
+      <p><strong>The thing in the brackets travels in.</strong> <code>say_hello("Sam")</code> sends the word Sam into the function, where it arrives under the name the <code>def</code> line gave it.</p>
+      <p><strong><code>return</code> sends an answer back out.</strong> <code>double(7)</code> hands you 14, which you can print or put in a box.</p>
+      <p><strong>A function can still see the things made outside it.</strong> When you use a name, Python looks inside the function first &mdash; and if it is not there, it looks out into the file around it. That is how <code>WIDTH</code> and <code>SPEED</code>, set once at the top of a file, can be used deep inside a function further down.</p>
+      <p>And a function keeps its own private copies of things. That's the second diagram, and it's the bit that surprises people.</p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 268" role="img" font-family="Hanken Grotesk, system-ui, sans-serif"
+           aria-label="Two panels side by side. On the left, outside the function, a variable called score holds 10. An arrow points right, labelled: a copy of the value goes in. On the right, inside the function, score is set to 999 and prints 999. An arrow pointing back to the left is crossed out and labelled: changes never come back out. Outside, score still prints 10.">
+
+        <defs>
+          <marker id="sc-in" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c1, #3DE1E1)"/>
+          </marker>
+          <marker id="sc-out" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c3, #FFC24B)"/>
+          </marker>
+        </defs>
+
+        <text x="30"  y="34" font-size="12" font-weight="700" letter-spacing="1.4" fill="currentColor">OUTSIDE THE FUNCTION</text>
+        <text x="380" y="34" font-size="12" font-weight="700" letter-spacing="1.4" fill="var(--c2, #F857C1)">INSIDE try_to_change()</text>
+
+        <rect x="30"  y="48" width="210" height="176" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="380" y="48" width="210" height="176" fill="var(--surface-2)" stroke="var(--c2, #F857C1)" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+        <text x="48"  y="82"  font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">score = 10</text>
+        <text x="48"  y="112" font-size="13.5" font-family="JetBrains Mono, monospace" fill="currentColor">try_to_change(score)</text>
+        <text x="48"  y="142" font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">print(score)</text>
+        <text x="48"  y="182" font-size="13.5" font-weight="700" fill="var(--c1, #3DE1E1)">prints 10</text>
+        <text x="48"  y="202" font-size="11.5" fill="currentColor">still the original</text>
+
+        <text x="398" y="82"  font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">score = 999</text>
+        <text x="398" y="112" font-size="13.5" font-family="JetBrains Mono, monospace" fill="var(--ink)">print(score)</text>
+        <text x="398" y="182" font-size="13.5" font-weight="700" fill="var(--c2, #F857C1)">prints 999</text>
+        <text x="398" y="202" font-size="11.5" fill="currentColor">a private copy</text>
+
+        <line x1="245" y1="98" x2="375" y2="98" stroke="var(--c1, #3DE1E1)" stroke-width="2" marker-end="url(#sc-in)"/>
+        <text x="309" y="88" font-size="11.5" text-anchor="middle" fill="var(--c1, #3DE1E1)">a copy goes in</text>
+
+        <line x1="375" y1="152" x2="249" y2="152" stroke="var(--c3, #FFC24B)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#sc-out)"/>
+        <line x1="303" y1="145" x2="317" y2="159" stroke="var(--c3, #FFC24B)" stroke-width="2.5"/>
+        <line x1="317" y1="145" x2="303" y2="159" stroke="var(--c3, #FFC24B)" stroke-width="2.5"/>
+        <text x="309" y="176" font-size="11.5" text-anchor="middle" fill="var(--c3, #FFC24B)">nothing comes back</text>
+
+      </svg>
+      <figcaption><strong>A function works on its own copy.</strong> The value travels in, but changes made inside never leak back out &mdash; even when the variable has the same name on both sides. The only way to get an answer out is to <code>return</code> it.</figcaption>
+    </figure>
+  </section>
+
+  <section id="steps">
+    <div class="head"><span></span><h2>Steps</h2></div>
+    <div class="tally"><span id="tally">0 of 7 done</span> <button type="button" id="clear">clear</button></div>
+
+    <ol class="checks" id="checks">
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Run <code>.\run.bat 5</code>. Read it all the way to the bottom.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Find <code>def say_hello(name):</code>. Two lines are inside it &mdash; but the greeting appears twice in the output, from two different names. Written once, used twice.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a third <code>say_hello("&hellip;")</code> with your own name in it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Add a line inside <code>say_hello</code> &mdash; indented to match &mdash; and check it appears every time the function is used, not just once.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Look at <code>double</code>. It doesn't print anything &mdash; it <code>return</code>s. The printing happens where it gets used, at the bottom.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Write your own function called <code>triple</code> that returns three times a number. Use it.</span></label></li>
+      <li><label><input type="checkbox"><span class="box"></span><span class="txt">Read the last section of output. <code>score</code> was set to 999 inside the function, and is still 10 outside. Look at the diagram again if that seems wrong.</span></label></li>
+    </ol>
+  </section>
+
+  <section id="knobs">
+    <div class="head"><span></span><h2>Turn the knobs</h2></div>
+
+    <div class="knobtable">
+      <div class="knobrow"><kbd>say_hello("Sam")</kbd><span>Whatever you put in the brackets arrives inside as <code>name</code>. Try a very long one.</span></div>
+      <div class="knobrow"><kbd>number * 2</kbd><span>Inside <code>double</code>. Change it to <code>* 10</code> and every place that uses <code>double</code> changes at once. That's the whole point of functions.</span></div>
+      <div class="knobrow"><kbd>return answer</kbd><span>Delete this line and run it. <code>double(7)</code> now gives <code>None</code> &mdash; Python's word for "nothing". A function with no <code>return</code> hands back nothing at all.</span></div>
+      <div class="knobrow"><kbd>score = 999</kbd><span>Inside <code>try_to_change</code>. Make it any number you like. The number outside never budges.</span></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="head"><span></span><h2>Stuck?</h2></div>
+
+    <details>
+      <summary>Hint 1 &mdash; why does nothing happen when I write a def?</summary>
+      <div class="hint">Because <code>def</code> only <em>invents</em> the word, it doesn't use it. It's the difference between writing a recipe and cooking. To make it happen you have to write its name with brackets after it, further down: <code>say_hello("Sam")</code>.</div>
+    </details>
+
+    <details>
+      <summary>Hint 2 &mdash; function, or method?</summary>
+      <div class="hint">
+        <p>Two words for almost the same thing, which is annoying but worth knowing.</p>
+        <p>A <strong>function</strong> stands on its own: <code>print("hi")</code>, <code>double(7)</code>.</p>
+        <p>A <strong>method</strong> is a function that belongs to something, and you reach it with a dot: <code>stars.append(star)</code> is a method belonging to that list. You will meet those in Session 9.</p>
+        <p>Same idea either way &mdash; a named job you can run whenever you want.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 3 &mdash; what's the difference between print and return?</summary>
+      <div class="hint">
+        <p><code>print</code> puts something on the screen for a human to read. That's all it does &mdash; the value is gone afterwards.</p>
+        <p><code>return</code> hands a value back to whoever used the function, so it can be stored, printed, or used in a sum. <code>double(double(5))</code> gives 20, because the inner answer got handed out and straight back in.</p>
+        <p>A function that prints is a dead end. A function that returns can be built on.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 4 &mdash; why didn't score change?</summary>
+      <div class="hint">
+        <p>When you call <code>try_to_change(score)</code>, the function doesn't get the box &mdash; it gets a <em>copy of what was in it</em>, in a fresh box of its own that happens to share the name.</p>
+        <p>Setting that copy to 999 fills in the function's own box and leaves yours alone. When the function ends, its box is thrown away.</p>
+        <p>This sounds like a nuisance and is actually the point: a function can't secretly mess up the rest of your program. If you want an answer out, <code>return</code> it and catch it: <code>score = try_to_change(score)</code>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Hint 5 &mdash; reading is fine, changing is not</summary>
+      <div class="hint">
+        <p>A function can happily <em>read</em> something from outside it. But the moment you assign to that name inside the function, Python decides the name is the function's own &mdash; and then complains that you used it before making it:</p>
+        <pre>WIDTH = <span class="nu">800</span>
+
+<span class="kw">def</span> <span class="fn">grow</span>():
+    WIDTH = WIDTH + <span class="nu">1</span>   <span class="cm"># UnboundLocalError</span></pre>
+        <p>That is not a bug, it is a guard rail: it stops a function quietly rewriting things the rest of the program depends on.</p>
+        <p>The way round it is the one you already know &mdash; hand the value in, and <code>return</code> the new one back out. That is exactly why <code>update()</code> in the later sessions takes the position as arguments and returns it again, instead of reaching out and changing it.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Show me a finished version</summary>
+      <div class="hint">
+        <pre><span class="kw">def</span> <span class="fn">triple</span>(number):
+    <span class="kw">return</span> number * <span class="nu">3</span>
+
+
+<span class="kw">def</span> <span class="fn">shout</span>(words):
+    <span class="fn">print</span>(words.<span class="fn">upper</span>() + <span class="st">"!!!"</span>)
+
+
+<span class="fn">print</span>(<span class="fn">triple</span>(<span class="nu">5</span>))
+<span class="fn">print</span>(<span class="fn">triple</span>(<span class="fn">triple</span>(<span class="nu">2</span>)))
+
+<span class="fn">shout</span>(<span class="st">"we are ready for pygame"</span>)</pre>
+      </div>
+    </details>
+  </section>
+
+  <section id="extra">
+    <div class="head"><span></span><h2>Challenge</h2></div>
+    <div class="challenge">
+      <p><strong>Write a dice roller.</strong> Put <code>import random</code> at the very top of the file, then make a function that returns a random number from 1 to 6:</p>
+      <p><code>return random.randint(1, 6)</code></p>
+      <p>Roll it ten times with a loop from Session 4. Then make the number of sides something you pass in, so <code>roll(20)</code> gives you a twenty-sided dice.</p>
+      <p>Keep this one. You'll want random numbers again in Session 9, for two hundred stars.</p>
+    </div>
+  </section>
+
+  <section id="breaks">
+    <div class="head"><span></span><h2>How it could break</h2></div>
+
+    <div class="errs">
+      <div class="err">
+        <b>TypeError: say_hello() missing 1 required positional argument: 'name'</b>
+        <span>You called it with empty brackets. The <code>def</code> line asks for one thing, so one thing has to go in: <code>say_hello("Sam")</code>.</span>
+      </div>
+      <div class="err">
+        <b>TypeError: say_hello() takes 1 positional argument but 2 were given</b>
+        <span>The opposite &mdash; you handed it two things when it only has room for one. The brackets on the <code>def</code> line and the brackets where you use it must match.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'say_hello' is not defined</b>
+        <span>Either a typo, or you're using it <em>above</em> the <code>def</code>. Python reads top to bottom, so the word has to be invented before it's used.</span>
+      </div>
+      <div class="err">
+        <b>It prints None</b>
+        <span>The function has no <code>return</code>, so it handed back nothing, and <code>None</code> is Python's word for nothing.</span>
+      </div>
+      <div class="err">
+        <b>NameError: name 'answer' is not defined</b>
+        <span>You're trying to use a variable outside the function that made it. It only exists in there &mdash; that's the diagram above.</span>
+      </div>
+      <div class="err">
+        <b>Nothing happens at all</b>
+        <span>You wrote the <code>def</code> but never used the word afterwards. Recipes don't cook themselves.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="signoff">Stop while it still runs. Next time, a window opens.</p>
+  </footer>
+
+</div>
+
+<script src="../_shared/lesson.js"></script>
+</body>
+</html>
