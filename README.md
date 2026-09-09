@@ -324,6 +324,3 @@ python.org and re-running `setup.bat` is the durable fix.
   lesson page to someone on its own, send the `_shared` folder with it.
 - Checklist ticks live in the browser's local storage, per session. Clearing
   browser data resets them; nothing else does.
-#   p y - b e g i n n e r - g a m e - c o u r s e - v 1  
- #   p y - l e a r n - g a m e - b a s i c s  
- 
